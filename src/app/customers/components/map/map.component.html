@@ -1,0 +1,12 @@
+<form [formGroup]="searchForm" class="map__verify-address">
+
+  <mat-form-field class="map__verify-address--form-field" appearance="fill">
+    <mat-label>Address</mat-label>
+    <input type="text" matInput formControlName="autocomplete" #autocomplete (focus)="geolocate(autocomplete)">
+    <mat-hint>Start typing an address...</mat-hint>
+  </mat-form-field>
+
+  <div #map style="height: 400px; width: 100%;" class="map__google-map"></div>
+
+</form>
+

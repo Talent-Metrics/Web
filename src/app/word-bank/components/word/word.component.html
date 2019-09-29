@@ -1,0 +1,25 @@
+<div [formGroup]="word" class="word">
+
+  <div class="utility__container">
+    <!--<mat-icon matListIcon class="word__icons&#45;&#45;delete" title="Delete Word">delete</mat-icon>-->
+
+    <h3 class="word__title" (click)="getDefinition()">
+      {{ word.value.name }}
+    </h3>
+
+<!--    <mat-form-field color="primary" class="word__point-field">-->
+<!--      &lt;!&ndash;<mat-label> Point Value </mat-label>&ndash;&gt;-->
+<!--      <mat-select formControlName="value">-->
+<!--        <mat-option *ngFor="let wordValue of wordValues" [value]="wordValue" (click)="setWordValue(wordValue)">-->
+<!--          {{ wordValue }}-->
+<!--        </mat-option>-->
+<!--      </mat-select>-->
+<!--    </mat-form-field>-->
+
+  </div>
+
+  <div class="utility__container">
+
+  </div>
+
+</div>

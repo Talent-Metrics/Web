@@ -1,0 +1,25 @@
+<div [formGroup]="parent" *ngIf="parent">
+
+  <div class="utility__container">
+
+    <mat-form-field appearance="fill" color="primary">
+      <mat-label> Name </mat-label>
+      <input matInput type="text" formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" color="primary">
+      <mat-label> Word Bank </mat-label>
+      <mat-select formControlName="wordBankId">
+        <mat-option *ngFor="let wb of wordBanks" [value]="wb._id">
+          {{ wb.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+
+  <div class="survey-dialog__buttons">
+    <a class="utility__button--primary" (click)="createSurvey()"> Create </a>
+  </div>
+
+</div>

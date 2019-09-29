@@ -1,0 +1,48 @@
+<div class="word-bank">
+
+  <mat-form-field class="word-bank__select">
+    <mat-select placeholder="Select Word Bank...">
+      <mat-option *ngFor="let bank of wordBanks" [value]="bank._id" (click)="selectWordBank(bank)">
+        {{bank.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <form [formGroup]="wordBankForm" *ngIf="wordBank" class="word-bank__col">
+
+    <div class="utility__col">
+      <mat-form-field appearance="fill" color="primary" class="utility__50">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" type="text">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" color="primary" class="utility__50">
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="description" type="text">
+      </mat-form-field>
+    </div>
+
+    <div class="word-bank__list--header">
+      <div> Words (count: {{ wordBankLength() }})</div>
+      <div class="word-bank__icon-row">
+<!--        <mat-icon matListIcon class="word-bank__icons" title="Add Word" *ngIf="wordBankLength() < 26" (click)="addNewWordToBank()">add_box</mat-icon>-->
+<!--        <mat-icon matListIcon class="word-bank__icons" title="Delete All Words">delete</mat-icon>-->
+      </div>
+    </div>
+    <mat-list formArrayName="words" *ngIf="wordBank" class="word-bank__list">
+      <mat-list-item *ngFor="let item of words; let i = index;" class="word-bank__list--item">
+<!--        <mat-icon matListIcon class="word-bank__icons word-bank__icons&#45;&#45;delete" title="Delete Word" (click)="deleteWordFromWordBank(i)">delete</mat-icon>-->
+        <div [formGroupName]="i" class="utility__100">
+          <word [word]="item" class="utility__100" (click)="tester(i)"></word>
+        </div>
+      </mat-list-item>
+    </mat-list>
+
+<!--    <div class="word-bank__buttons">-->
+<!--      <a class="utility__button&#45;&#45;primary" *ngIf="wordBank" (click)="saveWordBank()"> Save </a>-->
+<!--      <a class="utility__button&#45;&#45;primary" *ngIf="wordBank" (click)="deleteWordBank()"> Delete </a>-->
+<!--    </div>-->
+
+  </form>
+
+</div>

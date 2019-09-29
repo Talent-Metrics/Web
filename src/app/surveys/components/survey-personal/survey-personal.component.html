@@ -1,0 +1,125 @@
+<div [formGroup]="parent">
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label> First Name </mat-label>
+    <input matInput type="text" formControlName="firstName">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label> Last Name </mat-label>
+    <input matInput type="text" formControlName="lastName">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label> E-mail </mat-label>
+    <input matInput type="text" formControlName="email">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label> Position / Title </mat-label>
+    <input matInput type="text" formControlName="positionTitle">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label> Employee Classification </mat-label>
+    <mat-select formControlName="employeeClass">
+      <mat-option *ngFor="let emplClass of emplClasses" [value]="emplClass">
+        {{ emplClass }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+<!--  <mat-form-field appearance="fill" color="primary">-->
+<!--    <mat-label> Date of Birth </mat-label>-->
+<!--    <input matInput type="number" formControlName="dob">-->
+<!--  </mat-form-field>-->
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label>Date of Birth</mat-label>
+    <input matInput [matDatepicker]="dobPicker" placeholder="Choose a date" formControlName="dob">
+    <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+    <mat-datepicker #dobPicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label> Department </mat-label>
+    <input matInput type="text" formControlName="department">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label> Division </mat-label>
+    <input matInput type="text" formControlName="division">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label> Location </mat-label>
+    <input matInput type="text" formControlName="location">
+  </mat-form-field>
+
+<!--  <mat-form-field appearance="fill" color="primary">-->
+<!--    <mat-label> Hire Date </mat-label>-->
+<!--    <input matInput type="number" formControlName="hireDate">-->
+<!--  </mat-form-field>-->
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label>Hire Date</mat-label>
+    <input matInput [matDatepicker]="hireDatePicker" placeholder="Choose a date" formControlName="hireDate">
+    <mat-datepicker-toggle matSuffix [for]="hireDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #hireDatePicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label> Gender </mat-label>
+    <mat-select formControlName="gender">
+      <mat-option *ngFor="let gender of genders" [value]="gender">
+        {{ gender }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label> Ethnicity </mat-label>
+    <mat-select formControlName="ethnicity">
+      <mat-option *ngFor="let ethnic of ethnicities" [value]="ethnic">
+        {{ ethnic }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label> Veteran Status </mat-label>
+    <mat-select formControlName="veteranStatus">
+      <mat-option *ngFor="let veteranStatus of veteranStatuses" [value]="veteranStatus.key">
+        {{ veteranStatus.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label> Disability Status </mat-label>
+    <mat-select formControlName="disabilityStatus">
+      <mat-option *ngFor="let disabilityStatus of disabilityStatuses" [value]="disabilityStatus.key">
+        {{ disabilityStatus.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label> Education Level </mat-label>
+    <mat-select formControlName="educationLevel">
+      <mat-option *ngFor="let educationLevel of educationLevels" [value]="educationLevel.key">
+        {{ educationLevel.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label> Manager </mat-label>
+    <input matInput type="text" formControlName="manager">
+  </mat-form-field>
+
+  <div class="survey-personal__buttons">
+    <a class="utility__button--primary" (click)="updatePersonal()"> Confirm </a>
+  </div>
+
+</div>

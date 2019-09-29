@@ -1,0 +1,58 @@
+<div class="survey-output">
+
+  <div class="survey-output__container survey-output__header">
+    <div class="survey-output__col">
+      <h2 class="survey-output__header-title" *ngIf="personalInfo">
+        {{ personalInfo.value.firstName + " " + personalInfo.value.lastName }}
+      </h2>
+      <p class="survey-output__header-email">
+        {{ personalInfo.value.email }}
+      </p>
+    </div>
+    <div class="survey-output__fill utility__right">
+<!--      <div class="material-icons utility__hover utility__rotate" (click)="closeDialog(false)">close</div>-->
+    </div>
+  </div>
+
+  <hr class="utility__rule">
+
+  <div class="survey-output__container survey-output__container-body">
+    <div class="survey-output__left-side">
+      <div>Most Descriptive</div>
+      <div>Least Descriptive</div>
+    </div>
+    <div class="survey-output__body survey-output__fill">
+      <div class="survey-output__container">
+        <div class="survey-output__word" *ngFor="let highly of category1">
+          {{ highly.name }}
+        </div>
+      </div>
+      <div class="survey-output__container">
+        <div class="survey-output__word" *ngFor="let somewhat of category2">
+          {{ somewhat.name }}
+        </div>
+      </div>
+      <div class="survey-output__container">
+        <div class="survey-output__word" *ngFor="let slightly of category3">
+          {{ slightly.name }}
+        </div>
+      </div>
+      <div class="survey-output__container">
+        <div class="survey-output__word" *ngFor="let notVery of category4">
+          {{ notVery.name }}
+        </div>
+      </div>
+      <div class="survey-output__container">
+        <div class="survey-output__word" *ngFor="let notAtAll of category5">
+          {{ notAtAll.name }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--  <div class="survey-external__button-row">-->
+<!--    <a class="utility__button&#45;&#45;primary" (click)="closeDialog(false)"> Close </a>-->
+<!--    <a class="utility__button&#45;&#45;primary" *ngIf="!completed" (click)="closeDialog(true)"> Submit </a>-->
+<!--  </div>-->
+
+</div>

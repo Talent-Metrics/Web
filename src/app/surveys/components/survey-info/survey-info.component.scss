@@ -1,0 +1,74 @@
+$color-basic-white: #f1f1f1;
+$color-solid-white: #ffffff;
+$color-accent-pink: #dd33dd;
+$color-accent-green: #7cfc01;
+$color-matte-black: #3d3d3d;
+
+.survey-info {
+  display: flex;
+  flex-direction: column;
+  & .utility__col {
+    flex: 1;
+  }
+}
+.utility__container {
+  display: flex;
+  width: 100%;
+}
+.utility__col {
+  flex: 1;
+}
+.utility__right {
+  text-align: right;
+}
+.survey__list {
+  background-color: #E8E8E8;
+  height: 21rem;
+  margin-bottom: 1.5rem;
+  overflow: scroll;
+  padding-top: 0;
+  & .survey__subject {
+    //border-top: 1px solid $color-matte-black;
+    border-bottom: 1px solid $color-matte-black;
+    height: 7rem;
+    &:hover {
+      background-color: $color-solid-white;
+    }
+    & .survey__subject-width {
+      width: 100%;
+    }
+  }
+}
+.survey__subject--name {
+  font-family: "Avenir Next", sans-serif;
+  font-weight: lighter;
+}
+.survey__subject--email {
+  font-family: "Avenir Next", sans-serif;
+  font-weight: lighter;
+  font-size: 1rem;
+}
+.survey__subject--status {
+  font-family: "Avenir Next", sans-serif;
+  font-weight: lighter;
+  font-size: .75rem;
+}
+.survey__subject--notified {
+  font-family: "Avenir Next", sans-serif;
+  font-weight: lighter;
+  font-size: .75rem;
+}
+.survey__icon-row {
+  display: block;
+  text-align: right;
+  & .survey__icons:not(:last-child) {
+    margin-right: 1rem;
+  }
+}
+.survey__icons {
+  color: $color-matte-black;
+  &:hover {
+    cursor: pointer;
+    color: $color-accent-pink;
+  }
+}

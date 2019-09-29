@@ -1,0 +1,11 @@
+<div class="customers">
+  <div class="customers__col">
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+      <address [parent]="customerForm" (address)="testEmit($event)"></address>
+      <customer-info [parent]="customerForm"></customer-info>
+      <div class="customers__buttons">
+        <a class="utility__button--primary" (click)="onSubmit()" *ngIf="!customerForm.invalid && customerForm.dirty || customerForm.touched">Save</a>
+      </div>
+    </form>
+  </div>
+</div>

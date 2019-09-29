@@ -1,0 +1,122 @@
+<form [formGroup]="surveySubjectForm" *ngIf="surveySubjectForm">
+
+  <div class="utility__container">
+    <div formGroupName="surveyInfo" class="utility__container">
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Customer Id</mat-label>
+        <input matInput formControlName="customerId" type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Organization</mat-label>
+        <input matInput formControlName="organizationId" type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Creation Date</mat-label>
+        <input matInput [matDatepicker]="createPicker" placeholder="Choose a date" formControlName="createDate">
+        <mat-datepicker-toggle matSuffix [for]="createPicker"></mat-datepicker-toggle>
+        <mat-datepicker #createPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Completion Date</mat-label>
+        <input matInput [matDatepicker]="completePicker" placeholder="Choose a date" formControlName="completionDate">
+        <mat-datepicker-toggle matSuffix [for]="completePicker"></mat-datepicker-toggle>
+        <mat-datepicker #completePicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Completed</mat-label>
+        <input matInput formControlName="completed" type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Notified</mat-label>
+        <input matInput formControlName="notifiedCount" type="number">
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Word Bank Id</mat-label>
+        <input matInput formControlName="wordBankId" type="text">
+      </mat-form-field>
+    </div>
+    <div formGroupName="personalInfo" class="utility__container">
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>E-mail</mat-label>
+        <input matInput formControlName="email" type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Position/Title</mat-label>
+        <input matInput formControlName="positionTitle" type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Employee Class</mat-label>
+        <input matInput formControlName="employeeClass" type="text">
+      </mat-form-field>
+<!--      <mat-form-field appearance="fill" color="primary">-->
+<!--        <mat-label>Date of Birth</mat-label>-->
+<!--        <input matInput formControlName="dob" type="number">-->
+<!--      </mat-form-field>-->
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Date of Birth</mat-label>
+        <input matInput [matDatepicker]="dobPicker" placeholder="Choose a date" formControlName="dob">
+        <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dobPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Department</mat-label>
+        <input matInput formControlName="department" type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Division</mat-label>
+        <input matInput formControlName="division" type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Location</mat-label>
+        <input matInput formControlName="location" type="text">
+      </mat-form-field>
+<!--      <mat-form-field appearance="fill" color="primary">-->
+<!--        <mat-label>Hire Date</mat-label>-->
+<!--        <input matInput formControlName="hireDate" type="number">-->
+<!--      </mat-form-field>-->
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Hire Date</mat-label>
+        <input matInput [matDatepicker]="hireDatePicker" placeholder="Choose a date" formControlName="hireDate">
+        <mat-datepicker-toggle matSuffix [for]="hireDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #hireDatePicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Gender</mat-label>
+        <input matInput formControlName="gender" type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Ethnicity</mat-label>
+        <input matInput formControlName="ethnicity" type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Veteran</mat-label>
+        <input matInput formControlName="veteranStatus" type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Disabled</mat-label>
+        <input matInput formControlName="disabilityStatus" type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Education Level</mat-label>
+        <input matInput formControlName="educationLevel" type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Manager</mat-label>
+        <input matInput formControlName="manager" type="text">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <a class="utility__button--primary" *ngIf="data.type !== 'add'" (click)="updateSurveySubject()">Update</a>
+  <a class="utility__button--primary" *ngIf="data.type === 'add'" (click)="addSurveySubject()">Add</a>
+
+</form>
+<!--<pre>{{ surveySubjectForm.value | json }}</pre>-->

@@ -1,0 +1,33 @@
+$color-basic-white: #f1f1f1;
+$color-solid-white: #ffffff;
+$color-accent-pink: #dd33dd;
+$color-accent-green: #7cfc01;
+$color-matte-black: #3d3d3d;
+
+.word {
+
+}
+.utility__container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.word__title {
+  flex: 1;
+  font-family: "Avenir Next", sans-serif;
+  font-weight: lighter;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.word__point-field {
+  width: 75px;
+}
+mat-icon.word__icons--delete {
+  margin-right: 1rem;
+  color: $color-matte-black;
+  &:hover {
+    cursor: pointer;
+    color: $color-accent-pink;
+  }
+}

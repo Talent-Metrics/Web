@@ -1,0 +1,133 @@
+$color-basic-white: #f1f1f1;
+$color-solid-white: #ffffff;
+$color-accent-pink: #dd33dd;
+$color-accent-green: #7cfc01;
+$color-matte-black: #3d3d3d;
+
+.word-bank {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  & .word-bank__select {
+    padding: 1rem;
+    width: 100%;
+    max-width: 600px;
+  }
+}
+.word-bank__col {
+  flex: 1;
+  padding: 1rem;
+  width: 100%;
+  max-width: 600px;
+  & button {
+    width: 100%;
+  }
+}
+.utility__container {
+  display: flex;
+  width: 100%;
+}
+.utility__col {
+  flex: 1;
+  width: 100%;
+}
+.utility__right {
+  text-align: right;
+}
+.utility__100 {
+  width: 100%;
+}
+.utility__50 {
+  width: 50%;
+}
+.word-bank__list {
+  background-color: #E8E8E8;
+  height: 21rem;
+  margin-bottom: 1.5rem;
+  overflow: scroll;
+  padding-top: 0;
+  & .word-bank__list--item {
+    //border-top: 1px solid $color-matte-black;
+    border-bottom: 1px solid $color-matte-black;
+    height: 5rem;
+    width: 100%;
+    & > div {
+      width: 100%;
+    }
+    &:hover {
+      background-color: $color-solid-white;
+    }
+    & .survey__subject-width {
+      width: 100%;
+    }
+  }
+}
+.word-bank__list--header {
+  align-items: center;
+  background-color: #E8E8E8;
+  border-bottom: 1px solid $color-matte-black;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  height: 4rem;
+  justify-content: flex-start;
+  padding: 0 .75em 0 .75em;
+  & > * {
+    flex: 1;
+  }
+}
+.word-bank__icon-row {
+  display: block;
+  text-align: right;
+  & .survey__icons:not(:last-child) {
+    margin-right: 1rem;
+  }
+}
+.word-bank__icons {
+  color: $color-matte-black;
+  &:hover {
+    cursor: pointer;
+    color: $color-accent-pink;
+  }
+}
+.word-bank__icons--delete {
+  margin-right: 1rem;
+}
+a {
+  &.utility__button--primary {
+    font-family: "Avenir Next", sans-serif;
+    border-radius: 3px;
+    color: $color-matte-black;
+    border-bottom: 3px solid $color-matte-black;
+    display: inline-block;
+    background-color: $color-basic-white;
+    padding: .5rem 2rem;
+    transition: all .5s;
+    &:hover {
+      background-color: $color-matte-black;
+      border-bottom: 3px solid $color-accent-pink;
+      cursor: pointer;
+      color: $color-accent-pink;
+      box-shadow: 3px 3px 3rem $color-matte-black;
+      transform: translateY(-.33rem);
+    }
+    &:active {
+      background-color: $color-matte-black;
+      box-shadow: none;
+      border-bottom: 3px solid $color-accent-green;
+      color: $color-accent-green;
+      transform: translateY(0);
+    }
+  }
+}
+@media only screen and (min-width: 900px) {
+  .word-bank {
+    justify-content: flex-start;
+  }
+}

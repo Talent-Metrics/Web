@@ -1,0 +1,6 @@
+<div [formGroup]="parent" class="utility__container">
+    <mat-form-field *ngFor="let field of formFields" appearance="fill" color="primary" class="utility__col">
+      <mat-label>{{ field.value }}</mat-label>
+      <input matInput formControlName="{{ field.key }}" [value]="parent.get(field.key).value">
+    </mat-form-field>
+</div>

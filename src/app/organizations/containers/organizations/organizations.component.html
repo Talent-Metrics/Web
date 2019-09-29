@@ -1,0 +1,30 @@
+<div class="organizations">
+
+  <mat-form-field class="organizations__select">
+    <mat-label> Select an Organization </mat-label>
+    <mat-select>
+      <mat-option *ngFor="let org of organizations; let i = index;" [value]="i" (onSelectionChange)="selectOrganization(i)">
+        {{ org.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <form [formGroup]="organizationForm" (ngSubmit)="onSubmit()" class="organizations__col">
+
+    <organization-info [parent]="organizationForm" [fields]="formFields"></organization-info>
+
+    <div class="organizations__buttons">
+      <a class="utility__button--primary" *ngIf="organization" (click)="onUpdate()"> Edit </a>
+      <a class="utility__button--primary" *ngIf="!organization" (click)="onAdd()"> Create </a>
+      <a class="utility__button--primary" *ngIf="organization" (click)="onDelete(organization._id)"> Delete </a>
+      <a class="utility__button--primary" *ngIf="organizationForm.dirty || organization" (click)="refreshForm()"> Reset </a>
+    </div>
+
+    <!--<pre>-->
+      <!--{{ organizationForm.value | json }}-->
+      <!--{{ organizationForm.valid }}-->
+    <!--</pre>-->
+
+  </form>
+
+</div>

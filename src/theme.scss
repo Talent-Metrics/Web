@@ -1,0 +1,10 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$talent-metrics-primary: mat-palette($mat-purple, A200);
+$talent-metrics-accent:  mat-palette($mat-pink, 500, 900, A100);
+$talent-metrics-warn:    mat-palette($mat-deep-orange);
+
+$talent-metrics-theme: mat-light-theme($talent-metrics-primary, $talent-metrics-accent, $talent-metrics-warn);
+
+@include angular-material-theme($talent-metrics-theme);

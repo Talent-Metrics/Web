@@ -1,0 +1,48 @@
+<div [formGroup]="parent" class="subscription-info">
+
+  <mat-form-field class="utility__col" appearance="fill">
+    <mat-label>Subscription End Date</mat-label>
+    <input matInput [matDatepicker]="picker2" formControlName="endDate">
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
+  </mat-form-field>
+
+  <mat-radio-group formControlName="autoRenew" name="autorenew" class="subscription-info__autorenew utility__col">
+    <mat-radio-button value=1 name="autorenew" color="primary" [checked]="parent.get('autoRenew').value===1">Automatically Renew</mat-radio-button>
+    <mat-radio-button value=2 name="autorenew" color="primary" [checked]="parent.get('autoRenew').value===2">Do Not Renew</mat-radio-button>
+  </mat-radio-group>
+
+  <mat-form-field class="utility__col" appearance="fill">
+    <mat-label>Subscription Name</mat-label>
+    <input matInput formControlName="subscriptionName" type="text">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary" class="utility__col">
+    <mat-label>Subscription Type</mat-label>
+    <mat-select placeholder="Subscription Type" formControlName="subscriptionType" (selectionChange)="chgSubType($event)">
+      <mat-option *ngFor="let subType of subTypes" [value]="subType.key">
+        {{ subType.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="utility__col" appearance="fill">
+    <mat-label>Survey Count</mat-label>
+    <input matInput formControlName="surveyCount" type="number">
+  </mat-form-field>
+
+  <mat-form-field class="utility__col" appearance="fill">
+    <mat-label>Maximum Survey Count</mat-label>
+    <input matInput formControlName="maxSurveys" type="number">
+  </mat-form-field>
+
+
+</div>
+<!--{ key: 'autoRenew', value: 'Autorenew' },-->
+<!--{ key: 'customerId', value: 'Customer Id' },-->
+<!--{ key: 'endDate', value: 'End Date' },-->
+<!--{ key: 'maxSurveys', value: 'Maximum # of Surveys' },-->
+<!--{ key: 'startDate', value: 'Start Date' },-->
+<!--{ key: 'subscriptionName', value: 'Subscription' },-->
+<!--{ key: 'subscriptionType', value: 'Subscription Type' },-->
+<!--{ key: 'surveyCount', value: '# of Surveys' },-->

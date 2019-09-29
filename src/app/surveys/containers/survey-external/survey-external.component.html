@@ -1,0 +1,97 @@
+<mat-drawer-container class="survey-external__environment">
+<!--  <mat-drawer mode="side" opened class="survey-external__sidenav">-->
+<!--    <div class="survey-external__sidenav&#45;&#45;title">-->
+<!--      <h3>Talent Metrics</h3>-->
+<!--      <p>est 2019</p>-->
+<!--    </div>-->
+<!--    <mat-nav-list *ngIf="surveySubjectForm">-->
+<!--      <mat-list-item *ngFor="let link of links" [ngClass]="{ tester: (step > link.step || surveySubject.surveyInfo.completed) }">-->
+<!--        {{ link.value }}-->
+<!--        <i class="material-icons" *ngIf="step <= link.step">{{ link.icon }}</i>-->
+<!--        <i class="material-icons" *ngIf="step > link.step || surveySubject.surveyInfo.completed">done</i>-->
+<!--      </mat-list-item>-->
+<!--    </mat-nav-list>-->
+<!--  </mat-drawer>-->
+  <mat-drawer-content class="survey-external__content">
+
+    <mat-toolbar class="survey-external__toolbar" *ngIf="surveySubject">
+      <div class="survey-external__toolbar--left">
+        <h3>Talent Metrics</h3>
+        <p>est 2019</p>
+      </div>
+      <div class="utility__fill"></div>
+      <div class="survey-external__toolbar--notifications">
+        <i class="material-icons">payment</i>
+        <i class="material-icons">work</i>
+        <div class="survey-external__icon-super">
+          <i class="material-icons">notifications</i>
+<!--          <sup class="survey-external__notification">{{ surveySubject.surveyInfo.notifiedCount }}</sup>-->
+          <div style="position: absolute; width: .75rem; height: .75rem; background-color: red; border-radius: 5rem; top: 0; right: 0; font-size: .75rem;">
+            <sup class="survey-external__notification">{{ surveySubject.surveyInfo.notifiedCount }}</sup>
+          </div>
+        </div>
+      </div>
+      <span class="survey-external__toolbar--right">
+        {{ surveySubject.personalInfo.firstName + ' ' + surveySubject.personalInfo.lastName }}
+      </span>
+    </mat-toolbar>
+
+    <form [formGroup]="surveySubjectForm" *ngIf="surveySubjectForm" class="survey-external__form">
+      <mat-accordion multi="false">
+
+        <mat-expansion-panel class="survey-external__personal-info" [expanded]="step === 1" *ngIf="!surveySubject.surveyInfo.completed">
+          <mat-expansion-panel-header (click)="setStep(1)">
+            <mat-panel-title>
+              Step One
+            </mat-panel-title>
+            <mat-panel-description>
+              Review your personal information
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <survey-personal [parent]="personalInfo" (update)="setPersonal($event)"></survey-personal>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="step === 2" *ngIf="wordBank && !surveySubject.surveyInfo.completed">
+          <mat-expansion-panel-header>
+            <mat-panel-title> Step Two </mat-panel-title>
+            <mat-panel-description> Complete Survey </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <survey-pyramid [parent]="categories" [wordBank]="wordBank" (update)="setCategories($event)"></survey-pyramid>
+
+        </mat-expansion-panel>
+
+<!--        <mat-expansion-panel [expanded]="step === 2" *ngIf="step === 2 && !surveySubject.surveyInfo.completed">-->
+<!--          <mat-expansion-panel-header (click)="setStep(2)">-->
+<!--            <mat-panel-title>-->
+<!--              Step Two-->
+<!--            </mat-panel-title>-->
+<!--            <mat-panel-description>-->
+<!--              Complete survey-->
+<!--            </mat-panel-description>-->
+<!--          </mat-expansion-panel-header>-->
+<!--          <survey-categories [parent]="categories" [wordBank]="wordBank" *ngIf="categories && wordBank" (update)="setCategories($event)"></survey-categories>-->
+<!--        </mat-expansion-panel>-->
+
+        <mat-expansion-panel [expanded]="step === 3" *ngIf="step === 3 || surveySubject.surveyInfo.completed">
+          <mat-expansion-panel-header (click)="setStep(3)">
+            <mat-panel-title>
+              Step Three
+            </mat-panel-title>
+            <mat-panel-description>
+              Review and send
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <survey-output [completed]="completed" [personalInfo]="personalInfo" [surveySubjectCategories]="categories"></survey-output>
+          <div>
+            <div class="survey-external__button-row" *ngIf="surveySubjectForm.valid">
+              <a class="utility__button--primary" (click)="updateSurveySubject()" *ngIf="!surveySubject.surveyInfo.completed"> Submit </a>
+            </div>
+          </div>
+        </mat-expansion-panel>
+
+      </mat-accordion>
+    </form>
+
+  </mat-drawer-content>
+</mat-drawer-container>

@@ -1,0 +1,42 @@
+<div class="surveys">
+
+  <mat-form-field class="surveys__select">
+    <mat-select>
+      <mat-option *ngFor="let survey of surveys" (click)="selectSurvey(survey)" [value]="survey._id">
+        {{ survey.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()" class="surveys__col">
+
+    <div class="utility__col">
+      <mat-form-field appearance="fill" color="primary" class="utility__50">
+        <mat-label> Name </mat-label>
+        <input matInput formControlName="name" type="text">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" color="primary" class="utility__50">
+        <mat-label> Word Bank </mat-label>
+        <mat-select formControlName="wordBankId">
+          <mat-option *ngFor="let wordBank of wordBanks" value="{{ wordBank._id }}">
+            {{ wordBank.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <survey-subject [surveyId]="surveyId" [wordBankId]="wordBankId" *ngIf="surveyId && wordBankId"></survey-subject>
+
+    <div class="surveys__buttons">
+      <a class="utility__button--primary" (click)="updateSurvey()">Update</a>
+      <a class="utility__button--primary" (click)="createSurvey()" *ngIf="!survey">Add</a>
+      <a class="utility__button--primary" (click)="resetForm()" *ngIf="survey || surveyForm.get('name').dirty">Reset</a>
+      <a class="utility__button--primary" (click)="deleteSurvey()" *ngIf="survey">Delete</a>
+    </div>
+    <!--<pre>{{ surveyForm.value | json }}</pre>-->
+
+  </form>
+
+</div>
+

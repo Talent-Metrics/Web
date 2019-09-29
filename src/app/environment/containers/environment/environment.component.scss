@@ -1,0 +1,119 @@
+@import url("https://use.typekit.net/hsm6ydb.css");
+$color-matte-black: #3F3F3F;
+$color-basic-white: #f1f1f1;
+$color-solid-white: #ffffff;
+$color-accent-pink: #dd33dd;
+$color-accent-green: #7cfc01;
+$color-matte-black: #3d3d3d;
+$color-primary-gradient: linear-gradient(to bottom right, rgb(255,255,255), rgb(225,225,225), rgb(215,215,215));
+
+.environment__sidenav {
+  height: 100vh;
+  & .environment__sidenav--drawer {
+    background-color: $color-matte-black;
+    width: 15rem;
+    & mat-nav-list {
+      & a {
+        font-family: acumin-pro, sans-serif;
+        font-weight: 100;
+        font-style: normal;
+        width: 100%;
+        height: 4rem;
+        font-size: 1.1rem;
+        letter-spacing: .2rem;
+        color: $color-basic-white;
+        i {
+          position: absolute;
+          right: 0;
+          margin-right: 1rem;
+          font-size: 2rem;
+        }
+        &.active {
+          background-color: rgba($color-basic-white, .1);
+          border-bottom: 2px solid $color-accent-pink;
+          box-sizing: border-box;
+          i {
+            color: $color-accent-pink;
+          }
+        }
+        &:hover {
+          background-color: rgba($color-basic-white, .1);
+          border-bottom: 2px solid $color-accent-green;
+          box-sizing: border-box;
+          i {
+            color: $color-accent-green
+          }
+        }
+      }
+    }
+  }
+  & .environment__sidenav--content {
+    background-color: $color-basic-white;
+  }
+}
+.environment__flex--fill {
+  flex: 1 1 auto;
+}
+.environment__sidenav--toggle {
+  position: fixed;
+  top: 45%;
+  cursor: pointer;
+  width: 3px;
+  height: 70px;
+  background-color: $color-accent-pink;
+  border-radius: 10rem;
+}
+.environment__sidenav--title {
+  height: 6rem;
+  font-family: democratica, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: $color-basic-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  & h3 {
+    margin: 0;
+    padding: 0;
+    letter-spacing: .2rem;
+  }
+  & p {
+    letter-spacing: .25rem;
+    font-size: .75rem;
+  }
+}
+.environment__toolbar {
+  background-color: $color-solid-white;
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  & .environment__toolbar--left {
+    font-family: "Avenir Next", sans-serif;
+    font-weight: 300;
+    letter-spacing: 3px;
+  }
+  & .environment__toolbar--notifications {
+    display: flex;
+    padding-right: 1rem;
+    & i {
+      color: $color-basic-white;
+      margin-left: .5rem;
+      flex: 1;
+      display: inline-block;
+    }
+  }
+  & .environment__toolbar--right {
+    border-left: 1.5px solid $color-basic-white;
+    padding-left: 1rem;
+    & > img {
+      width: 3rem;
+      border-radius: 12rem;
+    }
+    & > .environment__toolbar--username {
+      display: inline-block;
+      font-size: .75rem;
+      margin-left: 1rem;
+    }
+  }
+}

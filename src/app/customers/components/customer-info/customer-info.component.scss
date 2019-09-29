@@ -1,0 +1,17 @@
+.utility__container {
+  display: flex;
+  flex-direction: column;
+  & .utility__col {
+    flex: 1;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .utility__container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    & .utility__col {
+      flex: 1;
+      width: 50%;
+    }
+  }
+}

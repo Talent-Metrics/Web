@@ -1,0 +1,14 @@
+<div class="users">
+
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="users__col">
+
+    <user-info [parent]="userForm" [fields]="usersService.fields"></user-info>
+
+    <div class="users__buttons">
+      <a class="utility__button--primary" *ngIf="user && userForm.dirty"> Update </a>
+      <a class="utility__button--primary" *ngIf="user"> Reset Password </a>
+    </div>
+
+  </form>
+
+</div>

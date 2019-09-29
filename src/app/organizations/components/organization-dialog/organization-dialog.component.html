@@ -1,0 +1,66 @@
+<div [formGroup]="parent" class="organization-dialog" *ngIf="this.parent">
+
+  <mat-form-field appearance="fill" color="primary" class="utility__col">
+    <mat-label>Organization Name</mat-label>
+    <input matInput formControlName="name" type="text">
+    <mat-error *ngIf="parent.get('name').invalid">{{ getErrorMessage('name', 4, 50) }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary" class="utility__col">
+    <mat-label>Point of Contact</mat-label>
+    <input matInput formControlName="poc" type="text">
+    <mat-error *ngIf="parent.get('poc').invalid">{{ getErrorMessage('poc', 0, 50) }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary" class="utility__col">
+    <mat-label>Organization Size</mat-label>
+    <mat-select placeholder="Organization Size" formControlName="size" (selectionChange)="chgSelect('size', $event)">
+      <mat-option *ngFor="let orgSize of orgSizes" [value]="orgSize.value">
+        {{orgSize.key}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary" class="utility__col">
+    <mat-label>Industry</mat-label>
+    <mat-select placeholder="Industry" formControlName="industry" (selectionChange)="chgSelect('industry', $event)">
+      <mat-option *ngFor="let industry of industries" [value]="industry">
+        {{ industry }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary" class="utility__col">
+    <mat-label>Annual Revenue</mat-label>
+    <mat-select placeholder="Annual Revenue" formControlName="annualRevenue" (selectionChange)="chgSelect('annualRevenue', $event)">
+      <mat-option *ngFor="let revenue of revenues" [value]="revenue.key">
+        {{ revenue.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary" class="utility__col">
+    <mat-label>Region</mat-label>
+    <mat-select placeholder="Region" formControlName="region" (selectionChange)="chgSelect('region', $event)">
+      <mat-option *ngFor="let region of regions" [value]="region.key" type="number">
+        {{ region.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary" class="utility__col">
+    <mat-label>State</mat-label>
+    <mat-select placeholder="State" formControlName="state" (selectionChange)="chgSelect('state', $event)">
+      <mat-option *ngFor="let state of states" [value]="state.key">
+        {{ state.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>
+
+<div class="organizations__buttons">
+  <a class="utility__button--primary" *ngIf="type === 'update'" (click)="onSubmit()"> Update </a>
+  <a class="utility__button--primary" *ngIf="type === 'add'" (click)="onSubmit()"> Create </a>
+  <a class="utility__button--primary" *ngIf="parent.dirty" (click)="refreshForm()"> Reset </a>
+</div>

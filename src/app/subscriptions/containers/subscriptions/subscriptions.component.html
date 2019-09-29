@@ -1,0 +1,13 @@
+<div class="subscriptions">
+
+  <form [formGroup]="subscriptionForm" (ngSubmit)="onSubmit()" class="subscriptions__col">
+
+    <subscription-info [parent]="subscriptionForm" [formFields]="formFields"></subscription-info>
+
+    <div class="subscriptions__buttons">
+      <a class="utility__button--primary" (click)="onSubmit()" *ngIf="subscriptionForm.valid && subscriptionForm.dirty">Save</a>
+    </div>
+    <!--<pre>{{ subscriptionForm.value | json }}</pre>-->
+  </form>
+
+</div>

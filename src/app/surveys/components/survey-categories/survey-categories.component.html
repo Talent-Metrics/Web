@@ -1,0 +1,64 @@
+<h5 class="survey__dialog" *ngIf="highly.length < 3"> Select {{ 3 - highly.length }} words highly descriptive of your organization </h5>
+<h5 class="survey__dialog" *ngIf="showSomewhat()"> Select {{ 6 - somewhat.length }} words somewhat descriptive of your organization </h5>
+<h5 class="survey__dialog" *ngIf="showSlightly()"> Select {{ 8 - slightly.length }} words slightly descriptive of your organization </h5>
+<h5 class="survey__dialog" *ngIf="showNotVery()"> Select {{ 6 - notVery.length }} words not very descriptive of your organization </h5>
+<h5 class="survey__dialog" *ngIf="showNotAtAll()"> Select {{ 3 - notAtAll.length }} words not at all descriptive of your organization </h5>
+<h5 class="survey__dialog" *ngIf="wordBankBackup.words.length === 0"> All finished! Please hit Next to continue </h5>
+
+<div *ngIf="wordBankBackup.words.length != 0" class="survey-categories">
+  <div class="utility__left">
+    <mat-list class="category__highly word-list" *ngIf="highly.length < 3">
+      <mat-list-item *ngFor="let highly of highly; let i = index" (dblclick)="categoryToWordBank('highly', i)">
+        {{ highly.name }}
+      </mat-list-item>
+    </mat-list>
+
+    <mat-list class="category__somewhat word-list" *ngIf="showSomewhat()">
+      <mat-list-item *ngFor="let somewhat of somewhat; let i = index" (dblclick)="categoryToWordBank('somewhat', i)">
+        {{ somewhat.name }}
+      </mat-list-item>
+    </mat-list>
+
+    <mat-list class="category__slightly word-list" *ngIf="showSlightly()">
+      <mat-list-item *ngFor="let slightly of slightly; let i = index" (dblclick)="categoryToWordBank('slightly', i)">
+        {{ slightly.name }}
+      </mat-list-item>
+    </mat-list>
+
+    <mat-list class="category__notVery word-list" *ngIf="showNotVery()">
+      <mat-list-item *ngFor="let notVery of notVery; let i = index" (dblclick)="categoryToWordBank('notVery', i)">
+        {{ notVery.name }}
+      </mat-list-item>
+    </mat-list>
+
+    <mat-list class="category__notAtAll word-list" *ngIf="showNotAtAll()">
+      <mat-list-item *ngFor="let notAtAll of notAtAll; let i = index" (dblclick)="categoryToWordBank('notAtAll', i)">
+        {{ notAtAll.name }}
+      </mat-list-item>
+    </mat-list>
+
+  </div>
+
+  <div class="utility__container">
+    <div>
+      <i class="material-icons utility__icons">arrow_forward</i>
+    </div>
+    <div>
+      <i class="material-icons utility__icons">arrow_back</i>
+    </div>
+  </div>
+
+
+  <div class="utility__right">
+    <mat-list class="word-list">
+      <mat-list-item *ngFor="let word of wordBankBackup.words; let i = index" class="word" (dblclick)="wordBankToCategory(i)">
+        {{ word.name }}
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div>
+
+<div class="survey-categories__buttons" *ngIf="wordBankBackup.words.length === 0">
+<!--  <a class="utility__button&#45;&#45;primary" (click)="resetCategories()"> Reset </a>-->
+  <a class="utility__button--primary" (click)="patchForm()"> Next </a>
+</div>

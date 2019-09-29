@@ -1,0 +1,22 @@
+<div [formGroup]="parent" class="word-dialog">
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label> Word </mat-label>
+    <input matInput formControlName="name" type="text">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label> Definition </mat-label>
+    <input matInput formControlName="definition" type="text">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary">
+    <mat-label> Point Value </mat-label>
+    <input matInput formControlName="value" type="number">
+  </mat-form-field>
+
+</div>
+
+<div class="word-dialog__buttons">
+  <a class="utility__button--primary" *ngIf="parent" (click)="createWord()"> Create </a>
+</div>

@@ -1,0 +1,34 @@
+<mat-sidenav-container class="environment__sidenav">
+  <mat-sidenav #sidenav [mode]="(screenWidth > 840) ? 'side' : 'over'" [opened]="screenWidth > 840" class="environment__sidenav--drawer">
+    <div class="environment__sidenav--title">
+      <h3>Talent Metrics</h3>
+      <p>est 2019</p>
+    </div>
+    <mat-nav-list>
+      <ng-container *ngFor="let link of links">
+        <a
+          mat-list-item
+          routerLink="{{ link.key }}"
+          routerLinkActive="active"
+        >{{ link.value }}<i class="material-icons">{{ link.icon }}</i></a>
+      </ng-container>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="environment__sidenav--content">
+    <mat-toolbar class="environment__toolbar">
+      <span class="environment__toolbar--left"></span>
+      <span class="environment__flex--fill"></span>
+      <span class="environment__toolbar--notifications">
+        <i class="material-icons">payment</i>
+        <i class="material-icons">work</i>
+        <i class="material-icons">notifications</i>
+      </span>
+      <span class="environment__toolbar--right">
+        <img src="https://www.gravatar.com/avatar/d22d53a225c7b49f27ff7ea1ea55f4b9" alt="Profile Picture">
+        <div class="environment__toolbar--username">Aaron Williams</div>
+      </span>
+    </mat-toolbar>
+    <a class="environment__sidenav--toggle" (click)="sidenav.toggle()">&nbsp;</a>
+    <router-outlet class="environment__router-outlet"></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
