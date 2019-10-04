@@ -8,8 +8,8 @@ import {FormControl, FormGroup} from '@angular/forms';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
-  @ViewChild('autocomplete') gmapElement: ElementRef;
-  @ViewChild('map') gmap: ElementRef;
+  @ViewChild('autocomplete',{static:false}) gmapElement: ElementRef;
+  @ViewChild('map',{static:false}) gmap: ElementRef;
   @Output()
   verifiedAddress = new EventEmitter<any>();
   autocomplete: google.maps.places.Autocomplete;
