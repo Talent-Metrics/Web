@@ -6,7 +6,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
   styleUrls: ['./environment.component.scss']
 })
 export class EnvironmentComponent implements OnInit {
-  @ViewChild('sidenav',{static:false}) sidenav: ElementRef;
+  @ViewChild('sidenav',{read:ElementRef, static:false}) sidenav: ElementRef;
   screenWidth: number;
   links = [
     { key: 'dashboard', value: 'Dashboard', icon: 'dashboard' },
