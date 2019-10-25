@@ -5,25 +5,35 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 
-import { OrganizationsComponent } from './containers/organizations/organizations.component';
+import { OrganizationDetailComponent } from './containers/organization-detail/organization-detail.component';
 import { OrganizationInfoComponent } from './components/organization-info/organization-info.component';
 import { OrganizationDialogComponent } from './components/organization-dialog/organization-dialog.component';
+import { OrganizationListComponent } from './components/organization-list/organization-list.component';
+import { OrganizationListViewComponent } from './containers/organization-list-view/organization-list-view.component';
+import { OrganizationViewComponent } from './containers/organization-view/organization-view.component';
+// import { OrganizationsRoutingModule } from './organizations-routing.module';
 
 @NgModule({
-  declarations: [
-    OrganizationsComponent,
-    OrganizationInfoComponent,
-    OrganizationDialogComponent
-  ],
   imports: [
     CommonModule,
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    // OrganizationsRoutingModule
+  ],
+  declarations: [
+    OrganizationDetailComponent,
+    OrganizationInfoComponent,
+    OrganizationDialogComponent,
+    OrganizationListComponent,
+    OrganizationListViewComponent,
+    OrganizationViewComponent
   ],
   exports: [
-    OrganizationsComponent
+    OrganizationDetailComponent,
+    OrganizationListComponent,
+    OrganizationListViewComponent
   ],
   entryComponents: [
     OrganizationDialogComponent

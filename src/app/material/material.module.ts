@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 
+import { MatPaginatorModule, MatProgressSpinnerModule,
+  MatSortModule, MatTableModule } from "@angular/material";
+
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -35,7 +38,10 @@ import {
     MatIconModule,
     MatDialogModule,
     MatExpansionModule,
-    MatDividerModule
+    MatDividerModule,
+    //for example
+    MatPaginatorModule, MatProgressSpinnerModule,
+    MatSortModule, MatTableModule
   ],
   exports: [
     MatButtonModule,
@@ -52,7 +58,10 @@ import {
     MatIconModule,
     MatDialogModule,
     MatExpansionModule,
-    MatDividerModule
+    MatDividerModule,
+    //for example
+    MatPaginatorModule, MatProgressSpinnerModule,
+    MatSortModule, MatTableModule
   ],
   providers: [MatDatepickerModule]
 })

@@ -5,25 +5,35 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
+import { OrganizationsModule } from '../organizations/organizations.module';
 
 // Components
 import { CustomersComponent } from './containers/customers/customers.component';
+import { CustomerListComponent } from './containers/customer-list/customer-list.component';
 import { AddressComponent } from './components/address/address.component';
 import { CustomerInfoComponent } from './components/customer-info/customer-info.component';
-import { MapComponent } from './components/map/map.component';
+import { AppMapComponent } from './components/app-map/app-map.component';
+import { AddressViewComponent } from './components/address-view/address-view.component';
 
 @NgModule({
-  declarations: [CustomersComponent, AddressComponent, CustomerInfoComponent, MapComponent],
+  declarations: [
+    CustomersComponent,
+    AddressComponent,
+    CustomerInfoComponent,
+    AppMapComponent,
+    CustomerListComponent,
+    AddressViewComponent],
   imports: [
     CommonModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    OrganizationsModule
   ],
   exports: [
-    CustomersComponent
+    CustomersComponent, CustomerListComponent
   ]
 })
 export class CustomersModule { }

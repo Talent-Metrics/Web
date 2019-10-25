@@ -4,15 +4,15 @@ import { OrganizationsService } from '../../services/organizations.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { take, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import {MatDialog} from '@angular/material';
-import {OrganizationDialogComponent} from '../../components/organization-dialog/organization-dialog.component';
+import { MatDialog} from '@angular/material';
+import { OrganizationDialogComponent} from '../../components/organization-dialog/organization-dialog.component';
 
 @Component({
-  selector: 'organizations',
-  templateUrl: './organizations.component.html',
-  styleUrls: ['./organizations.component.scss']
+  selector: 'organization-details',
+  templateUrl: './organization-detail.component.html',
+  styleUrls: ['./organization-detail.component.scss']
 })
-export class OrganizationsComponent implements OnInit, OnDestroy {
+export class OrganizationDetailComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject<void>();
   customerId: string = '5c429b0a1c9d4400005b4830';
   organizations: Organization[];
@@ -28,6 +28,8 @@ export class OrganizationsComponent implements OnInit, OnDestroy {
     { key: 'state', value: 'State', type: 'text' },
   ];
   getOrganizations(id) {
+    console.log('Getting organization' + id);
+    alert('Getting organization with id =' + id);
     this.organizationsService.getOrganizationsByCustomerId(id)
       .pipe(
         takeUntil(this.unsubscribe$)
@@ -36,7 +38,7 @@ export class OrganizationsComponent implements OnInit, OnDestroy {
         this.organizations = orgs;
       }, err => {
         console.log(err);
-        alert(err);
+        alert('The error ='+err);
       }, () => { console.log('Get Organizations complete'); });
   }
   selectOrganization(position: number) {
@@ -119,6 +121,9 @@ export class OrganizationsComponent implements OnInit, OnDestroy {
         alert(err);
         console.log(err);
       }, () => { console.log('Completed delete'); });
+  }
+
+  onSubmit() {
   }
   refreshForm() {
     this.organizationForm.reset();

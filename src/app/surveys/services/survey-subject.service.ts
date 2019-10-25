@@ -159,25 +159,32 @@ export class SurveySubjectService {
   getSurveySubjectsByCustomer(id: string) {
     return this.http.get(this.configUrl + '/customer/' + id);
   }
+
   getSurveySubjectById(id: string) {
     return this.http.get(this.configUrl + '/id/' + id);
   }
+
   getSurveySubjectsBySurvey(surveyId: string) {
     console.log(this.configUrl, '/survey/', surveyId);
     return this.http.get(this.configUrl + '/survey/' + surveyId);
   }
+
   updateSurveySubjects(id: string, surveySubject: SurveySubject) {
     return this.http.put(this.configUrl + '/' + id, surveySubject);
   }
+
   addSurveySubject(surveySubject: SurveySubject) {
     return this.http.post(this.configUrl, surveySubject);
   }
+
   deleteSurveySubject(id: string) {
     return this.http.delete(this.configUrl + '/id/' + id);
   }
+
   deleteSurveySubjectBySurvey(surveyId: string) {
     return this.http.delete(this.configUrl + '/survey/' + surveyId);
   }
+
   notifySurveySubject(abc) {
     return this.http.post(this.mailUrl, abc);
   }

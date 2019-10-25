@@ -14,7 +14,7 @@
     <organization-info [parent]="organizationForm" [fields]="formFields"></organization-info>
 
     <div class="organizations__buttons">
-      <a class="utility__button--primary" *ngIf="organization" (click)="onUpdate()"> Edit </a>
+      <a class="utility__button--primary" *ngIf="organization" (click)="onUpdate()"> Update </a>
       <a class="utility__button--primary" *ngIf="!organization" (click)="onAdd()"> Create </a>
       <a class="utility__button--primary" *ngIf="organization" (click)="onDelete(organization._id)"> Delete </a>
       <a class="utility__button--primary" *ngIf="organizationForm.dirty || organization" (click)="refreshForm()"> Reset </a>

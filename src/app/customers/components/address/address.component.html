@@ -1,15 +1,15 @@
 <div [formGroup]="parent">
-  <map (verifiedAddress)="verifiedAddress($event)"></map>
+  <app-map (verifiedAddress)="verifiedAddress($event)"></app-map>
 
-  <div formGroupName="address" class="utility__container">
+  <div formGroupName="address" class="address_container">
     <mat-form-field *ngFor="let field of formFields" appearance="fill" color="primary" [ngClass]="{
-      'utility__col': true,
-      'utility__25': field.class === 'utility__25',
-      'utility__33': field.class === 'utility__33',
-      'utility__50': field.class === 'utility__50',
-      'utility__67': field.class === 'utility__67',
-      'utility__75': field.class === 'utility__75',
-      'utility__100': field.class === 'utility__100'
+      'address_col': true,
+      'address_25': field.class === 'address_25',
+      'address_33': field.class === 'address_33',
+      'address_50': field.class === 'address_50',
+      'address_67': field.class === 'address_67',
+      'address_75': field.class === 'address_75',
+      'address_100': field.class === 'address_100'
     }">
       <mat-label>{{ field.value }}</mat-label>
       <input matInput formControlName="{{field.key}}">

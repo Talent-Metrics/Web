@@ -1,0 +1,42 @@
+<mat-table class="org-table mat-elevation-z10" [dataSource]="dataSource">
+
+    <ng-container matColumnDef="name">
+        <div *matHeaderCellDef class="large-header-cell">Name</div>
+        <div *matCellDef="let organization" class="large-row-cell" (click)="onRowClicked(organization)">
+          {{organization.name}}
+        </div>
+    </ng-container>
+
+    <ng-container matColumnDef="poc">
+        <div *matHeaderCellDef class="header-cell">Point of Contact</div>
+        <div *matCellDef="let organization" class="row-cell" (click)="onRowClicked(organization)">
+          {{organization.poc}}
+      </div>
+    </ng-container>
+
+    <ng-container matColumnDef="size">
+        <div *matHeaderCellDef class="header-cell">Size</div>
+        <div *matCellDef="let organization" class="row-cell" (click)="onRowClicked(organization)">
+          {{organization.size}}
+      </div>
+    </ng-container>
+
+    <ng-container matColumnDef="industry">
+        <div *matHeaderCellDef class="large-header-cell">Industry</div>
+        <div  *matCellDef="let organization" class="large-row-cell" (click)="onRowClicked(organization)">
+          {{organization.industry}}
+      </div>
+    </ng-container>
+
+    <ng-container matColumnDef="state">
+        <div *matHeaderCellDef class="header-cell">State</div>
+        <div *matCellDef="let organization" class="row-cell" (click)="onRowClicked(organization)">
+          {{organization.state}}
+      </div>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns" ></mat-row>
+
+  </mat-table>

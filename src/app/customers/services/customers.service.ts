@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {BehaviorSubject} from 'rxjs';
+import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { CustomerInterface } from '../models/customer.interface';
 import { environment } from '../../../environments/environment';
+import { BehaviorSubject, Observable, of} from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { CUSTOMERS } from './mock-customers';
 
 @Injectable({
   providedIn: 'root'
@@ -59,12 +61,44 @@ export class CustomersService {
     };
     return new FormGroup(formObj);
   }
-  getCustomerById(id: string) {
-    return this.http.get(this.configUrl + '/id/' + id);
+  getCustomerById(id: string): Observable<CustomerInterface> {
+    return this.http.get<CustomerInterface>(this.configUrl + '/id/' + id);
   }
+
+  getAllCustomers(): Observable<CustomerInterface[]> {
+    return this.http.get<CustomerInterface[]>(this.configUrl)
+    .pipe(
+      catchError(this.handleError<CustomerInterface[]>('getAllCustomers', []))
+    );
+  }
+
+  getMockCustomers(): Observable<CustomerInterface[]> {
+    return of(CUSTOMERS);
+  }
+
   updateCustomer(id: string, e) {
     return this.http.put(this.configUrl + '/' + id, e);
   }
+
+  /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+  private handleError<T> (operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      //this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+}
+
   constructor(
     private http: HttpClient
   ) { }

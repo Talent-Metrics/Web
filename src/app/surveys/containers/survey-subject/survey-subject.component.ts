@@ -22,14 +22,19 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
   surveySubjects: SurveySubject[];
   customerId: string;
   type: string;
+
   getSurveySubjects(surveyId: string) {
     this.surveySubjectService.getSurveySubjectsBySurvey(surveyId)
       .pipe(
         takeUntil(this.unsubscribe$)
-      ).subscribe((e: SurveySubject[]) => {
+      )
+      .subscribe((e: SurveySubject[]) => {
         this.surveySubjects = e;
-    }, err => console.log(err), () => console.log('complete survey subject pull'));
+      },
+      err => console.log(err), () => console.log('complete survey subject pull')
+      );
   }
+
   viewSurveySubject(a: SurveySubject) {
     const surveySubjectForm = this.surveySubjectService.surveySubjectForm(a);
     const dialogRef = this.dialog.open(SurveySubjectInfoComponent, {
@@ -48,6 +53,7 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
         }
       });
   }
+
   updateSurveySubject(id: string, sub: SurveySubject) {
     this.surveySubjectService.updateSurveySubjects(id, sub)
       .subscribe(e => {
@@ -55,6 +61,7 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
         // this.getSurveySubjects(this.surveyId);
       }, err => console.log(err), () => console.log('update complete'));
   }
+
   addSurveySubject() {
     console.log('Clicked add: ', this.surveyId$);
     const surveySubjectForm = this.surveySubjectService.surveySubjectForm();
@@ -87,6 +94,7 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
         }
       }, err => console.log(err), () => console.log('add complete'));
   }
+
   deleteSurveySubject(id: string) {
     this.surveySubjectService.deleteSurveySubject(id)
       .subscribe(e => {

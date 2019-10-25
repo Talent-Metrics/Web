@@ -1,14 +1,16 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { CustomerInterface } from '../../models/customer.interface';
 
 @Component({
-  selector: 'address',
-  templateUrl: './address.component.html',
-  styleUrls: ['./address.component.scss']
+  selector: 'app-address-view',
+  templateUrl: './address-view.component.html',
+  styleUrls: ['./address-view.component.scss']
 })
-export class AddressComponent implements OnInit {
+export class AddressViewComponent implements OnInit {
   @Input() parent: FormGroup;
-  @Output() address = new EventEmitter<any>();
+  @Input() customer: CustomerInterface;
+  @Output() customerInfo = new EventEmitter<any>();
 
   formFields = [
     { key: 'number', value: 'Street Number', type: 'text', class: 'address_33' },
@@ -19,16 +21,14 @@ export class AddressComponent implements OnInit {
     { key: 'country', value: 'Country', type: 'text', class: 'address_100' }
   ];
 
-  verifiedAddress(evt) {
-    this.parent.get('address').patchValue(evt);
-    this.parent.markAsDirty();
-  }
-  // updateAddress() {
-  //   this.address.emit(this.parent.get('address').value);
-  // }
-  constructor() { }
+  constructor() {
+   }
 
   ngOnInit() {
+  }
+
+  getValue(field): string {
+    return Object.entries(this.customer.address).find((g) => g[0] === field)[1];
   }
 
 }

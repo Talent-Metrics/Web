@@ -30,7 +30,7 @@
 
     <div class="surveys__buttons">
       <a class="utility__button--primary" (click)="updateSurvey()">Update</a>
-      <a class="utility__button--primary" (click)="createSurvey()" *ngIf="!survey">Add</a>
+      <a class="utility__button--primary" (click)="createSurvey()" *ngIf="!survey">Create</a>
       <a class="utility__button--primary" (click)="resetForm()" *ngIf="survey || surveyForm.get('name').dirty">Reset</a>
       <a class="utility__button--primary" (click)="deleteSurvey()" *ngIf="survey">Delete</a>
     </div>

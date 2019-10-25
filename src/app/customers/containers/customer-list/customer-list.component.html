@@ -1,0 +1,55 @@
+<div class="customers" >
+  <div class="customers_col">
+    <div style="width: 1024px;"></div>
+    <div class="customers_buttons">
+      <a class="utility__button--primary"  (click)="onCreateClicked()"> Create </a>
+    </div>
+    <mat-table class="org-table mat-elevation-z8" [dataSource]="dataSource">
+      <ng-container matColumnDef="firstName">
+          <div *matHeaderCellDef class="small-header-cell">First Name</div>
+          <div *matCellDef="let customer" class="small-row-cell" (click)="onRowClicked(customer)">
+            {{customer.firstName}}
+          </div>
+      </ng-container>
+
+      <ng-container matColumnDef="lastName">
+          <div *matHeaderCellDef class="small-header-cell">Last Name</div>
+          <div *matCellDef="let customer" class="small-row-cell" (click)="onRowClicked(customer)">
+            {{customer.lastName}}
+        </div>
+      </ng-container>
+
+      <ng-container matColumnDef="companyName">
+          <div *matHeaderCellDef class="large-header-cell">Company Name</div>
+          <div *matCellDef="let customer" class="large-row-cell" (click)="onRowClicked(customer)">
+            {{customer.companyName}}
+        </div>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+          <div *matHeaderCellDef class="small-header-cell">Phone</div>
+          <div  *matCellDef="let customer" class="small-row-cell" (click)="onRowClicked(customer)">
+            {{customer.phone}}
+        </div>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+          <div *matHeaderCellDef class="large-header-cell">Email</div>
+          <div *matCellDef="let customer" class="large-row-cell" (click)="onRowClicked(customer)">
+            {{customer.email}}
+        </div>
+      </ng-container>
+
+      <ng-container matColumnDef="_id">
+          <div *matHeaderCellDef class="small-header-cell"></div>
+          <div  *matCellDef="let customer" class="small-row-cell">
+              <a class="utility__button--primary"  (click)="onDeleteClicked(customer)"> Delete </a>
+        </div>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+      <mat-row *matRowDef="let row; columns: displayedColumns" ></mat-row>
+    </mat-table>
+  </div>
+</div>

@@ -1,41 +1,55 @@
 /// <reference types="@types/googlemaps" />
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, AfterViewInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
-  selector: 'map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  selector: 'app-map',
+  templateUrl: './app-map.component.html',
+  styleUrls: ['./app-map.component.scss']
 })
-export class MapComponent implements OnInit {
+
+export class AppMapComponent implements AfterViewInit {
   @ViewChild('autocomplete',{read:ElementRef, static:false}) gmapElement: ElementRef;
   @ViewChild('map',{read:ElementRef, static:false}) gmap: ElementRef;
   @Output()
+
   verifiedAddress = new EventEmitter<any>();
   autocomplete: google.maps.places.Autocomplete;
   place: google.maps.places.PlaceResult;
   map: google.maps.Map;
   marker = new google.maps.Marker;
+
   searchForm = new FormGroup({
     autocomplete: new FormControl('')
   });
+
   talentMetrics = {
     lat: 32.71117809999999,
     lng: -97.39857010000003
   };
+
   initAutocomplete() {
-    this.map = new google.maps.Map(this.gmap.nativeElement, {
+    try
+    {
+      this.map = new google.maps.Map(this.gmap.nativeElement, {
       center: this.talentMetrics,
       zoom: 15
-    });
-    this.autocomplete = new google.maps.places.Autocomplete(
-      this.gmapElement.nativeElement, {
-        types: ['address']
       });
-    this.autocomplete.bindTo('bounds', this.map);
-    this.autocomplete.setTypes(['address_components', 'geometry', 'icon', 'name']);
-    this.marker.setMap(this.map);
+
+      this.autocomplete = new google.maps.places.Autocomplete(
+        this.gmapElement.nativeElement, {
+          types: ['address']
+        });
+
+      this.autocomplete.bindTo('bounds', this.map);
+      this.autocomplete.setTypes(['address_components', 'geometry', 'icon', 'name']);
+      this.marker.setMap(this.map);
+    }
+    catch(error){
+      console.log('Error occurred. Error code: ' + error.code);
+    }
   }
+
   getAddress() {
     this.place = this.autocomplete.getPlace();
     const retObj = {};
@@ -73,7 +87,9 @@ export class MapComponent implements OnInit {
     const mapper = this.map;
     const mark = this.marker;
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
+      //violation
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
         const geolocation = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
@@ -85,12 +101,21 @@ export class MapComponent implements OnInit {
         mapper.setCenter(geolocation);
         mark.setPosition(geolocation);
         mark.setVisible(true);
-      });
+      },
+      function(error) {
+        console.log('Error occurred. Error code: ' + error.code);
+        // error.code can be:
+        //   0: unknown error
+        //   1: permission denied
+        //   2: position unavailable (error response from location provider)
+        //   3: timed out
+      },
+      );
     }
   }
   constructor() { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.initAutocomplete();
     this.autocomplete.addListener('place_changed', () => {
       this.getAddress();

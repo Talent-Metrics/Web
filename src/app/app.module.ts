@@ -15,12 +15,8 @@ import { WordBankModule } from './word-bank/word-bank.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     EnvironmentModule,
     CustomersModule,
@@ -29,7 +25,11 @@ import { DashboardModule } from './dashboard/dashboard.module';
     SurveysModule,
     UsersModule,
     WordBankModule,
-    DashboardModule
+    DashboardModule,
+    AppRoutingModule,
+  ],
+  declarations: [
+    AppComponent
   ],
   bootstrap: [AppComponent]
 })

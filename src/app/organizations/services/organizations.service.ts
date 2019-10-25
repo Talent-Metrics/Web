@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Organization } from '../models/organization';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { environment } from '../../../environments/environment';
-
-
+import { BehaviorSubject, Observable, of} from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -47,19 +47,45 @@ export class OrganizationsService {
     };
     return new FormGroup(formFields);
   }
-  getOrganizationsByCustomerId(customerId: string) {
-    return this.http.get(this.configUrl + '/customer/' + customerId);
+  getOrganizationsByCustomerId(customerId: string): Observable<Organization[]>{
+    return this.http.get<Organization[]>(this.configUrl + '/customer/' + customerId)
+    .pipe(
+      catchError(this.handleError<Organization[]>('getOrganizationsByCustomerId', []))
+    );
   }
+
   addOrganization(e: Organization) {
     return this.http.post(this.configUrl, e);
   }
+
   updateOrganization(id: string, e: Organization) {
     return this.http.put(this.configUrl + '/' + id, e);
   }
+
   deleteOrganization(id: string) {
     return this.http.delete(this.configUrl + '/' + id);
   }
+
   constructor(
     private http: HttpClient
   ) { }
+
+    /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+  private handleError<T> (operation = 'operation', result: T) {
+    return (error: any): Observable<T> => {
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      //this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+}
 }

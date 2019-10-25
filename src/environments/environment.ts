@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://talentmetrics.herokuapp.com/api',
+  //apiUrl: 'https://talentmetrics.herokuapp.com/api',
+  apiUrl: 'http://localhost:3000/api',
   apiUrlTest: 'http://localhost:3000/api',
   webUrl: 'https://talentmetrics.firebaseapp.com/'
 };
