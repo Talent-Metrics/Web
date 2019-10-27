@@ -1,30 +1,15 @@
-<div class="organizations">
+<div class="organizations" *ngIf="organization"  [hidden]="viewDisplay">
 
-  <mat-form-field class="organizations__select">
-    <mat-label> Select an Organization </mat-label>
-    <mat-select>
-      <mat-option *ngFor="let org of organizations; let i = index;" [value]="i" (onSelectionChange)="selectOrganization(i)">
-        {{ org.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+</div>
 
-  <form [formGroup]="organizationForm" (ngSubmit)="onSubmit()" class="organizations__col">
-
-    <organization-info [parent]="organizationForm" [fields]="formFields"></organization-info>
-
-    <div class="organizations__buttons">
-      <a class="utility__button--primary" *ngIf="organization" (click)="onUpdate()"> Update </a>
-      <a class="utility__button--primary" *ngIf="!organization" (click)="onAdd()"> Create </a>
-      <a class="utility__button--primary" *ngIf="organization" (click)="onDelete(organization._id)"> Delete </a>
-      <a class="utility__button--primary" *ngIf="organizationForm.dirty || organization" (click)="refreshForm()"> Reset </a>
+<div class="customers" *ngIf="organization && organizationReference" [hidden]="!viewDisplay">
+    <div class="customers_col">
+      <form [formGroup]="organizationForm" class="info_container">
+          <app-organization-view [parent]="organizationForm" [organization]="organization" [organizationReference]="organizationReference" [formFields]="formFields"></app-organization-view >
+      </form>
+      <div class="customers_buttons">
+          <button type="button" class="utility__button--primary" *ngIf="organization" (click)="onToggleDisplay()"> Edit </button>
+      </div>
+      <!--<app-survey-list [organizationId]=organization._id></app-survey-list>-->
     </div>
-
-    <!--<pre>-->
-      <!--{{ organizationForm.value | json }}-->
-      <!--{{ organizationForm.valid }}-->
-    <!--</pre>-->
-
-  </form>
-
 </div>

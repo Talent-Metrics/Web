@@ -10,11 +10,13 @@ import { environment } from '../../../environments/environment';
 })
 export class SurveysService {
   private configUrl = environment.apiUrl + '/surveys';
+
   formFields = [
     { key: 'wordBankId', value: 'Word Bank', type: 'text' },
     { key: 'name', value: 'Name', type: 'text' },
     { key: 'customerId', value: 'Customer Id', type: 'text' }
   ];
+
   surveyForm() {
     const formObj = {};
     this.formFields.forEach(e => {
@@ -31,15 +33,23 @@ export class SurveysService {
   getSurveyById(id: string) {
     return this.http.get(this.configUrl + '/id/' + id);
   }
+
   getSurveysByCustomerId(customerId: string) {
     return this.http.get(this.configUrl + '/customer/' + customerId);
   }
+
+  getSurveysByOrganizationsId(organizationId: string) {
+    return this.http.get<Survey[]>(this.configUrl + '/organization/' + organizationId);
+  }
+
   updateSurvey(id: string, survey: Survey) {
     return this.http.put(this.configUrl + '/' + id, survey);
   }
+
   addSurvey(survey: Survey) {
     return this.http.post(this.configUrl, survey);
   }
+
   deleteSurvey(surveyId: string) {
     return this.http.delete(this.configUrl + '/' + surveyId);
   }

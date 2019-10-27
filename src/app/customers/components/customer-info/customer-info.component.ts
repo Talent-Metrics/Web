@@ -2,15 +2,13 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
-  selector: 'customer-info',
+  selector: 'app-customer-info',
   templateUrl: './customer-info.component.html',
   styleUrls: ['./customer-info.component.scss']
 })
 export class CustomerInfoComponent implements OnInit {
-  @Input()
-  parent: FormGroup;
-  @Output()
-  customerInfo = new EventEmitter<any>();
+  @Input() parent: FormGroup;
+  @Output() customerInfo = new EventEmitter<any>();
   formFields = [
     // { key: 'userId', value: 'User Id' },
     { key: 'firstName', value: 'First Name' },

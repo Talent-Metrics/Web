@@ -14,6 +14,7 @@ import { AddressComponent } from './components/address/address.component';
 import { CustomerInfoComponent } from './components/customer-info/customer-info.component';
 import { AppMapComponent } from './components/app-map/app-map.component';
 import { AddressViewComponent } from './components/address-view/address-view.component';
+import { CustomerInfoViewComponent } from './components/customer-info-view/customer-info-view.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AddressViewComponent } from './components/address-view/address-view.com
     CustomerInfoComponent,
     AppMapComponent,
     CustomerListComponent,
-    AddressViewComponent],
+    AddressViewComponent,
+    CustomerInfoViewComponent],
   imports: [
     CommonModule,
     BrowserModule,

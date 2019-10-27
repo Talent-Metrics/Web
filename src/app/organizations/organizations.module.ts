@@ -10,7 +10,8 @@ import { OrganizationInfoComponent } from './components/organization-info/organi
 import { OrganizationDialogComponent } from './components/organization-dialog/organization-dialog.component';
 import { OrganizationListComponent } from './components/organization-list/organization-list.component';
 import { OrganizationListViewComponent } from './containers/organization-list-view/organization-list-view.component';
-import { OrganizationViewComponent } from './containers/organization-view/organization-view.component';
+import { OrganizationViewComponent } from './components/organization-view/organization-view.component';
+import { OrganizationViewInputComponent } from './components/organization-view-input/organization-view-input.component';
 // import { OrganizationsRoutingModule } from './organizations-routing.module';
 
 @NgModule({
@@ -28,7 +29,8 @@ import { OrganizationViewComponent } from './containers/organization-view/organi
     OrganizationDialogComponent,
     OrganizationListComponent,
     OrganizationListViewComponent,
-    OrganizationViewComponent
+    OrganizationViewComponent,
+    OrganizationViewInputComponent
   ],
   exports: [
     OrganizationDetailComponent,

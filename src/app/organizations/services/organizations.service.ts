@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Organization } from '../models/organization';
+import { OrganizationReference } from '../models/organization-reference';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { BehaviorSubject, Observable, of} from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, take } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })
 export class OrganizationsService {
   private configUrl = environment.apiUrl + '/organizations';
-  organizationForm(customerId: string) {
+  organizationForm() {
     const formFields = {
       name: new FormControl('', [
         Validators.required,
         Validators.maxLength(50),
         Validators.minLength(4)
-      ]),
-      customerId: new FormControl(customerId, [
-        Validators.required
       ]),
       poc: new FormControl('', [
         Validators.required,
@@ -47,10 +46,22 @@ export class OrganizationsService {
     };
     return new FormGroup(formFields);
   }
-  getOrganizationsByCustomerId(customerId: string): Observable<Organization[]>{
+
+  getOrganizationById(id: string): Observable<Organization> {
+    return this.http.get<Organization>(this.configUrl + '/id/' + id);
+  }
+
+  getOrganizationsByCustomerId(customerId: string): Observable<Organization[]> {
     return this.http.get<Organization[]>(this.configUrl + '/customer/' + customerId)
     .pipe(
       catchError(this.handleError<Organization[]>('getOrganizationsByCustomerId', []))
+    );
+  }
+
+  getOrganizationReference(): Observable<OrganizationReference[]> {
+    return this.http.get<OrganizationReference[]>(this.configUrl + '/reference/')
+    .pipe(
+      catchError(this.handleError<OrganizationReference[]>('getOrganizationReference', []))
     );
   }
 

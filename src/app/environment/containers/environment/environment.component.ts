@@ -10,8 +10,7 @@ export class EnvironmentComponent implements OnInit {
   screenWidth: number;
   links = [
     { key: 'dashboard', value: 'Dashboard', icon: 'dashboard' },
-    { key: 'customers', value: 'Customer', icon: 'group_work' },
-    { key: 'customers', value: 'Customer List', icon: 'group_work' },
+    { key: 'customers', value: 'Customers', icon: 'group_work' },
     { key: 'organizations', value: 'Organization', icon: 'people' },
     { key: 'subscriptions', value: 'Subscription', icon: 'payment' },
     { key: 'surveys', value: 'Surveys', icon: 'work' },

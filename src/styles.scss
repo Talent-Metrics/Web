@@ -84,19 +84,19 @@ a,button {
   }
 }
 
-.view_info_container {
+
+.info_container {
   display: flex;
   flex-direction: column;
   & .info_col {
     flex: 1;
   }
 }
-
 @media only screen and (min-width: 768px) {
-  .view_info_container {
+  .info_container {
     flex-direction: row;
     flex-wrap: wrap;
-    & .view_info_col {
+    & .info_col {
       flex: 1;
       width: 50%;
     }
