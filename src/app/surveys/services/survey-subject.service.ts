@@ -160,6 +160,10 @@ export class SurveySubjectService {
     return this.http.get(this.configUrl + '/customer/' + id);
   }
 
+  getSurveySubjectsByOrganization(id: string) {
+    return this.http.get(this.configUrl + '/organization/' + id);
+  }
+
   getSurveySubjectById(id: string) {
     return this.http.get(this.configUrl + '/id/' + id);
   }

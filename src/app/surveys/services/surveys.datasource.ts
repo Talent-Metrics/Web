@@ -1,34 +1,34 @@
 import { CollectionViewer, DataSource} from '@angular/cdk/collections';
-import { Organization} from '../models/Organization';
-import { OrganizationsService } from './organizations.service';
-import { Observable, Subject, BehaviorSubject, of } from 'rxjs';
+import { Survey} from '../models/Survey';
+import { SurveysService } from './surveys.service';
+import { Observable, BehaviorSubject, of } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 
-export class OrganizationsDataSource implements DataSource<Organization> {
+export class SurveysDataSource implements DataSource<Survey> {
 
-  private organizationSubject = new BehaviorSubject<Organization[]>([]);
+  private surveySubject = new BehaviorSubject<Survey[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
 
   public loading$ = this.loadingSubject.asObservable();
 
-  constructor(private organizationsService: OrganizationsService) {}
+  constructor(private surveysService: SurveysService) {}
 
-  connect(collectionViewer: CollectionViewer): Observable<Organization[]> {
+  connect(collectionViewer: CollectionViewer): Observable<Survey[]> {
       console.log('Connecting data source');
-      return this.organizationSubject.asObservable();
+      return this.surveySubject.asObservable();
   }
 
   disconnect(collectionViewer: CollectionViewer): void {
-      this.organizationSubject.complete();
+      this.surveySubject.complete();
       this.loadingSubject.complete();
       console.log('Disconnects data source');
   }
 
-  loadOrganizations(customerId: string) {
+  loadSurveys(organizationId: string) {
 
       this.loadingSubject.next(true);
 
-      this.organizationsService.getOrganizationsByCustomerId(customerId)
+      this.surveysService.getSurveysByOrganizationsId(organizationId)
       .pipe(
           catchError(() => {
             console.log('Empty collection due to error');
@@ -38,7 +38,7 @@ export class OrganizationsDataSource implements DataSource<Organization> {
       )
       .subscribe(organizations => {
         console.log('Subcribing to data');
-        this.organizationSubject.next(organizations);
+        this.surveySubject.next(organizations);
       });
   }
 }

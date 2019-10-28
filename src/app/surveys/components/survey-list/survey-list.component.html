@@ -1,0 +1,29 @@
+<mat-table class="org-table mat-elevation-z10" [dataSource]="dataSource">
+
+  <ng-container matColumnDef="name">
+      <div *matHeaderCellDef class="xlarge-header-cell">Name</div>
+      <div *matCellDef="let survey" class="xlarge-row-cell" (click)="onRowClicked(survey)">
+        {{survey.name}}
+      </div>
+  </ng-container>
+
+  <ng-container matColumnDef="completed">
+      <div *matHeaderCellDef class="xlarge-header-cell">Completed</div>
+      <div *matCellDef="let survey" class="xlarge-row-cell" (click)="onRowClicked(survey)">
+        {{survey.completed}}
+    </div>
+  </ng-container>
+
+  <ng-container matColumnDef="subjects">
+      <div *matHeaderCellDef class="xlarge-header-cell">Subjects</div>
+      <div *matCellDef="let survey" class="xlarge-row-cell" (click)="onRowClicked(survey)">
+        {{survey.subjects}}
+    </div>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns">
+  </mat-header-row>
+
+  <mat-row *matRowDef="let row; columns: displayedColumns" ></mat-row>
+
+</mat-table>

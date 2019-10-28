@@ -133,6 +133,12 @@ a,button {
   width: 20%;
 }
 
+.xlarge-header-cell, .xlarge-row-cell {
+  @extend %cell-shared;
+  flex: 1;
+  flex-grow: 1;
+}
+
 .small-header-cell, .small-row-cell {
   @extend %cell-shared;
   flex: 1;
@@ -141,7 +147,7 @@ a,button {
 
 .customers_buttons{
   margin-top: 7.5px;
-  margin-bottom: 7.5px;
+  margin-bottom: 17.5px;
 }
 
 .customers {

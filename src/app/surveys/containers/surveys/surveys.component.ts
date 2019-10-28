@@ -15,6 +15,7 @@ import {SurveyDialogComponent} from '../../components/survey-dialog/survey-dialo
   templateUrl: './surveys.component.html',
   styleUrls: ['./surveys.component.scss']
 })
+
 export class SurveysComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject<void>();
   surveys: Survey[];
@@ -24,6 +25,7 @@ export class SurveysComponent implements OnInit, OnDestroy {
   customerId: string;
   wordBankId = new Subject<string>();
   surveyForm = new FormGroup({});
+
   getSurveys(customerId: string) {
     this.surveysService.getSurveysByCustomerId(customerId)
       .pipe(
@@ -36,6 +38,7 @@ export class SurveysComponent implements OnInit, OnDestroy {
         alert(err);
       }, () => { console.log('Get Surveys complete'); });
   }
+
   selectSurvey(surv: Survey) {
     this.surveyForm.reset();
     this.survey = surv;
@@ -43,11 +46,13 @@ export class SurveysComponent implements OnInit, OnDestroy {
     this.surveyId.next(surv._id);
     this.surveyForm.patchValue(surv);
   }
+
   resetForm() {
     this.survey = undefined;
     this.surveyId.next('');
     this.surveyForm.reset();
   }
+
   onSubmit() {
     this.surveysService.updateSurvey(this.survey._id, this.surveyForm.value)
       .subscribe((e) => {
@@ -57,6 +62,7 @@ export class SurveysComponent implements OnInit, OnDestroy {
         alert(err);
       }, () => { console.log('Update Survey complete'); });
   }
+
   createSurvey() {
     const dialogRef = this.dialog.open(SurveyDialogComponent, {
       width: '700px',
@@ -66,6 +72,7 @@ export class SurveysComponent implements OnInit, OnDestroy {
         wordBanks: this.wordBanks
       }
     });
+
     dialogRef.afterClosed()
       .subscribe(result => {
         if (result) {
@@ -74,6 +81,7 @@ export class SurveysComponent implements OnInit, OnDestroy {
         }
       }, err => console.log(err), () => console.log('dialog closed'));
   }
+
   addSurvey() {
     this.surveyForm.patchValue({
       customerId: this.customerId
@@ -89,6 +97,7 @@ export class SurveysComponent implements OnInit, OnDestroy {
         console.log(err);
       }, () => console.log('complete add'));
   }
+
   updateSurvey() {
     this.surveysService.updateSurvey(this.survey._id, this.surveyForm.value)
       .subscribe((e) => {
@@ -100,6 +109,7 @@ export class SurveysComponent implements OnInit, OnDestroy {
         console.log(err);
       }, () => console.log('update complete'));
   }
+
   deleteSurvey() {
     this.surveysService.deleteSurvey(this.survey._id)
       .subscribe((e) => {
@@ -117,6 +127,7 @@ export class SurveysComponent implements OnInit, OnDestroy {
         console.log(err);
       }, () => console.log('delete subjects complete'));
   }
+
   getWordBanks(customerId: string) {
     this.wordBankService.getAllByCustomerId(customerId)
       .pipe(
@@ -125,6 +136,7 @@ export class SurveysComponent implements OnInit, OnDestroy {
         this.wordBanks = e;
     }, err => console.log(err), () => console.log('got word banks'));
   }
+
   constructor(
     public surveysService: SurveysService,
     public surveySubjectService: SurveySubjectService,

@@ -4,4 +4,6 @@ export interface Survey {
   customerId: string;
   wordBankId: string;
   organizationId: string;
+  subjects: number;
+  completed: number;
 }

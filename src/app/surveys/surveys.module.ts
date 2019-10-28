@@ -15,6 +15,7 @@ import { SurveyPersonalComponent } from './components/survey-personal/survey-per
 import { SurveyCategoriesComponent } from './components/survey-categories/survey-categories.component';
 import { SurveyOutputComponent } from './components/survey-output/survey-output.component';
 import { SurveyPyramidComponent } from './components/survey-pyramid/survey-pyramid.component';
+import { SurveyListComponent } from './components/survey-list/survey-list.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { SurveyPyramidComponent } from './components/survey-pyramid/survey-pyram
     SurveyPersonalComponent,
     SurveyCategoriesComponent,
     SurveyOutputComponent,
-    SurveyPyramidComponent
+    SurveyPyramidComponent,
+    SurveyListComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +39,7 @@ import { SurveyPyramidComponent } from './components/survey-pyramid/survey-pyram
     ReactiveFormsModule,
     MaterialModule
   ],
+  exports: [ SurveyListComponent],
   entryComponents: [SurveySubjectInfoComponent, SurveyDialogComponent, SurveyOutputComponent]
 })
 export class SurveysModule { }

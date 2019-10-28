@@ -13,7 +13,6 @@ import { SurveyExternalComponent } from './surveys/containers/survey-external/su
 import { OrganizationListViewComponent } from './organizations/containers/organization-list-view/organization-list-view.component';
 import { OrganizationDetailComponent } from './organizations/containers/organization-detail/organization-detail.component';
 
-
 const routes: Routes = [
   { path: 'portal', component: EnvironmentComponent,
     children: [
@@ -36,7 +35,6 @@ const routes: Routes = [
         { path: 'subscriptions', component: SubscriptionsComponent },
         { path: 'surveysubjects', component: SurveySubjectComponent },
         { path: 'surveys/:id', component: SurveysComponent },
-        { path: 'surveys', component: SurveysComponent }, //to be removed
         { path: 'wordbank', component: WordBankComponent },
         { path: 'users', component: UsersComponent },
         /*,

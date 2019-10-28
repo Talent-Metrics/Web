@@ -12,6 +12,7 @@ import { OrganizationListComponent } from './components/organization-list/organi
 import { OrganizationListViewComponent } from './containers/organization-list-view/organization-list-view.component';
 import { OrganizationViewComponent } from './components/organization-view/organization-view.component';
 import { OrganizationViewInputComponent } from './components/organization-view-input/organization-view-input.component';
+import { SurveysModule } from '../surveys/surveys.module';
 // import { OrganizationsRoutingModule } from './organizations-routing.module';
 
 @NgModule({
@@ -21,6 +22,7 @@ import { OrganizationViewInputComponent } from './components/organization-view-i
     HttpClientModule,
     ReactiveFormsModule,
     MaterialModule,
+    SurveysModule
     // OrganizationsRoutingModule
   ],
   declarations: [
