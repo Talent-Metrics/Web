@@ -4,7 +4,7 @@ import {FormGroup} from '@angular/forms';
 import {WordBank} from '../../../word-bank/models/word-bank';
 
 @Component({
-  selector: 'survey-dialog',
+  selector: 'app-survey-dialog',
   templateUrl: './survey-dialog.component.html',
   styleUrls: ['./survey-dialog.component.scss']
 })

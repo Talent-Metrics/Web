@@ -1,15 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap} from '@angular/router';
 import { Organization} from '../../models/organization';
 import { FormField} from '../../models/form-field';
 import { OrganizationReference} from '../../models/organization-reference';
 import { Survey } from '../../../surveys/models/survey';
+import { WordBank } from '../../../word-bank/models/word-bank';
 import { SurveysService } from '../../../surveys/services/surveys.service';
 import { OrganizationsService} from '../../services/organizations.service';
+import { WordBankService} from '../../../word-bank/services/word-bank.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { take, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { MatDialog} from '@angular/material';
+import { SurveyDialogComponent} from '../../../surveys/components/survey-dialog/survey-dialog.component';
+import { SurveyListComponent} from '../../../surveys/components/survey-list/survey-list.component';
 import { OrganizationDialogComponent} from '../../components/organization-dialog/organization-dialog.component';
 
 @Component({
@@ -24,6 +28,11 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   organizationReference: OrganizationReference;
   organizationForm = new FormGroup({});
   viewType: string;
+  surveyForm = new FormGroup({});
+  wordBanks: WordBank[];
+  @ViewChild(SurveyListComponent, {static: false})
+  private surveyListComponent: SurveyListComponent;
+  // public dialog: MatDialog;
 
   formFields: FormField[] = [
     { key: 'name', value: 'Organization Name', type: 'text', isSelect: false, referenceField: '' },
@@ -37,8 +46,9 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
 
   viewDisplay: boolean;
 
+  /*
   getSurveys(id: string) {
-    this.surveyService.getSurveysByOrganizationsId(id)
+    this.surveysService.getSurveysByOrganizationsId(id)
       .pipe(
         takeUntil(this.unsubscribe$)
       )
@@ -50,6 +60,7 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
         alert('The error =' + err);
       }, () => { console.log('Get Surveys complete'); });
   }
+  */
 
   getOrganization(id: string) {
     console.log('Getting organization' + id);
@@ -75,6 +86,15 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
         console.log(err);
         alert('The error =' + err);
       }, () => { console.log('Get Organization complete'); });
+  }
+
+  getWordBanks(customerId: string) {
+    this.wordBankService.getAllByCustomerId(customerId)
+      .pipe(
+        takeUntil(this.unsubscribe$)
+      ).subscribe((e: WordBank[]) => {
+        this.wordBanks = e;
+    }, err => console.log(err), () => console.log('got word banks'));
   }
 
 /*
@@ -171,6 +191,52 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   onSubmit() {
   }
 
+
+
+
+  constructor(
+    private organizationsService: OrganizationsService,
+    private surveysService: SurveysService,
+    public dialog: MatDialog,
+    private route: ActivatedRoute,
+    private wordBankService: WordBankService,
+  ) { }
+
+  ngOnInit() {
+    // this.getOrganizations(this.customerId);
+    this.organizationForm = this.organizationsService.organizationForm();
+    this.surveyForm = this.surveysService.surveyForm();
+    // this.organizationForm.disable();
+
+    this.viewDisplay = true;
+    this.route.paramMap
+    .subscribe((params: ParamMap) => {
+
+      const id: string = params.get('id');
+      console.log('Received organization id ' + id);
+      this.viewType = params.get('viewType');
+      console.log('Get view type ' + this.viewType);
+      this.setupPanels(this.viewType);
+      const customerId: string = params.get('customerId');
+
+      if (id) {
+        console.log('Get organization by organizations id ');
+        this.getOrganization(id);
+
+        // console.log('Get surveys by organizations id ');
+        // this.getSurveys(id);
+
+        console.log('Get word banks by customer id = ' + customerId );
+        this.getWordBanks(customerId);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   onToggleDisplay() {
     this.viewDisplay = !this.viewDisplay;
   }
@@ -192,41 +258,50 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
     this.organizationForm.patchValue(this.organization);
     this.organization = undefined;
   }
-  constructor(
-    private organizationsService: OrganizationsService,
-    private surveyService: SurveysService,
-    public dialog: MatDialog,
-    private route: ActivatedRoute
-  ) { }
 
-  ngOnInit() {
-    // this.getOrganizations(this.customerId);
-    this.organizationForm = this.organizationsService.organizationForm();
-    // this.organizationForm.disable();
-
-    this.viewDisplay = true;
-    this.route.paramMap
-    .subscribe((params: ParamMap) => {
-
-      const id: string = params.get('id');
-      console.log('Received organization id ' + id);
-      this.viewType = params.get('viewType');
-      console.log('Get view type ' + this.viewType);
-      this.setupPanels(this.viewType);
-
-      if (id) {
-        console.log('Get organization by organizations id ');
-        this.getOrganization(id);
-
-        console.log('Get surveys by organizations id ');
-        this.getSurveys(id);
-      }
-    });
+  resetSurveyForm() {
+    // this.survey = undefined;
+    // this.surveyId.next('');
+    this.surveyForm.reset();
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+  createSurvey() {
+    const dialogRef = this.dialog.open(SurveyDialogComponent, {
+      width: '700px',
+      data: {
+        type: 'add',
+        form: this.surveyForm,
+        wordBanks: this.wordBanks
+      }
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.surveyForm.patchValue(result);
+          this.addSurvey();
+        }
+      }, err => console.log(err), () => console.log('dialog closed'));
+  }
+
+  addSurvey() {
+    this.surveyForm.patchValue({
+      customerId: this.organization.customerId,
+      organizationId: this.organization._id,
+      subjects: 0,
+      completed: 0
+    });
+    this.surveysService.addSurvey(this.surveyForm.value)
+      .subscribe((e: Survey) => {
+        this.resetSurveyForm();
+        // this.getSurveys(this.organization._id);
+        this.surveyListComponent.loadSurveys();
+        alert(`Created survey named: ${e.name}`);
+        console.log(e);
+      }, err => {
+        alert(err);
+        console.log(err);
+      }, () => console.log('complete add'));
   }
 
 }

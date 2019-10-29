@@ -14,8 +14,11 @@ export class SurveysService {
   formFields = [
     { key: 'wordBankId', value: 'Word Bank', type: 'text' },
     { key: 'name', value: 'Name', type: 'text' },
-    { key: 'customerId', value: 'Customer Id', type: 'text' }
-  ];
+    { key: 'customerId', value: 'Customer Id', type: 'text' },
+    { key: 'organizationId', value: 'Organization Id', type: 'text' },
+    { key: 'subjects', value: 'Subjects', type: 'number' },
+    { key: 'completed', value: 'Completed', type: 'number' }
+    ];
 
   surveyForm() {
     const formObj = {};

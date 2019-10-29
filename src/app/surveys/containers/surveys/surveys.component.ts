@@ -9,6 +9,7 @@ import {MatDialog} from '@angular/material';
 import {WordBank} from '../../../word-bank/models/word-bank';
 import {WordBankService} from '../../../word-bank/services/word-bank.service';
 import {SurveyDialogComponent} from '../../components/survey-dialog/survey-dialog.component';
+import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 
 @Component({
   selector: 'surveys',
@@ -23,11 +24,12 @@ export class SurveysComponent implements OnInit, OnDestroy {
   survey: Survey;
   surveyId = new Subject<string>();
   customerId: string;
+  organizationId: string;
   wordBankId = new Subject<string>();
   surveyForm = new FormGroup({});
 
-  getSurveys(customerId: string) {
-    this.surveysService.getSurveysByCustomerId(customerId)
+  getSurveys(organizationId: string) {
+    this.surveysService.getSurveysByOrganizationsId(organizationId)
       .pipe(
         takeUntil(this.unsubscribe$)
       )
@@ -141,14 +143,37 @@ export class SurveysComponent implements OnInit, OnDestroy {
     public surveysService: SurveysService,
     public surveySubjectService: SurveySubjectService,
     public wordBankService: WordBankService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.customerId = '5c453f7ea0294b2bb92641e0';
-    this.getSurveys(this.customerId);
+    // this.customerId = '5c453f7ea0294b2bb92641e0';
     this.surveyForm = this.surveysService.surveyForm();
-    this.getWordBanks(this.customerId);
+
+    this.router.paramMap
+    .subscribe((params: ParamMap) => {
+
+      const id: string = params.get('id');
+      console.log('Received survey id ' + id);
+      this.customerId = params.get('customerId');
+      this.organizationId = params.get('organizationId');
+      // this.viewType = params.get('viewType');
+      // console.log('Get view type ' + this.viewType);
+      // this.setupPanels(this.viewType);
+
+      if (id && this.customerId && this.organizationId) {
+        console.log('Get surveys by organizations id');
+        this.getSurveys(this.organizationId);
+        this.getWordBanks(this.customerId);
+
+        // console.log('Get organization by organizations id ');
+        // this.getOrganization(id);
+
+
+        // this.getSurveys(id);
+      }
+    });
   }
 
   ngOnDestroy(): void {

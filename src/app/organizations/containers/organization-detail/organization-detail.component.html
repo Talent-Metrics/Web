@@ -7,14 +7,15 @@
 <div class="customers" *ngIf="organization && organizationReference" [hidden]="!viewDisplay">
     <div class="customers_col">
       <form [formGroup]="organizationForm" class="info_container">
-
           <app-organization-view [parent]="organizationForm" [organization]="organization" [organizationReference]="organizationReference" [formFields]="formFields"></app-organization-view >
       </form>
       <div class="customers_buttons">
           <button type="button" class="utility__button--primary" *ngIf="organization" (click)="onToggleDisplay()"> Edit </button>
       </div>
       <app-survey-list [organizationId]="organization._id" >
-
       </app-survey-list>
+      <div class="customers_buttons">
+        <button type="button" class="utility__button--primary" *ngIf="organization" (click)="createSurvey()"> Create Survey </button>
+      </div>
     </div>
 </div>

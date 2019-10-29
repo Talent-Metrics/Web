@@ -35,11 +35,16 @@ export class SurveyListComponent implements OnInit {
   }
 
   onRowClicked(row: Survey) {
-    const organizationId: string = row ? row._id : null;
+    const surveyId: string = row ? row._id : null;
     // Pass along the organization id if available
-    console.log('Organization Id: ' + organizationId);
+    console.log('Survey Id: ' + surveyId);
     console.log('Row clicked: ', row);
 
-    this.router.navigate(['/portal/surveys/', organizationId, {viewType: 'View', customerId: row.customerId}]);
+    this.router.navigate(['/portal/surveys/', surveyId, {viewType: 'View', customerId: row.customerId,
+    organizationId: row.organizationId}]);
+  }
+
+  loadSurveys() {
+    this.dataSource.loadSurveys(this.organizationId);
   }
 }

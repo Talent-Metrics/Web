@@ -32,6 +32,6 @@ export class OrganizationListComponent implements OnInit {
     console.log('Organization Id: ' + organizationId);
     console.log('Row clicked: ', row);
 
-    this.router.navigate(['/portal/organizations/', organizationId, {viewType: 'View'}]);
+    this.router.navigate(['/portal/organizations/', organizationId, {viewType: 'View', customerId: row.customerId}]);
   }
 }

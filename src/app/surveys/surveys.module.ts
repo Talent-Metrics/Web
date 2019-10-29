@@ -39,7 +39,7 @@ import { SurveyListComponent } from './components/survey-list/survey-list.compon
     ReactiveFormsModule,
     MaterialModule
   ],
-  exports: [ SurveyListComponent],
+  exports: [ SurveyListComponent, SurveyDialogComponent],
   entryComponents: [SurveySubjectInfoComponent, SurveyDialogComponent, SurveyOutputComponent]
 })
 export class SurveysModule { }
