@@ -36,9 +36,9 @@ export class SurveysDataSource implements DataSource<Survey> {
           }),
           finalize(() => this.loadingSubject.next(false))
       )
-      .subscribe(organizations => {
+      .subscribe(surveys => {
         console.log('Subcribing to data');
-        this.surveySubject.next(organizations);
+        this.surveySubject.next(surveys);
       });
   }
 }

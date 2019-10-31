@@ -4,6 +4,7 @@ $color-accent-pink: #dd33dd;
 $color-accent-green: #7cfc01;
 $color-matte-black: #3d3d3d;
 
+/*
 .surveys {
   display: flex;
   justify-content: flex-start;
@@ -16,14 +17,15 @@ $color-matte-black: #3d3d3d;
   }
 }
 .surveys__col {
-  flex: 1;
+  // flex: 1;
   padding: 1rem;
   width: 100%;
-  max-width: 600px;
+  max-width: 1032px;
   & button {
     width: 100%;
   }
 }
+*/
 .utility__container {
   display: flex;
   width: 100%;
@@ -83,7 +85,7 @@ $color-matte-black: #3d3d3d;
     color: $color-accent-pink;
   }
 }
-a {
+/*a {
   &.utility__button--primary {
     font-family: "Avenir Next", sans-serif;
     border-radius: 3px;
@@ -110,6 +112,7 @@ a {
     }
   }
 }
+*/
 @media only screen and (min-width: 900px) {
   .surveys {
     justify-content: flex-start;
