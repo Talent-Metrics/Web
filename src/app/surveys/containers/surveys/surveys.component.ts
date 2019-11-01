@@ -41,6 +41,19 @@ export class SurveysComponent implements OnInit, OnDestroy {
       }, () => { console.log('Get Surveys complete'); });
   }
 
+  setupSurvey(surveyId: string) {
+    this.surveysService.getSurveyById(surveyId)
+      .pipe(
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((e: Survey) => {
+        this.selectSurvey(e);
+      }, err => {
+        console.log(err);
+        alert(err);
+      }, () => { console.log('Survey setup complete'); });
+  }
+
   selectSurvey(surv: Survey) {
     this.surveyForm.reset();
     this.survey = surv;
@@ -66,6 +79,7 @@ export class SurveysComponent implements OnInit, OnDestroy {
   }
 
   createSurvey() {
+    this.surveyForm.reset();
     const dialogRef = this.dialog.open(SurveyDialogComponent, {
       width: '700px',
       data: {
@@ -86,12 +100,17 @@ export class SurveysComponent implements OnInit, OnDestroy {
 
   addSurvey() {
     this.surveyForm.patchValue({
-      customerId: this.customerId
+      customerId: this.customerId,
+      organizationId: this.organizationId,
+      subjects: 0,
+      completed: 0
     });
+
     this.surveysService.addSurvey(this.surveyForm.value)
       .subscribe((e: Survey) => {
-        this.resetForm();
-        this.getSurveys(this.customerId);
+
+        this.getSurveys(this.organizationId);
+        this.selectSurvey(e);
         alert(`Created survey named: ${e.name}`);
         console.log(e);
       }, err => {
@@ -105,7 +124,7 @@ export class SurveysComponent implements OnInit, OnDestroy {
       .subscribe((e) => {
         alert('updated');
         console.log(e);
-        this.getSurveys(this.customerId);
+        this.getSurveys(this.organizationId);
       }, err => {
         alert(err);
         console.log(err);
@@ -116,7 +135,8 @@ export class SurveysComponent implements OnInit, OnDestroy {
     this.surveysService.deleteSurvey(this.survey._id)
       .subscribe((e) => {
         console.log(e);
-        this.getSurveys(this.customerId);
+        this.getSurveys(this.organizationId);
+        this.resetForm();
       }, err => {
         alert(err);
         console.log(err);
@@ -148,7 +168,6 @@ export class SurveysComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    // this.customerId = '5c453f7ea0294b2bb92641e0';
     this.surveyForm = this.surveysService.surveyForm();
 
     this.router.paramMap
@@ -158,20 +177,12 @@ export class SurveysComponent implements OnInit, OnDestroy {
       console.log('Received survey id ' + id);
       this.customerId = params.get('customerId');
       this.organizationId = params.get('organizationId');
-      // this.viewType = params.get('viewType');
-      // console.log('Get view type ' + this.viewType);
-      // this.setupPanels(this.viewType);
 
       if (id && this.customerId && this.organizationId) {
         console.log('Get surveys by organizations id');
         this.getSurveys(this.organizationId);
         this.getWordBanks(this.customerId);
-
-        // console.log('Get organization by organizations id ');
-        // this.getOrganization(id);
-
-
-        // this.getSurveys(id);
+        this.setupSurvey(id);
       }
     });
   }

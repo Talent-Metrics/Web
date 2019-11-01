@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Survey } from '../models/survey';
-import {FormArray, FormControl, FormGroup} from '@angular/forms';
+import { FormArray, FormControl, FormGroup} from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -33,15 +34,15 @@ export class SurveysService {
     });
     return new FormGroup(formObj);
   }
-  getSurveyById(id: string) {
-    return this.http.get(this.configUrl + '/id/' + id);
+  getSurveyById(id: string): Observable<Survey> {
+    return this.http.get<Survey>(this.configUrl + '/id/' + id);
   }
 
-  getSurveysByCustomerId(customerId: string) {
-    return this.http.get(this.configUrl + '/customer/' + customerId);
+  getSurveysByCustomerId(customerId: string): Observable<Survey[]> {
+    return this.http.get<Survey[]>(this.configUrl + '/customer/' + customerId);
   }
 
-  getSurveysByOrganizationsId(organizationId: string) {
+  getSurveysByOrganizationsId(organizationId: string): Observable<Survey[]> {
     return this.http.get<Survey[]>(this.configUrl + '/organization/' + organizationId);
   }
 

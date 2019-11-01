@@ -14,10 +14,12 @@ export class SurveySubjectService {
   private mailUrl = environment.apiUrl + '/mail';
   dataSource = new BehaviorSubject(undefined);
   data = this.dataSource.asObservable();
+
   get survey() {
     console.log('getting survey');
     return this.dataSource.getValue();
   }
+
   surveySubjectForm(a?: any) {
     if (a) {
       return new FormGroup({
@@ -156,6 +158,7 @@ export class SurveySubjectService {
       });
     }
   }
+
   getSurveySubjectsByCustomer(id: string) {
     return this.http.get(this.configUrl + '/customer/' + id);
   }

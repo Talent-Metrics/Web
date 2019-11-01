@@ -10,7 +10,7 @@
       </mat-form-field>
 
       <div class="row_column column-40 left-center-images">
-          <mat-icon matListIcon class="survey__icons ">delete</mat-icon>
+
       </div>
     </div>
 
@@ -30,8 +30,9 @@
           </mat-select>
         </mat-form-field>
         <div class="row_column column-40 left-center-images">
-            <mat-icon matListIcon class="survey__icons">save</mat-icon>
-            <mat-icon matListIcon class="survey__icons">add_circle</mat-icon>
+            <mat-icon matListIcon class="survey__icons" (click)="updateSurvey()" >save</mat-icon>
+            <mat-icon matListIcon class="survey__icons" (click)="createSurvey()">add_circle</mat-icon>
+            <mat-icon matListIcon class="survey__icons" (click)="deleteSurvey()">delete</mat-icon>
         </div>
 
       <survey-subject class="row_column column-60" [surveyId]="surveyId" [wordBankId]="wordBankId" *ngIf="surveyId && wordBankId"></survey-subject>
