@@ -4,8 +4,6 @@ $color-accent-pink: #dd33dd;
 $color-accent-green: #7cfc01;
 $color-matte-black: #3d3d3d;
 
-.survey-subject {
-}
 a {
   &.utility__button--primary {
     font-family: "Avenir Next", sans-serif;
@@ -33,16 +31,11 @@ a {
     }
   }
 }
-.utility__container {
-  display: flex;
-  width: 100%;
-}
-.utility__col {
-  flex: 1;
-}
+
 .utility__right {
   text-align: right;
 }
+
 .survey__list {
   background-color: #E8E8E8;
   height: 21rem;

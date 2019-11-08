@@ -6,34 +6,33 @@
       <mat-icon matListIcon class="survey__icons" title="Delete Survey">delete</mat-icon>
       <mat-icon matListIcon class="survey__icons" title="Close Survey">close</mat-icon>
       <mat-icon matListIcon class="survey__icons" title="E-mail All Open Subjects">mail</mat-icon>
-      <mat-icon matListIcon class="survey__icons" title="Upload Survey Subjects">publish</mat-icon>
+      <mat-icon matListIcon class="survey__icons" title="Upload Survey Subjects" (click)="uploadSurvey()">publish</mat-icon>
     </div>
   </div>
   <mat-list class="survey__list">
     <mat-list-item *ngFor="let subject of surveySubjects" class="survey__subject">
       <div class="survey__subject-width">
-
-        <div class="utility__container">
-          <div class="utility__col">
+        <div class="row_container">
+          <div class="row_column column-50">
             <h4 class="survey__subject--name" (click)="viewSurveySubject(subject)">{{ subject.personalInfo.lastName }}, {{ subject.personalInfo.firstName }}</h4>
           </div>
-          <div class="utility__col utility__right">
+          <div class="row_column column-50 utility__right">
             <mat-icon matListIcon class="survey__icons">refresh</mat-icon>
             <mat-icon matListIcon class="survey__icons" (click)="notifySurveySubject(subject)">mail</mat-icon>
             <mat-icon matListIcon class="survey__icons" (click)="deleteSurveySubject(subject._id)">delete</mat-icon>
           </div>
         </div>
-        <div class="utility__container">
-          <div class="utility__col">
+        <div class="row_container">
+          <div class="row_column">
             <span class="survey__subject--email">{{ subject.personalInfo.email }}</span>
           </div>
         </div>
-        <div class="utility__container">
-          <div class="utility__col">
+        <div class="row_container">
+          <div class="row_column column-50">
             <span class="survey__subject--status" *ngIf="subject.surveyInfo.completed"> Closed </span>
             <span class="survey__subject--status" *ngIf="!subject.surveyInfo.completed"> Open </span>
           </div>
-          <div class="utility__col utility__right">
+          <div class="row_column column-50 utility__right">
             <span class="survey__subject--notified"> Times Notified: {{ subject.surveyInfo.notifiedCount }}</span>
           </div>
         </div>

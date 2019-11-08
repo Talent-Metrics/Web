@@ -111,7 +111,7 @@ export class SurveySubjectService {
           veteranStatus: new FormControl(false),
           disabilityStatus: new FormControl(false),
           educationLevel: new FormControl(0),
-          manager: new FormControl('Update')
+          manager: new FormControl('')
         }),
         surveyInfo: new FormGroup({
           customerId: new FormControl('', [
@@ -123,7 +123,7 @@ export class SurveySubjectService {
           createDate: new FormControl(0, [
             Validators.required
           ]),
-          completionDate: new FormControl(0),
+          completionDate: new FormControl(),
           completed: new FormControl(false),
           notifiedCount: new FormControl(0),
           surveyId: new FormControl('', [

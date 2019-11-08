@@ -12,7 +12,7 @@ import {SurveyDialogComponent} from '../../components/survey-dialog/survey-dialo
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 
 @Component({
-  selector: 'surveys',
+  selector: 'app-surveys',
   templateUrl: './surveys.component.html',
   styleUrls: ['./surveys.component.scss']
 })
@@ -108,7 +108,6 @@ export class SurveysComponent implements OnInit, OnDestroy {
 
     this.surveysService.addSurvey(this.surveyForm.value)
       .subscribe((e: Survey) => {
-
         this.getSurveys(this.organizationId);
         this.selectSurvey(e);
         alert(`Created survey named: ${e.name}`);
@@ -122,9 +121,9 @@ export class SurveysComponent implements OnInit, OnDestroy {
   updateSurvey() {
     this.surveysService.updateSurvey(this.survey._id, this.surveyForm.value)
       .subscribe((e) => {
-        alert('updated');
         console.log(e);
         this.getSurveys(this.organizationId);
+        alert('updated');
       }, err => {
         alert(err);
         console.log(err);

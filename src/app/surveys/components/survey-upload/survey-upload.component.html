@@ -1,0 +1,47 @@
+<div class="info_container">
+<div class="info_col mat-form-field mat-primary mat-form-field-type-mat-input mat-form-field-appearance-fill mat-form-field-can-float mat-form-field-has-label mat-form-field-should-float">
+<div class="mat-form-field-wrapper">
+  <div class="mat-form-field-flex">
+    <div class="mat-form-field-infix">
+      <span class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored">
+        <input type="file" class="form-control" (change)="uploadFile($event)" placeholder="Upload file" accept=".xlsx, .xls" style="padding: 3px 2px;">
+      </span>
+      <span class="mat-form-field-label-wrapper">
+        <label class="mat-form-field-label" >
+          <mat-label>Upload Survey Participant Excel File (.xls, xlsx)</mat-label>
+        </label>
+      </span>
+    </div>
+  </div>
+  <div class="mat-form-field-underline">
+    <span class="mat-form-field-ripple"></span>
+  </div>
+  <div class="mat-form-field-subscript-wrapper" >
+    <div class="mat-form-field-hint-wrapper" style="opacity: 1; transform: translateY(0%);">
+      <div class="mat-form-field-hint-spacer"></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<div *ngIf="uploadedFile" class="customers_buttons">
+  <button type="button" class="utility__button--primary" (click)="processFile()">Process excel file</button>
+</div>
+<div class="utility__container">
+  <div *ngIf="processedFile" >
+    <p>
+      Found {{this.rowsFound - 1}} participants in the file
+    </p>
+  </div>
+  <div *ngIf="processedFile && this.rowsFound > 1 && this.rowsFound -1 === this.rowsInserted + this.rowsFailed" >
+    <p>
+      {{this.rowsInserted}} participant(s) succesfully created from the file.
+    </p>
+    <p>
+      {{this.rowsFailed}} participant(s) failed to  created from the file.
+    </p>
+    <div  class="customers_buttons">
+      <button type="button" class="utility__button--primary" (click)="finishSurveyUpload()">Done</button>
+    </div>
+  </div>
+</div>

@@ -34,7 +34,8 @@ export class SurveyPersonalComponent implements OnInit {
     { key: 3, value: 'High school' },
     { key: 4, value: 'Some College' },
     { key: 5, value: 'Bachelor\'s Degree' },
-    { key: 6, value: 'Graduate or Professional Degree' }
+    { key: 6, value: 'Graduate or Professional Degree' },
+    { key: 7, value: 'Trade School' }
   ];
   constructor() { }
   updatePersonal() {

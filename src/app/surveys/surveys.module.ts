@@ -5,6 +5,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
+import { MatFileUploadModule } from 'angular-material-fileupload';
+
 import { SurveysComponent } from './containers/surveys/surveys.component';
 import { SurveyInfoComponent } from './components/survey-info/survey-info.component';
 import { SurveySubjectComponent } from './containers/survey-subject/survey-subject.component';
@@ -16,6 +18,7 @@ import { SurveyCategoriesComponent } from './components/survey-categories/survey
 import { SurveyOutputComponent } from './components/survey-output/survey-output.component';
 import { SurveyPyramidComponent } from './components/survey-pyramid/survey-pyramid.component';
 import { SurveyListComponent } from './components/survey-list/survey-list.component';
+import { SurveyUploadComponent } from './components/survey-upload/survey-upload.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,8 @@ import { SurveyListComponent } from './components/survey-list/survey-list.compon
     SurveyCategoriesComponent,
     SurveyOutputComponent,
     SurveyPyramidComponent,
-    SurveyListComponent
+    SurveyListComponent,
+    SurveyUploadComponent
   ],
   imports: [
     CommonModule,
@@ -37,9 +41,10 @@ import { SurveyListComponent } from './components/survey-list/survey-list.compon
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    MatFileUploadModule,
   ],
   exports: [ SurveyListComponent, SurveyDialogComponent],
-  entryComponents: [SurveySubjectInfoComponent, SurveyDialogComponent, SurveyOutputComponent]
+  entryComponents: [SurveySubjectInfoComponent, SurveyDialogComponent, SurveyOutputComponent, SurveyUploadComponent]
 })
 export class SurveysModule { }

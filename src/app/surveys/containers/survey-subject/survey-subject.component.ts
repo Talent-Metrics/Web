@@ -1,26 +1,27 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { SurveySubject } from '../../models/survey-subject';
 import { SurveySubjectService } from '../../services/survey-subject.service';
-import {Observable, Subject} from 'rxjs';
-import {take, takeUntil} from 'rxjs/operators';
+import { Observable, Subject} from 'rxjs';
+import { take, takeUntil} from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { SurveySubjectInfoComponent } from '../../components/survey-subject-info/survey-subject-info.component';
+import { SurveyUploadComponent } from '../../components/survey-upload/survey-upload.component';
+import * as moment from 'moment';
 
 @Component({
-  selector: 'survey-subject',
+  selector: 'app-survey-subject',
   templateUrl: './survey-subject.component.html',
   styleUrls: ['./survey-subject.component.scss']
 })
 export class SurveySubjectComponent implements OnInit, OnDestroy {
-  @Input()
-    surveyId: Subject<string>;
-  @Input()
-    wordBankId: Subject<string>;
+  @Input() surveyId: Subject<string>;
+  @Input() wordBankId: Subject<string>;
+  @Input() customerId: string;
+  @Input() organizationId: string;
   surveyId$: string;
   wordBankId$: string;
   unsubscribe$ = new Subject<void>();
   surveySubjects: SurveySubject[];
-  customerId: string;
   type: string;
 
   getSurveySubjects(surveyId: string) {
@@ -35,13 +36,39 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
       );
   }
 
+  uploadSurvey() {
+    const dialogRef = this.dialog.open(SurveyUploadComponent, {
+      width: '500px',
+      data: {
+        type: 'upload',
+        surveyInfo: {
+          customerId: this.customerId,
+          organizationId: this.organizationId,
+          surveyId: this.surveyId$,
+          wordBankId: this.wordBankId$,
+          createDate: moment().toJSON()
+        }
+      }
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result) {
+          if (result.success > 0) {
+            this.getSurveySubjects(this.surveyId$);
+          }
+        }
+      }, err => console.log(err), () => console.log('dialog closed'));
+  }
+
   viewSurveySubject(a: SurveySubject) {
     const surveySubjectForm = this.surveySubjectService.surveySubjectForm(a);
     const dialogRef = this.dialog.open(SurveySubjectInfoComponent, {
       width: '700px',
       height: '500px',
       data: {
-        form: surveySubjectForm
+        form: surveySubjectForm,
+        type: 'view',
       }
     });
     dialogRef.afterClosed()
@@ -57,8 +84,8 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
   updateSurveySubject(id: string, sub: SurveySubject) {
     this.surveySubjectService.updateSurveySubjects(id, sub)
       .subscribe(e => {
+        this.getSurveySubjects(sub.surveyInfo.surveyId);
         alert('Record updated');
-        // this.getSurveySubjects(this.surveyId);
       }, err => console.log(err), () => console.log('update complete'));
   }
 
@@ -68,8 +95,10 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
     surveySubjectForm.patchValue({
       surveyInfo: {
         customerId: this.customerId,
+        organizationId: this.organizationId,
         surveyId: this.surveyId$,
-        wordBankId: this.wordBankId$
+        wordBankId: this.wordBankId$,
+        createDate: moment().toJSON()
       }
     });
     console.log('Patched form: ', surveySubjectForm.value);
@@ -102,6 +131,7 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
         this.getSurveySubjects(this.surveyId$);
       }, err => console.log(err), () => console.log('completed deleted'));
   }
+
   notifySurveySubject(surveySubject: SurveySubject) {
     console.log(surveySubject);
     // this.surveySubjectService.notifySurveySubject({ _id: surveySubject._id, email: surveySubject.personalInfo.email })
@@ -110,21 +140,23 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
         take(1)
       ).subscribe(result => console.log(result), err => console.log(err), () => console.log('notified'));
   }
+
   constructor(
     public surveySubjectService: SurveySubjectService,
     public dialog: MatDialog
   ) { }
+
   ngOnInit() {
     this.wordBankId.subscribe(e => {
       this.wordBankId$ = e;
     }, err => console.log(err), () => console.log('complete'));
+
     this.surveyId.subscribe(e => {
       this.surveyId$ = e;
       this.getSurveySubjects(e);
     }, err => console.log(err), () => console.log('survey id complete'));
-
-    this.customerId = '5c429b0a1c9d4400005b4830';
   }
+
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();

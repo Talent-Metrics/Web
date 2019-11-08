@@ -51,6 +51,11 @@ $theme: mat-light-theme($primary, $accent);
 // Include all theme styles for the components.
 @include angular-material-theme($theme);
 
+.utility__container {
+  display: flex;
+  flex-direction: column;
+}
+
 a,button {
   &.utility__button--primary {
     font-family: "Avenir Next", sans-serif;

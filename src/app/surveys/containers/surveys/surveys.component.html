@@ -8,19 +8,15 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
       <div class="row_column column-40 left-center-images">
-
       </div>
     </div>
 
     <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()" class="row_container" >
-
       <mat-form-field appearance="fill" color="primary" class="row_column column-30">
           <mat-label> Name </mat-label>
           <input matInput formControlName="name" type="text">
         </mat-form-field>
-
         <mat-form-field appearance="fill" color="primary" class="row_column column-30">
           <mat-label> Word Bank </mat-label>
           <mat-select formControlName="wordBankId">
@@ -35,16 +31,10 @@
             <mat-icon matListIcon class="survey__icons" (click)="deleteSurvey()">delete</mat-icon>
         </div>
 
-      <survey-subject class="row_column column-60" [surveyId]="surveyId" [wordBankId]="wordBankId" *ngIf="surveyId && wordBankId"></survey-subject>
+      <app-survey-subject class="row_column column-60" [surveyId]="surveyId" [wordBankId]="wordBankId"
+      [customerId]="customerId" [organizationId]="organizationId" *ngIf="surveyId && wordBankId">
+      </app-survey-subject>
 
-      <!--
-      <div class="surveys__buttons">
-        <a class="utility__button--primary" (click)="updateSurvey()">Update</a>
-        <a class="utility__button--primary" (click)="createSurvey()" *ngIf="!survey">Create</a>
-        <a class="utility__button--primary" (click)="resetForm()" *ngIf="survey || surveyForm.get('name').dirty">Reset</a>
-        <a class="utility__button--primary" (click)="deleteSurvey()" *ngIf="survey">Delete</a>
-      </div>
-      -->
       <!--<pre>{{ surveyForm.value | json }}</pre>-->
 
     </form>

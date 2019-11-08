@@ -63,7 +63,7 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   */
 
   getOrganization(id: string) {
-    console.log('Getting organization' + id);
+    console.log('Getting organization ' + id);
     // alert('Getting organization with id =' + id);
     this.organizationsService.getOrganizationById(id)
       .pipe(
@@ -125,19 +125,24 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
     }, err => console.log(err), () => console.log('update complete'));
   }
  */
- /*
   updateOrg() {
+
+    this.organizationForm.patchValue({
+      customerId: this.organization.customerId,
+      _id: this.organization._id
+    });
+
     this.organizationsService.updateOrganization(this.organization._id, this.organizationForm.value)
-      .subscribe((e) => {
-        alert(`${this.organizationForm.get('name').value} has been updated`);
-        this.refreshForm();
-        this.getOrganizations(this.customerId);
-      }, err => {
-        console.log(err);
-        alert(err);
-      }, () => { console.log('Update Organization complete'); });
+    .subscribe((e) => {
+      this.getOrganization(this.organization._id);
+      alert(`${this.organizationForm.get('name').value} has been updated`);
+      // this.refreshForm();
+    }, err => {
+      console.log(err);
+      alert(err);
+    }, () => { console.log('Update Organization complete'); });
     console.log(this.organizationForm.value);
-  }*/
+  }
   /*
   onAdd() {
     this.organizationForm.enable();
@@ -191,9 +196,6 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   onSubmit() {
   }
 
-
-
-
   constructor(
     private organizationsService: OrganizationsService,
     private surveysService: SurveysService,
@@ -238,6 +240,8 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   }
 
   onToggleDisplay() {
+    this.organizationForm.reset();
+    this.organizationForm.patchValue(this.organization);
     this.viewDisplay = !this.viewDisplay;
   }
 
@@ -256,7 +260,7 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   refreshForm() {
     this.organizationForm.reset();
     this.organizationForm.patchValue(this.organization);
-    this.organization = undefined;
+    // this.organization = undefined;
   }
 
   resetSurveyForm() {

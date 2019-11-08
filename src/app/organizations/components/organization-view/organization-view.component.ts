@@ -10,7 +10,6 @@ import { OrganizationReference } from '../../models/organization-reference';
   styleUrls: ['./organization-view.component.scss']
 })
 export class OrganizationViewComponent implements OnInit {
-  @Input() parent: FormGroup;
   @Input() organization: Organization;
   @Input() organizationReference: OrganizationReference;
   @Input() formFields: FormField[];

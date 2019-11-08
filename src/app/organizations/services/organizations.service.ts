@@ -24,24 +24,19 @@ export class OrganizationsService {
         Validators.maxLength(50)
       ]),
       size: new FormControl(0, [
-        Validators.required,
-        Validators.min(1)
+        Validators.required
       ]),
       industry: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3)
+        Validators.required
       ]),
       annualRevenue: new FormControl('', [
         Validators.required
       ]),
       region: new FormControl('', [
         Validators.required,
-        Validators.minLength(2)
       ]),
       state: new FormControl('', [
-        Validators.required,
-        Validators.minLength(2),
-        Validators.maxLength(2)
+        Validators.required
       ]),
     };
     return new FormGroup(formFields);
