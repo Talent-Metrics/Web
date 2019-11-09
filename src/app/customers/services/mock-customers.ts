@@ -2,7 +2,8 @@ import { CustomerInterface } from '../models/customer.interface';
 
 export const CUSTOMERS: CustomerInterface[] = [
   {
-  _id: '11', firstName: 'Dr Nice' , lastName:'Mock', email:'mock@gmail.com', userId:"j1",
+  _id: '11', firstName: 'Dr Nice' , lastName: 'Mock', email: 'mock@gmail.com',
+  // userId:"j1",
   companyName: "Schaefer Advertising Co.",
   phone : "817-226-4332",
   countryCode : "01",
@@ -39,7 +40,8 @@ export const CUSTOMERS: CustomerInterface[] = [
   closedDate : -62167219200000,
   hris : "N/A,",
   taxId : 825555555},
-  { _id: '13', firstName: 'Bombasto' , lastName:'Mock', email:'mock@gmail.com',companyName: "Schaefer Advertising Co.",userId:"j2",
+  { _id: '13', firstName: 'Bombasto' , lastName:'Mock', email:'mock@gmail.com',companyName: "Schaefer Advertising Co.",
+  //userId:"j2",
   phone : "817-226-4332",
   countryCode : "01",
   address : {

@@ -36,27 +36,26 @@ export class CustomersService {
           Validators.required
         ])
       }),
-      userId: new FormControl('', [
+      firstName: new FormControl('', [
         Validators.required
       ]),
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
-      companyName: new FormControl(''),
+      lastName: new FormControl('', [
+        Validators.required
+      ]),
+      companyName: new FormControl('', [
+        Validators.required
+      ]),
       email: new FormControl('', [
         Validators.required
       ]),
       phone: new FormControl(''),
-      countryCode: new FormControl(''),
-      subscribed: new FormControl(false, [
-        Validators.required
-      ]),
-      subscriptionId: new FormControl(''),
+      countryCode: new FormControl('01'),
+      subscribed: new FormControl(false),
+      subscriptionId: new FormControl(null),
       lifetimeValue: new FormControl(0),
-      creationDate: new FormControl(0, [
-        Validators.required
-      ]),
-      closedDate: new FormControl(0),
-      taxId: new FormControl(0),
+      creationDate: new FormControl(Date.now),
+      closedDate: new FormControl(),
+      taxId: new FormControl(),
       hris: new FormControl(''),
     };
     return new FormGroup(formObj);
@@ -77,8 +76,12 @@ export class CustomersService {
     return of(CUSTOMERS);
   }
 
-  updateCustomer(id: string, e) {
+  updateCustomer(id: string, e: CustomerInterface) {
     return this.http.put(this.configUrl + '/' + id, e);
+  }
+
+  addCustomer(e: CustomerInterface) {
+    return this.http.post(this.configUrl, e);
   }
 
   /**

@@ -10,7 +10,7 @@ import { Subject} from 'rxjs';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'customers',
+  selector: 'app-customers',
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.scss']
 })
@@ -31,9 +31,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
         takeUntil(this.unsubscribe$)
       )
       .subscribe((data: CustomerInterface) => {
-        this.customer = data;
-        this.customerForm.patchValue(this.customer);
-        this.customerViewForm.patchValue(this.customer);
+        this.setCustomerInterface(data);
       },
       err => {
         console.log(err);
@@ -63,15 +61,16 @@ export class CustomersComponent implements OnInit, OnDestroy {
   }
 
   update() {
-    console.log('Updating customer = ' + this.customerForm.value);
+    console.log('Attempting to update a customer = ' + this.customerForm.value);
     const form = this.customerForm.value;
     form.updateDate = moment().toJSON();
     this.customersService.updateCustomer(this.customer._id, form)
       .subscribe((e) => {
-        alert(`Your customer record has been successfully updated.`);
         console.log(e);
-        this.customerForm.markAsPristine();
         this.getCustomer(this.customer._id);
+        alert(`Your customer record has been successfully updated.`);
+        this.customerForm.markAsPristine();
+        this.onToggleDisplay();
       },
       err => {
         console.log(err);
@@ -80,8 +79,28 @@ export class CustomersComponent implements OnInit, OnDestroy {
       () => { console.log('Update Customer complete'); });
   }
 
+  setCustomerInterface(c: CustomerInterface) {
+    this.customer = c;
+    this.customerForm.patchValue(this.customer);
+    this.customerViewForm.patchValue(this.customer);
+  }
+
   add() {
-    console.log('Add a new customer' + this.customerForm.value);
+    console.log('Attempting to add a new customer ' + JSON.stringify(this.customerForm.value));
+    const form = this.customerForm.value;
+    form.creationDate = moment().toJSON();
+    this.customersService.addCustomer(form)
+    .subscribe((e) => {
+      console.log(' Addition return =' + JSON.stringify(e));
+      this.customerForm.markAsPristine();
+      alert(`Your customer record has been successfully added.`);
+      this.router.navigate(['/portal/customers/']);
+    },
+    err => {
+      console.log(err);
+      alert(err);
+    },
+    () => { console.log('Add Customer complete'); });
   }
 
   onSubmit() {
@@ -114,7 +133,11 @@ export class CustomersComponent implements OnInit, OnDestroy {
   }
 
   onToggleDisplay() {
-    this.viewDisplay = !this.viewDisplay;
+    if (this.customer) {
+      this.viewDisplay = !this.viewDisplay;
+    } else {
+      this.router.navigate(['/portal/customers/']);
+    }
   }
 
   testEmit(evt) {
@@ -137,7 +160,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
       this.viewType = params.get('viewType');
       console.log('Get view type ' + this.viewType);
       this.setupPanels(this.viewType);
-      if (id) {
+      if (id !== '0' ) {
         this.getCustomer(id);
         console.log('Get organizations for customer id ' + id);
         this.getOrganizations(id);

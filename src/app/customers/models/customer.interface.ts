@@ -8,7 +8,6 @@ export class CustomerInterface {
     zip: string,
     country: string
   };
-  userId: string;
   firstName: string;
   lastName: string;
   companyName: string;

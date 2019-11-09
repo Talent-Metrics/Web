@@ -6,10 +6,10 @@
       <app-customer-info [parent]="customerForm"></app-customer-info>
       <div class="customers_buttons">
         <button type="button" class="utility__button--primary" *ngIf="customer"  [disabled]="!customerForm.valid" (click)="onSubmit()"> Update </button>
-        <button type="button" class="utility__button--primary" *ngIf="!customer && viewType =='View'"   [disabled]="!customerForm.valid" (click)="onSubmit()">Create </button>
+        <button type="button" class="utility__button--primary" *ngIf="!customer && viewType =='Create'"   [disabled]="!customerForm.valid" (click)="onSubmit()">Create </button>
         <button type="button" class="utility__button--primary" *ngIf="customer" (click)="onDelete()"> Delete </button>
-        <button type="button" class="utility__button--primary" *ngIf="customerForm.dirty || customer" (click)="refreshForm()"> Reset </button>
-        <button type="button" class="utility__button--primary" *ngIf="customer" (click)="onToggleDisplay()"> Cancel </button>
+        <button type="button" class="utility__button--primary" *ngIf="customerForm.dirty && customer" (click)="refreshForm()"> Reset </button>
+        <button type="button" class="utility__button--primary" (click)="onToggleDisplay()"> Cancel </button>
       </div>
       <br/>
       <br/>
