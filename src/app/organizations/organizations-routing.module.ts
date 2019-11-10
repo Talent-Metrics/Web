@@ -17,7 +17,7 @@ const organizationsRoutes: Routes = [
 
 const organizationsRoutes: Routes = [
   {
-    path:'portal',
+    path: 'portal',
     children:
     [{
 

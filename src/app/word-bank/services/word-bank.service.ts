@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment';
 })
 export class WordBankService {
   configUrl: string = environment.apiUrl + '/wordbanks';
-  mwKey: string = '464c1cde-220b-44a9-a1f2-23e2cfa8235b';
+  mwKey = '464c1cde-220b-44a9-a1f2-23e2cfa8235b';
   getWordForm(word?: Word) {
     if (word) {
       return new FormGroup({

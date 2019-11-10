@@ -1,11 +1,12 @@
-<div class="customers" *ngIf="organization && organizationReference"  [hidden]="viewDisplay">
+<div class="customers" *ngIf="organizationReference"  [hidden]="viewDisplay">
     <div class="customers_col">
         <div class="info_container">
             <app-organization-info [parent]="organizationForm" [organization]="organization" [organizationReference]="organizationReference" [formFields]="formFields"></app-organization-info >
         </div>
         <div class="customers_buttons">
-          <button type="button" class="utility__button--primary" *ngIf="organization" (click)="updateOrg()"> Update </button>
-          <button type="button" class="utility__button--primary" *ngIf="organization" (click)="onToggleDisplay()"> Cancel </button>
+          <button type="button" class="utility__button--primary" *ngIf="organization" [disabled]="!organizationForm.valid" (click)="updateOrg()"> Update </button>
+          <button type="button" class="utility__button--primary" *ngIf="!organization && viewType =='Create'" (click)="addOrg()" [disabled]="!organizationForm.valid"> Create </button>
+          <button type="button" class="utility__button--primary" (click)="onToggleDisplay()"> Cancel </button>
         </div>
     </div>
 </div>

@@ -132,6 +132,11 @@ export class CustomersComponent implements OnInit, OnDestroy {
     }
   }
 
+  createOrganization() {
+    this.router.navigate(['/portal/organizations/0', {viewType: 'Create', customerId: this.customer._id}]);
+  }
+
+
   onToggleDisplay() {
     if (this.customer) {
       this.viewDisplay = !this.viewDisplay;

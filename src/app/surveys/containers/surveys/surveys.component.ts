@@ -149,8 +149,8 @@ export class SurveysComponent implements OnInit, OnDestroy {
       }, () => console.log('delete subjects complete'));
   }
 
-  getWordBanks(customerId: string) {
-    this.wordBankService.getAllByCustomerId(customerId)
+  getWordBanks() {
+    this.wordBankService.getAll()
       .pipe(
         takeUntil(this.unsubscribe$)
       ).subscribe((e: WordBank[]) => {

@@ -14,6 +14,7 @@ export class OrganizationsService {
   private configUrl = environment.apiUrl + '/organizations';
   organizationForm() {
     const formFields = {
+      customerId: new FormControl(null),
       name: new FormControl('', [
         Validators.required,
         Validators.maxLength(50),

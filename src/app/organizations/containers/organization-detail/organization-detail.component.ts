@@ -25,6 +25,7 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject<void>();
   surveys: Survey[];
   organization: Organization;
+  customerId: string;
   organizationReference: OrganizationReference;
   organizationForm = new FormGroup({});
   viewType: string;
@@ -75,7 +76,10 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
         console.log(err);
         alert('The error =' + err);
       }, () => { console.log('Get Organization complete'); });
+  }
 
+  getOrganizationReference() {
+    console.log('Getting organization reference');
     this.organizationsService.getOrganizationReference()
       .pipe(
         takeUntil(this.unsubscribe$)
@@ -88,8 +92,9 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
       }, () => { console.log('Get Organization complete'); });
   }
 
-  getWordBanks(customerId: string) {
-    this.wordBankService.getAllByCustomerId(customerId)
+  getWordBanks() {
+    console.log('Getting word bank');
+    this.wordBankService.getAll()
       .pipe(
         takeUntil(this.unsubscribe$)
       ).subscribe((e: WordBank[]) => {
@@ -136,11 +141,12 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
     .subscribe((e) => {
       this.getOrganization(this.organization._id);
       alert(`${this.organizationForm.get('name').value} has been updated`);
+      this.onToggleDisplay();
       // this.refreshForm();
     }, err => {
       console.log(err);
       alert(err);
-    }, () => { console.log('Update Organization complete'); });
+    }, () => { console.log('Organization update complete'); });
     console.log(this.organizationForm.value);
   }
   /*
@@ -166,17 +172,7 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   }
   */
   /*
-  addOrg() {
-    console.log(this.organizationForm.value);
-    this.organizationsService.addOrganization(this.organizationForm.value)
-      .subscribe(e => {
-          console.log(e);
-          this.refreshForm();
-          this.getOrganizations(this.customerId);
-        },
-        err => console.log(err),
-        () => console.log('Add complete'));
-  }
+
   onDelete(id: string) {
     this.organizationsService.deleteOrganization(id)
       .pipe(
@@ -192,6 +188,23 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
       }, () => { console.log('Completed delete'); });
   }
   */
+  addOrg() {
+    this.organizationForm.patchValue({
+      customerId: this.customerId,
+    });
+
+  console.log(JSON.stringify(this.organizationForm.value));
+  this.organizationsService.addOrganization(this.organizationForm.value)
+    .subscribe(e => {
+        console.log(e);
+        alert(`${this.organizationForm.get('name').value} has been added`);
+        this.onToggleDisplay();
+        // this.refreshForm();
+        // this.getOrganizations(this.customerId);
+      },
+      err => console.log(err),
+      () => console.log('Organization add complete'));
+  }
 
   onSubmit() {
   }
@@ -201,6 +214,7 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
     private surveysService: SurveysService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
+    private router: Router,
     private wordBankService: WordBankService,
   ) { }
 
@@ -216,20 +230,23 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
 
       const id: string = params.get('id');
       console.log('Received organization id ' + id);
+
       this.viewType = params.get('viewType');
       console.log('Get view type ' + this.viewType);
-      this.setupPanels(this.viewType);
-      const customerId: string = params.get('customerId');
 
-      if (id) {
+      this.setupPanels(this.viewType);
+      this.customerId = params.get('customerId');
+
+      this.getOrganizationReference();
+      console.log('Get word banks by customer id = ' + this.customerId );
+      this.getWordBanks();
+
+      if (id !== '0') {
         console.log('Get organization by organizations id ');
         this.getOrganization(id);
 
         // console.log('Get surveys by organizations id ');
         // this.getSurveys(id);
-
-        console.log('Get word banks by customer id = ' + customerId );
-        this.getWordBanks(customerId);
       }
     });
   }
@@ -239,10 +256,14 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  onToggleDisplay() {
-    this.organizationForm.reset();
-    this.organizationForm.patchValue(this.organization);
-    this.viewDisplay = !this.viewDisplay;
+  onToggleDisplay(): void {
+    if (this.organization) {
+      this.organizationForm.reset();
+      this.organizationForm.patchValue(this.organization);
+      this.viewDisplay = !this.viewDisplay;
+    } else {
+      this.router.navigate(['/portal/customers/' + this.customerId, {viewType: 'View'}]);
+    }
   }
 
   setupPanels(view: string) {

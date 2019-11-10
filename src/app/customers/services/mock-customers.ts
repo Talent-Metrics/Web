@@ -22,7 +22,8 @@ export const CUSTOMERS: CustomerInterface[] = [
   closedDate : -62167219200000,
   hris : "N/A,",
   taxId : 825555555},
-  { _id: '12', firstName: 'Narco' , lastName:'Mock', email:'mock@gmail.com', companyName: "Schaefer Advertising Co.",userId:"j3",
+  { _id: '12', firstName: 'Narco' , lastName:'Mock', email:'mock@gmail.com', companyName: "Schaefer Advertising Co.",
+  //userId:"j3",
   phone : "817-226-4332",
   countryCode : "01",
   address : {

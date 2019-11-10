@@ -27,6 +27,9 @@
         <button type="button" class="utility__button--primary" *ngIf="customer" (click)="onToggleDisplay()"> Edit </button>
     </div>
     <app-organization-list [customerId]=customer._id></app-organization-list>
+    <div class="customers_buttons">
+      <button type="button" class="utility__button--primary" (click)="createOrganization()"> Create </button>
+    </div>
   </div>
 </div>
 
