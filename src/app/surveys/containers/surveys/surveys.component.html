@@ -1,7 +1,7 @@
 <div class="customers">
   <div class="customers_col">
     <div class="row_container">
-      <mat-form-field class="surveys__select row_column column-60">
+      <mat-form-field class="row_column column-60">
         <mat-select>
           <mat-option *ngFor="let survey of surveys" (click)="selectSurvey(survey)" [value]="survey._id">
             {{ survey.name }}
@@ -26,13 +26,13 @@
           </mat-select>
         </mat-form-field>
         <div class="row_column column-40 left-center-images">
-            <mat-icon matListIcon class="survey__icons" (click)="updateSurvey()" >save</mat-icon>
-            <mat-icon matListIcon class="survey__icons" (click)="createSurvey()">add_circle</mat-icon>
-            <mat-icon matListIcon class="survey__icons" (click)="deleteSurvey()">delete</mat-icon>
+            <mat-icon matListIcon class="icons" (click)="updateSurvey()" >save</mat-icon>
+            <mat-icon matListIcon class="icons" (click)="createSurvey()">add_circle</mat-icon>
+            <mat-icon matListIcon class="icons" (click)="deleteSurvey()">delete</mat-icon>
         </div>
 
       <app-survey-subject class="row_column column-60" [surveyId]="surveyId" [wordBankId]="wordBankId"
-      [customerId]="customerId" [organizationId]="organizationId" *ngIf="surveyId && wordBankId">
+        [customerId]="customerId" [organizationId]="organizationId" *ngIf="surveyId && wordBankId">
       </app-survey-subject>
 
       <!--<pre>{{ surveyForm.value | json }}</pre>-->

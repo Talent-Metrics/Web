@@ -1,12 +1,12 @@
 <div class="survey-subject" *ngIf="surveyId$">
   <div class="survey__list--header">
     <div>Survey Subjects</div>
-    <div class="survey__icon-row">
-      <mat-icon matListIcon class="survey__icons" title="Add Survey Subject" (click)="addSurveySubject()">add_box</mat-icon>
-      <mat-icon matListIcon class="survey__icons" title="Delete Survey">delete</mat-icon>
-      <mat-icon matListIcon class="survey__icons" title="Close Survey">close</mat-icon>
-      <mat-icon matListIcon class="survey__icons" title="E-mail All Open Subjects">mail</mat-icon>
-      <mat-icon matListIcon class="survey__icons" title="Upload Survey Subjects" (click)="uploadSurvey()">publish</mat-icon>
+    <div class="icon-row">
+      <mat-icon matListIcon class="icons" title="Add Survey Subject" (click)="addSurveySubject()">add_box</mat-icon>
+      <mat-icon matListIcon class="icons" title="Delete Survey">delete</mat-icon>
+      <mat-icon matListIcon class="icons" title="Close Survey">close</mat-icon>
+      <mat-icon matListIcon class="icons" title="E-mail All Open Subjects">mail</mat-icon>
+      <mat-icon matListIcon class="icons" title="Upload Survey Subjects" (click)="uploadSurvey()">publish</mat-icon>
     </div>
   </div>
   <mat-list class="survey__list">
@@ -16,10 +16,10 @@
           <div class="row_column column-50">
             <h4 class="survey__subject--name" (click)="viewSurveySubject(subject)">{{ subject.personalInfo.lastName }}, {{ subject.personalInfo.firstName }}</h4>
           </div>
-          <div class="row_column column-50 utility__right">
-            <mat-icon matListIcon class="survey__icons">refresh</mat-icon>
-            <mat-icon matListIcon class="survey__icons" (click)="notifySurveySubject(subject)">mail</mat-icon>
-            <mat-icon matListIcon class="survey__icons" (click)="deleteSurveySubject(subject._id)">delete</mat-icon>
+          <div class="row_column column-50 column-right">
+            <mat-icon matListIcon class="icons">refresh</mat-icon>
+            <mat-icon matListIcon class="icons" (click)="notifySurveySubject(subject)">mail</mat-icon>
+            <mat-icon matListIcon class="icons" (click)="deleteSurveySubject(subject._id)">delete</mat-icon>
           </div>
         </div>
         <div class="row_container">
@@ -32,11 +32,10 @@
             <span class="survey__subject--status" *ngIf="subject.surveyInfo.completed"> Closed </span>
             <span class="survey__subject--status" *ngIf="!subject.surveyInfo.completed"> Open </span>
           </div>
-          <div class="row_column column-50 utility__right">
+          <div class="row_column column-50 column-right">
             <span class="survey__subject--notified"> Times Notified: {{ subject.surveyInfo.notifiedCount }}</span>
           </div>
         </div>
-
       </div>
     </mat-list-item>
   </mat-list>

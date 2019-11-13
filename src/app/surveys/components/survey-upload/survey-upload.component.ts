@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import * as XLSX from 'xlsx';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import { SurveySubjectService } from '../../services/survey-subject.service';
+import { SurveysService } from '../../services/surveys.service';
 import { SurveySubject } from '../../models/survey-subject';
 import * as moment from 'moment';
 
@@ -35,7 +36,8 @@ export class SurveyUploadComponent implements OnInit, OnDestroy {
   constructor(
     public dialogRef: MatDialogRef<SurveyUploadComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
-      public surveySubjectService: SurveySubjectService
+      public surveySubjectService: SurveySubjectService,
+      public surveyService: SurveysService,
 ) { }
 
   ngOnInit() {
@@ -101,6 +103,7 @@ export class SurveyUploadComponent implements OnInit, OnDestroy {
         obj.surveyInfo.organizationId = this.data.surveyInfo.organizationId;
         obj.surveyInfo.wordBankId = this.data.surveyInfo.wordBankId;
         obj.surveyInfo.surveyId = this.data.surveyInfo.surveyId;
+        obj.surveyInfo.notifiedCount = 0;
 
         this.surveySubjectService.addSurveySubject(obj)
         .subscribe((e: SurveySubject) => {
@@ -152,7 +155,20 @@ export class SurveyUploadComponent implements OnInit, OnDestroy {
     this.dialogRef.close({success: this.rowsInserted, failed: this.rowsFailed, subjects: this.surveySubjects});
   }
 
+  updateSurveyCount(cnt: number) {
+    this.data.survey.subjects = this.data.survey.subjects + cnt;
+    this.surveyService.updateSurvey(this.data.survey._id, this.data.survey)
+      .subscribe(e => {
+        // this.getSurveySubjects(sub.surveyInfo.surveyId);
+        console.log('Update survey count = ' + JSON.stringify(e));
+      }, err => console.log(err), () => console.log('survey update complete'));
+  }
+
   ngOnDestroy(): void {
+    if (this.rowsInserted > 0) {
+      this.updateSurveyCount(this.rowsInserted);
+    }
+
     this.fileUploaded = null;
     this.uploadedFile = false;
   }

@@ -10,7 +10,7 @@ import {MatDialog} from '@angular/material';
 import {SurveyOutputComponent} from '../../components/survey-output/survey-output.component';
 
 @Component({
-  selector: 'survey-external',
+  selector: 'app-survey-external',
   templateUrl: './survey-external.component.html',
   styleUrls: ['./survey-external.component.scss']
 })
@@ -19,7 +19,7 @@ export class SurveyExternalComponent implements OnInit {
   surveySubject: SurveySubject;
   surveySubjectForm: FormGroup;
   wordBank: WordBank;
-  step: number = 1;
+  step = 1;
   completed: boolean;
   getSurveySubjectById() {
     this.surveySubjectService.getSurveySubjectById(this.id)

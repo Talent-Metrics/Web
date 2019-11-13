@@ -31,11 +31,6 @@ a {
     }
   }
 }
-
-.utility__right {
-  text-align: right;
-}
-
 .survey__list {
   background-color: #E8E8E8;
   height: 21rem;
@@ -109,13 +104,7 @@ a {
   font-weight: lighter;
   font-size: .75rem;
 }
-.survey__icon-row {
-  display: block;
-  text-align: right;
-  & .survey__icons:not(:last-child) {
-    margin-right: 1rem;
-  }
-}
+
 .survey__icons {
   color: $color-matte-black;
   &:hover {

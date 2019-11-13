@@ -9,25 +9,25 @@ import {MatDialog} from '@angular/material';
 import {WordDialogComponent} from '../../components/word-dialog/word-dialog.component';
 
 @Component({
-  selector: 'word-bank',
+  selector: 'app-word-bank',
   templateUrl: './word-bank.component.html',
   styleUrls: ['./word-bank.component.scss']
 })
 export class WordBankComponent implements OnInit {
-  testId = '5c453f7ea0294b2bb92641e0';
   wordBanks: WordBank[];
   wordBank: WordBank = undefined;
   unsubscribe$ = new Subject<void>();
   wordBankForm = new FormGroup({
-    name: new FormControl({ value: '', disabled: true }, [
+    name: new FormControl({ value: ''}, [
       Validators.required
     ]),
     customerId: new FormControl(''),
-    description: new FormControl({ value: '', disabled: true }),
+    description: new FormControl({ value: ''}),
     words: new FormArray([])
   });
-  getAllByCustomer(customerId: string) {
-    this.wordBankService.getAllByCustomerId(customerId)
+
+  getAllWords() {
+    this.wordBankService.getAll()
       .pipe(
         takeUntil(this.unsubscribe$)
       )
@@ -38,7 +38,8 @@ export class WordBankComponent implements OnInit {
         console.log(err);
       }, () => { console.log('Get Word Banks complete'); });
   }
-  selectWordBank(evt) {
+
+  selectWordBank(evt: WordBank) {
     this.resetForm();
     this.wordBank = evt;
     this.wordBankForm.patchValue(evt);
@@ -46,28 +47,39 @@ export class WordBankComponent implements OnInit {
       this.pushWord(this.wordBankService.getWordForm(e));
     });
   }
+
   get words() {
     return (this.wordBankForm.get('words') as FormArray).controls;
   }
+
   pushWord(a: FormGroup) {
     (this.wordBankForm.get('words') as FormArray).push(a);
   }
+
+  removeWord(pos: number) {
+    (this.wordBankForm.get('words') as FormArray).removeAt(pos);
+  }
+
   wordDefinition(word: string) {
     this.wordBankService.getWordDefinition(word)
       .pipe(
         takeUntil(this.unsubscribe$)
       ).subscribe(e => console.log(e), err => console.log(err), () => console.log('done'));
   }
-  saveWordBank() {
+
+  updateWordBank() {
     this.wordBankService.updateOne(this.wordBank._id, this.wordBankForm.value)
       .subscribe(e => {
+        this.getAllWords();
         console.log(e);
-      }, err => console.log(err), () => console.log('save complete'));
+      }, err => console.log(err), () => console.log('word back save complete'));
   }
+
   resetForm() {
     this.wordBankForm.setControl('words', new FormArray([]));
     this.wordBankForm.reset();
   }
+
   addNewWordToBank() {
     const dialogRef = this.dialog.open(WordDialogComponent, {
       width: '700px',
@@ -77,23 +89,47 @@ export class WordBankComponent implements OnInit {
     });
     dialogRef.afterClosed()
       .subscribe(result => {
-        if (result) {
-          this.pushWord(result);
+        if (result && !result.pristine ) {
+          this.pushWord(this.wordBankService.getWordForm(result.value));
+          this.updateWordBank();
         }
       }, err => console.log(err), () => console.log('done'));
   }
-  deleteWordFromWordBank(pos: number) {
-    (this.wordBankForm.get('words') as FormArray).removeAt(pos);
+
+  updateWordInBank(word: Word) {
+    const dialogRef = this.dialog.open(WordDialogComponent, {
+      width: '700px',
+      data: {
+        wordForm: this.wordBankService.getWordForm(word)
+      }
+    });
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result && !result.pristine) {
+          const w = this.wordBank.words.findIndex(k => k.name === result.value.name);
+          (this.wordBankForm.get('words') as FormArray).at(w).patchValue(result.value);
+          this.updateWordBank();
+        }
+      }, err => console.log(err), () => console.log('done'));
   }
+
+  deleteWordInBank(word: Word) {
+    const w = this.wordBank.words.findIndex(k => k.name === word.name);
+    this.removeWord(w);
+    this.updateWordBank();
+    console.log('Deleted Word in bank =' + word.name);
+  }
+
   deleteWordBank() {
     console.log(this.wordBank._id);
     this.wordBankService.deleteOne(this.wordBank._id)
       .subscribe(e => {
         alert('You have deleted a Word Bank');
         console.log(e);
-        this.getAllByCustomer(this.testId);
+        this.getAllWords();
       }, err => console.log(err), () => console.log('delete complete'));
   }
+
   tester(pos: number) {
     console.log(pos);
   }
@@ -106,7 +142,7 @@ export class WordBankComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getAllByCustomer(this.testId);
+    this.getAllWords();
   }
 
 }

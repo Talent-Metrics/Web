@@ -58,17 +58,4 @@ $color-matte-black: #3d3d3d;
   font-weight: lighter;
   font-size: .75rem;
 }
-.survey__icon-row {
-  display: block;
-  text-align: right;
-  & .survey__icons:not(:last-child) {
-    margin-right: 1rem;
-  }
-}
-.survey__icons {
-  color: $color-matte-black;
-  &:hover {
-    cursor: pointer;
-    color: $color-accent-pink;
-  }
-}
+

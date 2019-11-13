@@ -4,6 +4,7 @@ $color-accent-pink: #dd33dd;
 $color-accent-green: #7cfc01;
 $color-matte-black: #3d3d3d;
 
+/*
 .word-bank {
   display: flex;
   justify-content: flex-start;
@@ -15,6 +16,7 @@ $color-matte-black: #3d3d3d;
     max-width: 600px;
   }
 }
+
 .word-bank__col {
   flex: 1;
   padding: 1rem;
@@ -24,6 +26,8 @@ $color-matte-black: #3d3d3d;
     width: 100%;
   }
 }
+*/
+
 .utility__container {
   display: flex;
   width: 100%;
@@ -32,9 +36,7 @@ $color-matte-black: #3d3d3d;
   flex: 1;
   width: 100%;
 }
-.utility__right {
-  text-align: right;
-}
+
 .utility__100 {
   width: 100%;
 }
@@ -82,20 +84,7 @@ $color-matte-black: #3d3d3d;
     flex: 1;
   }
 }
-.word-bank__icon-row {
-  display: block;
-  text-align: right;
-  & .survey__icons:not(:last-child) {
-    margin-right: 1rem;
-  }
-}
-.word-bank__icons {
-  color: $color-matte-black;
-  &:hover {
-    cursor: pointer;
-    color: $color-accent-pink;
-  }
-}
+
 .word-bank__icons--delete {
   margin-right: 1rem;
 }

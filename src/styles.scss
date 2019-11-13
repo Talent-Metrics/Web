@@ -227,6 +227,10 @@ a,button {
     width: 20%;
     flex: 1;
   }
+  .column-25 {
+    width:25%;
+    flex: 1 1 auto;
+  }
   .column-30 {
     width:30%;
   }
@@ -256,5 +260,35 @@ a,button {
   }
   .column-100 {
     width: 100%;
+  }
+  .column-right {
+   text-align: right;
+  }
+}
+
+.icons {
+  color: $color-matte-black;
+  &:hover {
+    cursor: pointer;
+    color: $color-accent-pink;
+  }
+}
+
+.icon-row {
+  display: block;
+  text-align: right;
+  & .icons:not(:last-child) {
+    margin-right: 1rem;
+  }
+}
+
+.title {
+  flex: 1;
+  font-family: "Avenir Next", sans-serif;
+  font-weight: lighter;
+  &:hover {
+    cursor: pointer;
+    color: $color-accent-pink;
+    font-weight: normal;
   }
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { SurveySubject } from '../../models/survey-subject';
+import { Survey } from '../../models/survey';
 import { SurveySubjectService } from '../../services/survey-subject.service';
+import { SurveysService } from '../../services/surveys.service';
 import { Observable, Subject} from 'rxjs';
 import { take, takeUntil} from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
@@ -22,6 +24,7 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
   wordBankId$: string;
   unsubscribe$ = new Subject<void>();
   surveySubjects: SurveySubject[];
+  survey: Survey;
   type: string;
 
   getSurveySubjects(surveyId: string) {
@@ -36,11 +39,24 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
       );
   }
 
+  getSurvey(surveyId: string) {
+    this.surveyService.getSurveyById(surveyId)
+      .pipe(
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((e: Survey) => {
+        this.survey = e;
+      },
+      err => console.log(err), () => console.log('complete survey subject pull')
+      );
+  }
+
   uploadSurvey() {
     const dialogRef = this.dialog.open(SurveyUploadComponent, {
       width: '500px',
       data: {
         type: 'upload',
+        survey: this.survey,
         surveyInfo: {
           customerId: this.customerId,
           organizationId: this.organizationId,
@@ -85,8 +101,17 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
     this.surveySubjectService.updateSurveySubjects(id, sub)
       .subscribe(e => {
         this.getSurveySubjects(sub.surveyInfo.surveyId);
-        alert('Record updated');
+        alert('Suver subject is updated');
       }, err => console.log(err), () => console.log('update complete'));
+  }
+
+  updateSurveyCount(id: string, cnt: number) {
+    this.survey.subjects = this.survey.subjects + cnt;
+    this.surveyService.updateSurvey(id, this.survey)
+      .subscribe(e => {
+        // this.getSurveySubjects(sub.surveyInfo.surveyId);
+        console.log('Update survey count = ' + JSON.stringify(e));
+      }, err => console.log(err), () => console.log('Update Survey Count'));
   }
 
   addSurveySubject() {
@@ -98,7 +123,8 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
         organizationId: this.organizationId,
         surveyId: this.surveyId$,
         wordBankId: this.wordBankId$,
-        createDate: moment().toJSON()
+        createDate: moment().toJSON(),
+        notifiedCount: 0
       }
     });
     console.log('Patched form: ', surveySubjectForm.value);
@@ -115,8 +141,10 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
         if (result && !result.pristine) {
           this.surveySubjectService.addSurveySubject(result.value)
             .subscribe((e: SurveySubject) => {
-              alert(`added: ${e.personalInfo.firstName}, ${e.personalInfo.lastName}`);
+              this.updateSurveyCount(this.surveyId$, 1);
               this.getSurveySubjects(this.surveyId$);
+              alert(`added: ${e.personalInfo.firstName}, ${e.personalInfo.lastName}`);
+
             }, err => console.log(err), () => console.log('complete add'));
         } else {
           console.log('aborted');
@@ -127,8 +155,9 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
   deleteSurveySubject(id: string) {
     this.surveySubjectService.deleteSurveySubject(id)
       .subscribe(e => {
-        alert('deleted');
+        this.updateSurveyCount(this.surveyId$, -1);
         this.getSurveySubjects(this.surveyId$);
+        alert('deleted');
       }, err => console.log(err), () => console.log('completed deleted'));
   }
 
@@ -138,11 +167,20 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
     this.surveySubjectService.notifySurveySubject(surveySubject)
       .pipe(
         take(1)
-      ).subscribe(result => console.log(result), err => console.log(err), () => console.log('notified'));
+      ).subscribe(
+        result => {
+          console.log(result);
+          surveySubject.surveyInfo.notifiedCount++;
+          this.updateSurveySubject(surveySubject._id, surveySubject);
+          alert(`Email has been sent to ` + surveySubject.personalInfo.email);
+        },
+        err => console.log(err),
+        () => console.log('notified'));
   }
 
   constructor(
     public surveySubjectService: SurveySubjectService,
+    public surveyService: SurveysService,
     public dialog: MatDialog
   ) { }
 
@@ -154,6 +192,7 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
     this.surveyId.subscribe(e => {
       this.surveyId$ = e;
       this.getSurveySubjects(e);
+      this.getSurvey(e);
     }, err => console.log(err), () => console.log('survey id complete'));
   }
 

@@ -34,12 +34,11 @@ $color-matte-black: #3d3d3d;
   flex: 1;
   width: 100%;
 }
-.utility__right {
-  text-align: right;
-}
+
 .utility__50 {
   width: 50%;
 }
+/*
 .survey__list--header {
   align-items: flex-start;
   background-color: #E8E8E8;
@@ -58,6 +57,8 @@ $color-matte-black: #3d3d3d;
   & > * {
     flex: 1;
   }
+
+
   //& .survey__header-text-container {
   //  display: block;
   //  position: absolute;
@@ -71,13 +72,9 @@ $color-matte-black: #3d3d3d;
   //  }
   //}
 }
-.survey__icon-row {
-  display: block;
-  text-align: right;
-  & .survey__icons:not(:last-child) {
-    margin-right: 1rem;
-  }
-}
+*/
+
+
 .survey__icons {
   color: $color-matte-black;
   &:hover {
@@ -85,6 +82,7 @@ $color-matte-black: #3d3d3d;
     color: $color-accent-pink;
   }
 }
+
 /*a {
   &.utility__button--primary {
     font-family: "Avenir Next", sans-serif;

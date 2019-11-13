@@ -3,7 +3,7 @@ import {FormArray, FormGroup} from '@angular/forms';
 import {SurveySubject} from '../../models/survey-subject';
 
 @Component({
-  selector: 'survey-info',
+  selector: 'app-survey-info',
   templateUrl: './survey-info.component.html',
   styleUrls: ['./survey-info.component.scss']
 })

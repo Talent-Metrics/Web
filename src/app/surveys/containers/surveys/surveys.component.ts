@@ -180,7 +180,7 @@ export class SurveysComponent implements OnInit, OnDestroy {
       if (id && this.customerId && this.organizationId) {
         console.log('Get surveys by organizations id');
         this.getSurveys(this.organizationId);
-        this.getWordBanks(this.customerId);
+        this.getWordBanks();
         this.setupSurvey(id);
       }
     });
