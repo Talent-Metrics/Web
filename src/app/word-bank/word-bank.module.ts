@@ -6,9 +6,10 @@ import { WordBankComponent } from './containers/word-bank/word-bank.component';
 import { MaterialModule } from '../material/material.module';
 import { WordComponent } from './components/word/word.component';
 import { WordDialogComponent } from './components/word-dialog/word-dialog.component';
+import { WordBankDialogComponent } from './components/word-bank-dialog/word-bank-dialog.component';
 
 @NgModule({
-  declarations: [WordBankComponent, WordComponent, WordDialogComponent],
+  declarations: [WordBankComponent, WordComponent, WordDialogComponent, WordBankDialogComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -17,6 +18,6 @@ import { WordDialogComponent } from './components/word-dialog/word-dialog.compon
     MaterialModule
   ],
   exports: [WordBankComponent],
-  entryComponents: [WordDialogComponent]
+  entryComponents: [WordDialogComponent, WordBankDialogComponent]
 })
 export class WordBankModule { }

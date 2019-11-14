@@ -9,6 +9,7 @@ import {FormGroup} from '@angular/forms';
 })
 export class WordDialogComponent implements OnInit {
   parent: FormGroup;
+
   createWord() {
     this.dialogRef.close(this.parent);
   }
@@ -16,6 +17,7 @@ export class WordDialogComponent implements OnInit {
   updateWord() {
     this.dialogRef.close(this.parent);
   }
+
   constructor(
     public dialogRef: MatDialogRef<WordDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any

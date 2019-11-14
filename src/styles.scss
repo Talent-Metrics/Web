@@ -292,3 +292,11 @@ a,button {
     font-weight: normal;
   }
 }
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  & .utility__col {
+    flex: 1;
+  }
+}

@@ -1,18 +1,18 @@
 <div class="customers">
   <div class="customers_col">
     <div class="row_container">
-
-      <mat-form-field class="row_column column-60">
-        <mat-select placeholder="Select Word Bank...">
-          <mat-option *ngFor="let bank of wordBanks" [value]="bank._id" (click)="selectWordBank(bank)">
-            {{bank.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <form [formGroup]="wordBankForm" *ngIf="wordBank" class="row_container">
-        <div class="row_column column-60">
-          <mat-form-field appearance="fill" color="primary" class="row_column column-50">
+      <form [formGroup]="wordBankSelectForm" class="row_container column-100">
+        <mat-form-field class="row_column column-60">
+          <mat-select formControlName='selectWordBanks' placeholder="Select Word Bank..." (selectionChange)="change($event)"  [compareWith]="compareWordBanks" >
+            <mat-option *ngFor="let bank of wordBanks" [value]="bank"  >
+              {{bank.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+      <form [formGroup]="wordBankForm" *ngIf="wordBank" class="row_container column-100">
+        <div class="row_column column-60 " >
+          <mat-form-field appearance="fill" color="primary" class="row_column column-50" >
             <mat-label>Name</mat-label>
             <input matInput formControlName="name" type="text">
           </mat-form-field>
@@ -24,18 +24,18 @@
         </div>
         <div class="row_column column-40 left-center-images">
           <mat-icon matListIcon class="icons"  (click)="updateWordBank()">save</mat-icon>
-          <mat-icon matListIcon class="icons">add_circle</mat-icon>
+          <mat-icon matListIcon class="icons" (click)="addNewWordBank()">add_circle</mat-icon>
           <mat-icon matListIcon class="icons">delete</mat-icon>
         </div>
 
-        <div class="row_column column-60 word-bank__list--header">
-          <div> Words (count: {{ wordBankLength() }})</div>
-          <div class="icon-row">
-              <mat-icon matListIcon class="icons" title="Add Word" (click)="addNewWordToBank()">add_box</mat-icon>
-          </div>
+        <div class="row_column column-60 word-bank__list--header;" >
+          <div class="row_column column-75"> Words (count: {{ wordBankLength() }})</div>
+        </div>
+        <div class="row_column column-40 left-center-images">
+          <mat-icon matListIcon class="icons" title="Add Word" (click)="addNewWordToBank()">add_box</mat-icon>
         </div>
         <mat-list formArrayName="words" *ngIf="wordBank" class="row_column column-60 word-bank__list">
-          <mat-list-item *ngFor="let item of words; let i = index;" class="word-bank__list--item">
+          <mat-list-item *ngFor="let item of words; let i = index;" class="word-bank__list--item" >
             <app-word [parent]="item" (updateWord)="updateWordInBank($event)" (deleteWord)="deleteWordInBank($event)" class="row_container column-100" ></app-word>
           </mat-list-item>
         </mat-list>

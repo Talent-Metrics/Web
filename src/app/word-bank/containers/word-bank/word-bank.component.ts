@@ -7,6 +7,7 @@ import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Word} from '../../models/word';
 import {MatDialog} from '@angular/material';
 import {WordDialogComponent} from '../../components/word-dialog/word-dialog.component';
+import {WordBankDialogComponent} from '../../components/word-bank-dialog/word-bank-dialog.component';
 
 @Component({
   selector: 'app-word-bank',
@@ -14,25 +15,39 @@ import {WordDialogComponent} from '../../components/word-dialog/word-dialog.comp
   styleUrls: ['./word-bank.component.scss']
 })
 export class WordBankComponent implements OnInit {
+  wordBankForm: FormGroup;
+  wordBankSelectForm = new FormGroup({
+    selectWordBanks: new FormControl()
+  });
   wordBanks: WordBank[];
   wordBank: WordBank = undefined;
   unsubscribe$ = new Subject<void>();
-  wordBankForm = new FormGroup({
-    name: new FormControl({ value: ''}, [
-      Validators.required
-    ]),
-    customerId: new FormControl(''),
-    description: new FormControl({ value: ''}),
-    words: new FormArray([])
-  });
 
-  getAllWords() {
+  // compareWordBanks() {
+    // this.wordBankSelectForm.controls['selectWordBanks'].setValue(this.wordBanks[1]._id);
+  // }
+
+  compareWordBanks (object1: WordBank, object2: WordBank) {
+    return object1 && object2 && object1._id === object2._id;
+  }
+
+  change(event) {
+    if (event.source.value) {
+      // console.log(event.source.value, event.source.selected);
+      this.selectWordBank(event.source.value);
+    }
+  }
+
+  getAllWords(bank?: WordBank) {
     this.wordBankService.getAll()
       .pipe(
         takeUntil(this.unsubscribe$)
       )
       .subscribe((e: WordBank[]) => {
         this.wordBanks = e;
+        if (bank) {
+          this.wordBankSelectForm.controls['selectWordBanks'].setValue(bank);
+        }
       }, err => {
         alert(err);
         console.log(err);
@@ -40,8 +55,8 @@ export class WordBankComponent implements OnInit {
   }
 
   selectWordBank(evt: WordBank) {
-    this.resetForm();
     this.wordBank = evt;
+    this.wordBankForm = this.wordBankService.getBankWordForm();
     this.wordBankForm.patchValue(evt);
     evt.words.forEach(e => {
       this.pushWord(this.wordBankService.getWordForm(e));
@@ -92,6 +107,31 @@ export class WordBankComponent implements OnInit {
         if (result && !result.pristine ) {
           this.pushWord(this.wordBankService.getWordForm(result.value));
           this.updateWordBank();
+        }
+      }, err => console.log(err), () => console.log('done'));
+  }
+
+  addNewWordBank() {
+    const dialogRef = this.dialog.open(WordBankDialogComponent, {
+      width: '700px',
+      data: {
+        wordBankForm: this.wordBankService.getBankWordForm()
+      }
+    });
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result && !result.pristine ) {
+          this.wordBankService.addOne(result.value)
+          .subscribe(wb => {
+            // this.resetForm();
+            console.log(JSON.stringify(wb));
+            // this.wordBank = wb;
+            // this.wordBankForm = result;
+            // this.wordBankForm.patchValue(wb);
+            this.getAllWords(wb);
+          },
+            err => console.log(err),
+            () => console.log('Added New Word Bank'));
         }
       }, err => console.log(err), () => console.log('done'));
   }
