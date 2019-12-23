@@ -1,9 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {FormGroup} from '@angular/forms';
+import { OrganizationReference } from '../../models/organization-reference';
 
 @Component({
-  selector: 'organization-dialog',
+  selector: 'app-organization-dialog',
   templateUrl: './organization-dialog.component.html',
   styleUrls: ['./organization-dialog.component.scss']
 })

@@ -1,0 +1,11 @@
+.survey-thankyou_container {
+  display: flex;
+  overflow: hidden;
+  flex: 1;
+  & .survey-thankyou_col {
+    display: flex;
+    flex-basis: 100%;
+    justify-content: center;
+    font-weight: bold;
+  }
+}

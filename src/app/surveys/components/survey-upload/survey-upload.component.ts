@@ -18,6 +18,8 @@ export class SurveyUploadComponent implements OnInit, OnDestroy {
   worksheet: XLSX.WorkSheet;
   rowsFound = 0;
   rowsInserted = 0;
+  rowsUpdated = 0;
+  rowsSkipped = 0;
   rowsFailed = 0;
   uploadedFile: boolean;
   processedFile: boolean;
@@ -68,7 +70,6 @@ export class SurveyUploadComponent implements OnInit, OnDestroy {
   }
 
   processFile() {
-    this.processedFile = false;
     const range = XLSX.utils.decode_range(this.worksheet['!ref']);
     const ncols = range.e.c - range.s.c + 1;
     const nrows = range.e.r - range.s.r + 1;
@@ -93,25 +94,49 @@ export class SurveyUploadComponent implements OnInit, OnDestroy {
           // Get the value
           const desired_value = (desired_cell ? desired_cell.v : undefined);
           const header_value = (header_cell ? header_cell.v : undefined);
+          if (desired_value) {
+            obj = this.mapSurveyParticipant(obj, desired_value, header_value);
+          }
 
-          obj = this.mapSurveyParticipant(obj, desired_value, header_value);
         }
 
-        obj.surveyInfo.customerId = this.data.surveyInfo.customerId;
+        obj.surveyInfo.customerId = this.data.survey.customerId;
         obj.surveyInfo.completed = false;
         obj.surveyInfo.createDate = this.data.surveyInfo.createDate;
-        obj.surveyInfo.organizationId = this.data.surveyInfo.organizationId;
-        obj.surveyInfo.wordBankId = this.data.surveyInfo.wordBankId;
-        obj.surveyInfo.surveyId = this.data.surveyInfo.surveyId;
+        obj.surveyInfo.organizationId = this.data.survey.organizationId;
+        obj.surveyInfo.wordBankId = this.data.survey.wordBankId;
+        obj.surveyInfo.surveyId = this.data.survey._id;
         obj.surveyInfo.notifiedCount = 0;
+        // check minimum for insert
+        if (obj && obj.personalInfo.firstName &&  obj.personalInfo.lastName && obj.personalInfo.email ) {
+          const surveyInfo: SurveySubject = this.data.surveySubjects
+            .find(j => j.personalInfo.email.toLowerCase().trim() === obj.personalInfo.email.toLowerCase().trim());
 
-        this.surveySubjectService.addSurveySubject(obj)
-        .subscribe((e: SurveySubject) => {
-          this.rowsInserted++;
-          this.surveySubjects.push(e);
-        },
-        err => {console.log(err); this.rowsFailed++; },
-        () => console.log('survey subject add'));
+          if (!surveyInfo) {
+            this.surveySubjectService.addSurveySubject(obj)
+            .subscribe((e: SurveySubject) => {
+              this.rowsInserted++;
+              this.data.surveySubjects.push(e);
+            },
+            err => {console.log(err); this.rowsFailed++; },
+            () => console.log('survey subject add'));
+          } else if (surveyInfo) {
+            obj._id = surveyInfo._id;
+            this.surveySubjectService.updateSurveySubjects(surveyInfo._id, obj)
+            .subscribe((e: Object) => {
+              const p = this.data.surveySubjects.findIndex((k) => k._id === surveyInfo._id);
+              surveyInfo.personalInfo = obj.personalInfo;
+              this.surveySubjects[p] = surveyInfo;
+              this.rowsUpdated++;
+            },
+            err => {console.log(err); this.rowsFailed++; },
+            () => console.log('survey subject updated'));
+          } else {
+            this.rowsSkipped++;
+          }
+        } else {
+          this.rowsFailed++;
+        }
     }
   }
 }
@@ -128,8 +153,12 @@ export class SurveyUploadComponent implements OnInit, OnDestroy {
       case 'ethnicity':
       case 'gender':
       case 'manager':
+      case 'managerEmail':
       case 'employeeClass':
         obj.personalInfo[header] = value;
+        break;
+      case 'age':
+        obj.personalInfo[header] = parseInt(value);
         break;
       case 'veteranStatus':
           obj.personalInfo.veteranStatus = (value === 'Veteran' ? true : false);
@@ -152,23 +181,11 @@ export class SurveyUploadComponent implements OnInit, OnDestroy {
   }
 
   finishSurveyUpload() {
-    this.dialogRef.close({success: this.rowsInserted, failed: this.rowsFailed, subjects: this.surveySubjects});
-  }
-
-  updateSurveyCount(cnt: number) {
-    this.data.survey.subjects = this.data.survey.subjects + cnt;
-    this.surveyService.updateSurvey(this.data.survey._id, this.data.survey)
-      .subscribe(e => {
-        // this.getSurveySubjects(sub.surveyInfo.surveyId);
-        console.log('Update survey count = ' + JSON.stringify(e));
-      }, err => console.log(err), () => console.log('survey update complete'));
+    this.dialogRef.close({inserted: this.rowsInserted, failed: this.rowsFailed, updated: this.rowsUpdated,
+      subjects: this.data.surveySubjects});
   }
 
   ngOnDestroy(): void {
-    if (this.rowsInserted > 0) {
-      this.updateSurveyCount(this.rowsInserted);
-    }
-
     this.fileUploaded = null;
     this.uploadedFile = false;
   }

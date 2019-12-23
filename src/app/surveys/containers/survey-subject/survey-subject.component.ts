@@ -47,9 +47,36 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
       .subscribe((e: Survey) => {
         this.survey = e;
       },
+      err => console.log(err), () => console.log('complete survey pull')
+      );
+  }
+
+  refreshSurveyCounts() {
+    this.surveySubjectService.getSurveySubjectsBySurvey(this.surveyId$)
+      .pipe(
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((e: SurveySubject[]) => {
+        this.surveySubjects = e;
+        let surveyCompleted = 0;
+        for (const subjectSubject of this.surveySubjects) {
+          if (subjectSubject.surveyInfo.completed) {
+            surveyCompleted++;
+          }
+        }
+        this.survey.completed = surveyCompleted;
+        this.survey.subjects = e.length;
+        this.surveyService.updateSurvey(this.surveyId$, this.survey)
+        .subscribe(s => {
+          this.getSurvey(this.surveyId$);
+          console.log('Update survey count and completed = ' + JSON.stringify(s));
+        }, err => console.log(err),
+        () => console.log('Update Survey Count'));
+      },
       err => console.log(err), () => console.log('complete survey subject pull')
       );
   }
+
 
   uploadSurvey() {
     const dialogRef = this.dialog.open(SurveyUploadComponent, {
@@ -58,20 +85,18 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
         type: 'upload',
         survey: this.survey,
         surveyInfo: {
-          customerId: this.customerId,
-          organizationId: this.organizationId,
-          surveyId: this.surveyId$,
-          wordBankId: this.wordBankId$,
           createDate: moment().toJSON()
-        }
+        },
+        surveySubjects: this.surveySubjects
       }
     });
 
     dialogRef.afterClosed()
       .subscribe(result => {
         if (result) {
-          if (result.success > 0) {
+          if (result.inserted > 0 || result.updated > 0 ) {
             this.getSurveySubjects(this.surveyId$);
+              // trigger an update survey
           }
         }
       }, err => console.log(err), () => console.log('dialog closed'));
@@ -91,6 +116,7 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
       .subscribe(result => {
         if (result && !result.pristine) {
           this.updateSurveySubject(result.value._id, result.value);
+          this.refreshSurveyCounts();
         } else {
           console.log('No changes');
         }
@@ -101,17 +127,8 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
     this.surveySubjectService.updateSurveySubjects(id, sub)
       .subscribe(e => {
         this.getSurveySubjects(sub.surveyInfo.surveyId);
-        alert('Suver subject is updated');
+        alert('Suvery subject is updated');
       }, err => console.log(err), () => console.log('update complete'));
-  }
-
-  updateSurveyCount(id: string, cnt: number) {
-    this.survey.subjects = this.survey.subjects + cnt;
-    this.surveyService.updateSurvey(id, this.survey)
-      .subscribe(e => {
-        // this.getSurveySubjects(sub.surveyInfo.surveyId);
-        console.log('Update survey count = ' + JSON.stringify(e));
-      }, err => console.log(err), () => console.log('Update Survey Count'));
   }
 
   addSurveySubject() {
@@ -141,8 +158,8 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
         if (result && !result.pristine) {
           this.surveySubjectService.addSurveySubject(result.value)
             .subscribe((e: SurveySubject) => {
-              this.updateSurveyCount(this.surveyId$, 1);
               this.getSurveySubjects(this.surveyId$);
+              this.refreshSurveyCounts();
               alert(`added: ${e.personalInfo.firstName}, ${e.personalInfo.lastName}`);
 
             }, err => console.log(err), () => console.log('complete add'));
@@ -155,15 +172,14 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
   deleteSurveySubject(id: string) {
     this.surveySubjectService.deleteSurveySubject(id)
       .subscribe(e => {
-        this.updateSurveyCount(this.surveyId$, -1);
         this.getSurveySubjects(this.surveyId$);
+        this.refreshSurveyCounts();
         alert('deleted');
       }, err => console.log(err), () => console.log('completed deleted'));
   }
 
   notifySurveySubject(surveySubject: SurveySubject) {
     console.log(surveySubject);
-    // this.surveySubjectService.notifySurveySubject({ _id: surveySubject._id, email: surveySubject.personalInfo.email })
     this.surveySubjectService.notifySurveySubject(surveySubject)
       .pipe(
         take(1)

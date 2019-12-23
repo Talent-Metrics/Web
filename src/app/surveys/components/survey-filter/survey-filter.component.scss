@@ -1,0 +1,236 @@
+$color-tm-blue: rgb(0, 136, 199);
+$color-tm-orange: rgba(250, 166, 26);
+$color-tm-lightorange: rgba(250, 166, 26, .25);
+$color-tm-red: rgba(240, 90, 34);
+
+.example-box-all {
+  padding: 2px 2px;
+  border: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction:row;
+  align-items: center;
+  //box-sizing: border-box;
+  cursor: move;
+  background: white;
+  border-radius: 4px;
+  width: 210px;
+  text-align: center;
+  //font-size: 10px;
+  max-height: 150px;
+  margin: 2px;
+}
+
+.example-all-container {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 5px;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+}
+
+.example-container-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.example-container {
+  min-width: 408px;
+  max-width: 33%;
+  margin: 0px;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+}
+
+.example-container-100 {
+    display: flex;
+    vertical-align: top;
+  }
+
+.example-container-50 {
+  width: 50%;
+  max-width: 50%;
+  margin: 0 12.5px 12.5px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: top;
+}
+
+.example-all-list {
+  border: solid 1px #ccc;
+  min-height: 250px;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+  0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
+
+/* On the flex container */
+.example-list  {
+  border:  solid 1px #ccc;
+  min-height: 250px;
+  display: flex;
+  justify-content: space-between;
+  /* You can set flex-wrap and
+     flex-direction individually */
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* Or do it all in one line
+    with flex flow */
+  flex-flow: row wrap;
+  /* tweak where items line
+     up on the row
+     valid values are: flex-start,
+     flex-end, space-between,
+     space-around, stretch */
+  align-content: flex-start;
+  overflow: hidden;
+  align-items: flex-start;
+  padding: 4px;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+  0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
+
+.example-box-cell {
+  padding: 2px 2px;
+  border: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction:row;
+  align-items: center;
+  cursor: move;
+  background: white;
+  border-radius: 4px;
+  width: 195px;
+  text-align: center;
+  max-height: 150px;
+  margin: 2px;
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-box {
+  font-weight: normal;
+ }
+
+.example-box-title {
+  font-weight: bold;
+  font-size: .65rem;
+}
+
+.example-box-title-all {
+  font-weight: bold;
+  font-size: .75rem;
+}
+
+
+.example-box-desc {
+  font-weight: normal;
+  font-size: .5rem;
+  overflow-y: auto;
+}
+
+
+.survey-pyramid {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  & .survey-sections {
+    flex: 1 1 auto;
+    padding-right: 24px;
+    & .survey-instructions {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+.survey-instructions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  & .survey-instructions__logo {
+    background-image: url("../../../../assets/images/tmLogo.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    opacity: .5;
+    height: 120px;
+    width: 118px;
+  }
+  & .survey-instructions__tm-title {
+    font-family: democratica, sans-serif;
+  }
+  & .survey-filler_begin{
+    display: flex;
+    justify-content: center;
+  }
+}
+
+mat-expansion-panel-header {
+  background: $color-tm-blue;
+}
+
+mat-expansion-panel-header:hover {
+  background:$color-tm-orange;
+}
+
+.mat-expansion-panel-header.mat-expanded:focus, .mat-expansion-panel-header.mat-expanded:hover {
+  background:$color-tm-orange;
+}
+
+.mat-expansion-panel .mat-expansion-panel-header.cdk-keyboard-focused:not([aria-disabled=true]),
+.mat-expansion-panel .mat-expansion-panel-header.cdk-program-focused:not([aria-disabled=true]),
+ .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]) {
+  background:$color-tm-red;
+ }
+
+mat-panel-description {
+  color:white;
+}
+
+.survey-filler_continue {
+  margin-top: 15pt;
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: #0088c7;
+  margin-bottom: 5px;
+}
+
+.dot {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    background-color: $color-tm-lightorange;
+  }
+}
+
+.mat-expansion-panel-header-description, .mat-expansion-panel-header-title {
+  margin-right: 3px;
+}

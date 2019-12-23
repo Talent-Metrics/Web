@@ -25,15 +25,9 @@
             </mat-option>
         </mat-select>
       </mat-form-field>
-<!--      <mat-form-field appearance="fill" color="primary">-->
-<!--        <mat-label>Date of Birth</mat-label>-->
-<!--        <input matInput formControlName="dob" type="number">-->
-<!--      </mat-form-field>-->
       <mat-form-field appearance="fill" color="primary">
-        <mat-label>Date of Birth</mat-label>
-        <input matInput [matDatepicker]="dobPicker" placeholder="Choose a date" formControlName="dob">
-        <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
-        <mat-datepicker #dobPicker></mat-datepicker>
+        <mat-label>Age</mat-label>
+        <input matInput formControlName="age" type="number">
       </mat-form-field>
       <mat-form-field appearance="fill" color="primary">
         <mat-label>Department</mat-label>
@@ -47,10 +41,6 @@
         <mat-label>Location</mat-label>
         <input matInput formControlName="location" type="text">
       </mat-form-field>
-<!--      <mat-form-field appearance="fill" color="primary">-->
-<!--        <mat-label>Hire Date</mat-label>-->
-<!--        <input matInput formControlName="hireDate" type="number">-->
-<!--      </mat-form-field>-->
       <mat-form-field appearance="fill" color="primary">
         <mat-label>Hire Date</mat-label>
         <input matInput [matDatepicker]="hireDatePicker" placeholder="Choose a date" formControlName="hireDate">
@@ -101,6 +91,10 @@
         <mat-label>Manager</mat-label>
         <input matInput formControlName="manager" type="text">
       </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Manager Email</mat-label>
+        <input matInput formControlName="managerEmail" type="text">
+      </mat-form-field>
     </div>
     <div formGroupName="surveyInfo" class="utility__container" [hidden]="!viewUpdate">
       <mat-form-field appearance="fill" color="primary">
@@ -142,4 +136,3 @@
   <a class="utility__button--primary" *ngIf="data.type === 'add'" (click)="addSurveySubject()">Create</a>
 
 </form>
-<!--<pre>{{ surveySubjectForm.value | json }}</pre>-->

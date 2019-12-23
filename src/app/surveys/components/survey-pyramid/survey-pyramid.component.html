@@ -31,100 +31,102 @@
         <a class="utility__button--primary" (click)="closeInstructions()"> Begin Survey </a>
       </div>
     </div>
-    <div *ngIf="veryDescriptive.length < 3 && !instructions">
-      <h3> Very Descriptive of your culture</h3>
-      <h5>Drag {{ 3 - veryDescriptive.length }} more words from the right</h5>
-      <mat-list
-        class="survey-sections__drop-area"
-        (drop)="drop('veryDescriptive', $event)"
-        (dragover)="allowDrop($event)"
-        (dragenter)="tester($event)"
-        (dragleave)="tester2($event)"
-      >
-        <mat-list-item *ngFor="let very of veryDescriptive; let i = index;">
-          {{ very.name }}
-        </mat-list-item>
-      </mat-list>
-    </div>
+    <div *ngIf="instructions">
+      <div *ngIf="veryDescriptive.length < 3 && !instructions">
+        <h3> Very Descriptive of your culture</h3>
+        <h5>Drag {{ 3 - veryDescriptive.length }} more words from the right</h5>
+        <mat-list
+          class="survey-sections__drop-area"
+          (drop)="drop('veryDescriptive', $event)"
+          (dragover)="allowDrop($event)"
+          (dragenter)="tester($event)"
+          (dragleave)="tester2($event)"
+        >
+          <mat-list-item *ngFor="let very of veryDescriptive; let i = index;">
+            {{ very.name }}
+          </mat-list-item>
+        </mat-list>
+      </div>
 
-    <div *ngIf="somewhatDescriptive.length < 6 && veryDescriptive.length === 3 && !instructions">
-      <h3> Somewhat Descriptive </h3>
-      <h5>Drag {{ 6 - somewhatDescriptive.length }} more words from the right</h5>
-      <mat-list
-        class="survey-sections__drop-area"
-        (drop)="drop('somewhatDescriptive', $event)"
-        (dragover)="allowDrop($event)"
-        (dragenter)="tester($event)"
-        (dragleave)="tester2($event)"
-      >
-        <mat-list-item *ngFor="let somewhat of somewhatDescriptive; let i = index;">
-          {{ somewhat.name }}
-        </mat-list-item>
-      </mat-list>
-    </div>
+      <div *ngIf="somewhatDescriptive.length < 6 && veryDescriptive.length === 3 && !instructions">
+        <h3> Somewhat Descriptive </h3>
+        <h5>Drag {{ 6 - somewhatDescriptive.length }} more words from the right</h5>
+        <mat-list
+          class="survey-sections__drop-area"
+          (drop)="drop('somewhatDescriptive', $event)"
+          (dragover)="allowDrop($event)"
+          (dragenter)="tester($event)"
+          (dragleave)="tester2($event)"
+        >
+          <mat-list-item *ngFor="let somewhat of somewhatDescriptive; let i = index;">
+            {{ somewhat.name }}
+          </mat-list-item>
+        </mat-list>
+      </div>
 
-    <div *ngIf="slightlyDescriptive.length < 8 && somewhatDescriptive.length === 6 && !instructions">
-      <h3> Slightly Descriptive </h3>
-      <h5>Drag {{ 8 - slightlyDescriptive.length }} more words from the right </h5>
-      <mat-list
-        class="survey-sections__drop-area"
-        (drop)="drop('slightlyDescriptive', $event)"
-        (dragover)="allowDrop($event)"
-        (dragenter)="tester($event)"
-        (dragleave)="tester2($event)"
-      >
-        <mat-list-item *ngFor="let slightly of slightlyDescriptive; let i = index;">
-          {{ slightly.name }}
-        </mat-list-item>
-      </mat-list>
-    </div>
+      <div *ngIf="slightlyDescriptive.length < 8 && somewhatDescriptive.length === 6 && !instructions">
+        <h3> Slightly Descriptive </h3>
+        <h5>Drag {{ 8 - slightlyDescriptive.length }} more words from the right </h5>
+        <mat-list
+          class="survey-sections__drop-area"
+          (drop)="drop('slightlyDescriptive', $event)"
+          (dragover)="allowDrop($event)"
+          (dragenter)="tester($event)"
+          (dragleave)="tester2($event)"
+        >
+          <mat-list-item *ngFor="let slightly of slightlyDescriptive; let i = index;">
+            {{ slightly.name }}
+          </mat-list-item>
+        </mat-list>
+      </div>
 
-    <div *ngIf="notVeryDescriptive.length < 6 && slightlyDescriptive.length === 8 && !instructions">
-      <h3> Not Very Descriptive </h3>
-      <h5>Drag {{ 6 - notVeryDescriptive.length }} more words from the right</h5>
-      <mat-list
-        class="survey-sections__drop-area"
-        (drop)="drop('notVeryDescriptive', $event)"
-        (dragover)="allowDrop($event)"
-        (dragenter)="tester($event)"
-        (dragleave)="tester2($event)"
-      >
-        <mat-list-item *ngFor="let notVery of notVeryDescriptive; let i = index;">
-          {{ notVery.name }}
-        </mat-list-item>
-      </mat-list>
-    </div>
+      <div *ngIf="notVeryDescriptive.length < 6 && slightlyDescriptive.length === 8 && !instructions">
+        <h3> Not Very Descriptive </h3>
+        <h5>Drag {{ 6 - notVeryDescriptive.length }} more words from the right</h5>
+        <mat-list
+          class="survey-sections__drop-area"
+          (drop)="drop('notVeryDescriptive', $event)"
+          (dragover)="allowDrop($event)"
+          (dragenter)="tester($event)"
+          (dragleave)="tester2($event)"
+        >
+          <mat-list-item *ngFor="let notVery of notVeryDescriptive; let i = index;">
+            {{ notVery.name }}
+          </mat-list-item>
+        </mat-list>
+      </div>
 
-    <div *ngIf="notAtAllDescriptive.length < 3 && notVeryDescriptive.length === 6 && !instructions">
-      <h3> Not At All Descriptive </h3>
-      <h5>Drag {{ 3 - notAtAllDescriptive.length }} more words from the right</h5>
-      <mat-list
-        class="survey-sections__drop-area"
-        (drop)="drop('notAtAllDescriptive', $event)"
-        (dragover)="allowDrop($event)"
-        (dragenter)="tester($event)"
-        (dragleave)="tester2($event)"
-      >
+      <div *ngIf="notAtAllDescriptive.length < 3 && notVeryDescriptive.length === 6 && !instructions">
+        <h3> Not At All Descriptive </h3>
+        <h5> Drag {{ 3 - notAtAllDescriptive.length }} more words from the right</h5>
+        <mat-list
+          class="survey-sections__drop-area"
+          (drop)="drop('notAtAllDescriptive', $event)"
+          (dragover)="allowDrop($event)"
+          (dragenter)="tester($event)"
+          (dragleave)="tester2($event)"
+        >
         <mat-list-item *ngFor="let notAtAll of notAtAllDescriptive; let i = index;">
           {{ notAtAll.name }}
         </mat-list-item>
-      </mat-list>
+        </mat-list>
+      </div>
+
+      <br/>
+
+      <div class="survey-pyramid__button-row">
+        <a class="utility__button--primary" *ngIf="!instructions" (click)="resetSurvey()"> Reset Survey </a>
+        <a class="utility__button--primary" *ngIf="!instructions" (click)="showInstructions()"> Show Instructions </a>
+        <a class="utility__button--primary" *ngIf="importedWordBank.length === 0 && !instructions" (click)="setCategories()"> Review and Submit </a>
+      </div>
+
+      <div style="max-height: 500px;">
+        <mat-list class="right-pane-wordlist" *ngIf="importedWordBank.length > 0 && !instructions">
+          <mat-list-item *ngFor="let word of importedWordBank; let i = index" (dragstart)="dragWord(i)" draggable="true" class="list-words" title="{{ word.definition }}">
+            {{ word.name }}
+          </mat-list-item>
+        </mat-list>
+      </div>
     </div>
-
-    <br>
-
-    <div class="survey-pyramid__button-row">
-      <a class="utility__button--primary" *ngIf="!instructions" (click)="resetSurvey()"> Reset Survey </a>
-      <a class="utility__button--primary" *ngIf="!instructions" (click)="showInstructions()"> Show Instructions </a>
-      <a class="utility__button--primary" *ngIf="importedWordBank.length === 0 && !instructions" (click)="setCategories()"> Review and Submit </a>
-    </div>
-  </div>
-
-  <div style="max-height: 500px;">
-    <mat-list class="right-pane-wordlist" *ngIf="importedWordBank.length > 0 && !instructions">
-      <mat-list-item *ngFor="let word of importedWordBank; let i = index" (dragstart)="dragWord(i)" draggable="true" class="list-words" title="{{ word.definition }}">
-        {{ word.name }}
-      </mat-list-item>
-    </mat-list>
   </div>
 </div>

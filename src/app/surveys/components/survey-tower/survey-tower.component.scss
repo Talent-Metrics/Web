@@ -1,0 +1,192 @@
+/* Inserting this collapsed row between two flex items will make
+ * the flex item that comes after it break to a new row */
+$color-tm-blue: rgb(0, 136, 199);
+$color-tm-orange: rgba(250, 166, 26);
+$color-tm-red: rgba(240, 90, 34);
+
+.break {
+  flex-basis: 100%;
+  height: 0;
+}
+
+.example-container-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.example-container {
+  max-width: 310px;
+  margin: 0px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.example-container-lg {
+  max-width: 350px;
+  margin: 0px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.example-container-100 {
+    display: flex;
+    vertical-align: top;
+  }
+
+.example-container-50 {
+  width: 50%;
+  max-width: 50%;
+  margin: 0 12.5px 12.5px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: top;
+}
+
+/* On the flex container */
+.example-list  {
+  border: solid 1px #ccc;
+  min-height: 250px;
+  min-width: 310px;
+  display: flex;
+  justify-content: space-between;
+  /* You can set flex-wrap and
+     flex-direction individually */
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* Or do it all in one line
+    with flex flow */
+  flex-flow: row wrap;
+  /* tweak where items line
+     up on the row
+     valid values are: flex-start,
+     flex-end, space-between,
+     space-around, stretch */
+  align-content: flex-start;
+  overflow: hidden;
+  align-items: flex-start;
+  padding: 4px;
+  border-radius: 4px;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+  0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
+
+.example-box-cell {
+  border: solid 1px #ccc;
+  color: white;
+  display: flex;
+  flex-direction:row;
+  align-items: center;
+  cursor: pointer;
+  background: $color-tm-blue;
+  border-radius: 4px;
+  width: 125px;
+  text-align: center;
+  max-height: 100px;
+  min-height: 55px;
+  font-size: .75rem;
+  font-weight: bold;
+  padding: 0px 4px;
+  justify-content: center;
+  &:hover {
+    background:$color-tm-orange;
+  }
+}
+
+.example-box-all {
+  border: solid 1px #ccc;
+  color: white;
+  display: flex;
+  flex-direction:row;
+  align-items: center;
+  cursor: pointer;
+  background: $color-tm-blue;
+  border-radius: 4px;
+  width: 135px;
+  text-align: center;
+  max-height: 100px;
+  min-height: 55px;
+  margin: 2px;
+  font-size: .75rem;
+  font-weight: bold;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+  0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  padding: 0px 4px;
+  justify-content: center;
+  &:hover {
+    background:$color-tm-orange;
+  }
+}
+
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-box {
+  font-weight: normal;
+ }
+
+.example-box-title {
+  font-weight: bold;
+  font-size: .75rem;
+}
+
+.example-box-desc {
+  font-weight: normal;
+  font-size: .5rem;
+  overflow-y: auto;
+}
+
+.container-example {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px 0px;
+  margin-bottom: 15px;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+  0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
+
+.item {
+  border: solid 1px #ccc;
+  border-radius: 10px;
+  min-width: 135px;
+  min-height: 48px;
+  padding: 4px;
+  margin-left: 2px;
+  margin-top: 4px;
+  display: flex;
+  max-height: 65px;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+  0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+
+}
+
+.example-box mat-expansion-panel-header {
+  padding: 0 8px;
+}
+
+.header {
+  font-weight: 500;
+  font-size: 1.35rem;
+  color: #0088c7;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.survey-tower_button-row {
+  margin-top: 15pt;
+  display: flex;
+  justify-content: center;
+}

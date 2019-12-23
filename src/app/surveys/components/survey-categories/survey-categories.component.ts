@@ -47,7 +47,8 @@ export class SurveyCategoriesComponent implements OnInit {
     return (this.highly.length > 2 && this.somewhat.length > 5 && this.slightly.length > 7 && this.notVery.length < 6);
   }
   showNotAtAll() {
-    return (this.highly.length > 2 && this.somewhat.length > 5 && this.slightly.length > 7 && this.notVery.length > 5 && this.notAtAll.length < 3);
+    return (this.highly.length > 2 && this.somewhat.length > 5 && this.slightly.length > 7 && this.notVery.length > 5
+      && this.notAtAll.length < 3);
   }
   resetCategories() {
     this.highly = [];

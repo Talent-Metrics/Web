@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SurveySubject } from '../models/survey-subject';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import {BehaviorSubject} from 'rxjs';
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -36,7 +34,8 @@ export class SurveySubjectService {
           ]),
           positionTitle: new FormControl(a.personalInfo.positionTitle),
           employeeClass: new FormControl(a.personalInfo.employeeClass),
-          dob: new FormControl(a.personalInfo.dob),
+          // dob: new FormControl(a.personalInfo.dob),
+          age: new FormControl(a.personalInfo.age),
           department: new FormControl(a.personalInfo.department),
           division: new FormControl(a.personalInfo.division),
           location: new FormControl(a.personalInfo.location),
@@ -46,7 +45,8 @@ export class SurveySubjectService {
           veteranStatus: new FormControl(a.personalInfo.veteranStatus),
           disabilityStatus: new FormControl(a.personalInfo.disabilityStatus),
           educationLevel: new FormControl(a.personalInfo.educationLevel),
-          manager: new FormControl(a.personalInfo.manager)
+          manager: new FormControl(a.personalInfo.manager),
+          managerEmail: new FormControl(a.personalInfo.managerEmail)
         }),
         surveyInfo: new FormGroup({
           customerId: new FormControl(a.surveyInfo.customerId, [
@@ -83,6 +83,23 @@ export class SurveySubjectService {
           ]),
           category5: new FormControl(a.categories.category5, [
             Validators.required
+          ]),
+          category6: new FormControl(a.categories.category6, [
+            Validators.required
+          ]),
+          category7: new FormControl(a.categories.category7, [
+            Validators.required
+          ])
+        }),
+        filters: new FormGroup({
+          filter1: new FormControl([], [
+            Validators.required
+          ]),
+          filter2: new FormControl([], [
+            Validators.required
+          ]),
+          filter3: new FormControl([], [
+            Validators.required
           ])
         })
       });
@@ -101,7 +118,8 @@ export class SurveySubjectService {
           ]),
           positionTitle: new FormControl(''),
           employeeClass: new FormControl(''),
-          dob: new FormControl(0),
+          // dob: new FormControl(0),
+          age: new FormControl(),
           department: new FormControl(''),
           division: new FormControl(''),
           location: new FormControl(''),
@@ -111,7 +129,8 @@ export class SurveySubjectService {
           veteranStatus: new FormControl(false),
           disabilityStatus: new FormControl(false),
           educationLevel: new FormControl(0),
-          manager: new FormControl('')
+          manager: new FormControl(''),
+          managerEmail: new FormControl('')
         }),
         surveyInfo: new FormGroup({
           customerId: new FormControl('', [
@@ -133,17 +152,28 @@ export class SurveySubjectService {
             Validators.required
           ])
         }),
+        filters: new FormGroup({
+          filter1: new FormControl([], [
+            Validators.required
+          ]),
+          filter2: new FormControl([], [
+            Validators.required
+          ]),
+          filter3: new FormControl([], [
+            Validators.required
+          ])
+        }),
         categories: new FormGroup({
           category1: new FormControl([], [
-            Validators.maxLength(3),
+            Validators.maxLength(2),
             Validators.required
           ]),
           category2: new FormControl([], [
-            Validators.maxLength(6),
+            Validators.maxLength(3),
             Validators.required
           ]),
           category3: new FormControl([], [
-            Validators.maxLength(8),
+            Validators.maxLength(5),
             Validators.required
           ]),
           category4: new FormControl([], [
@@ -151,7 +181,15 @@ export class SurveySubjectService {
             Validators.required
           ]),
           category5: new FormControl([], [
+            Validators.maxLength(5),
+            Validators.required
+          ]),
+          category6: new FormControl([], [
             Validators.maxLength(3),
+            Validators.required
+          ]),
+          category7: new FormControl([], [
+            Validators.maxLength(2),
             Validators.required
           ])
         })

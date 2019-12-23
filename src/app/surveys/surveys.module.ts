@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { MatFileUploadModule } from 'angular-material-fileupload';
+import { DragDropModule} from '@angular/cdk/drag-drop';
+import { MatTooltipModule} from '@angular/material/tooltip';
 
 import { SurveysComponent } from './containers/surveys/surveys.component';
 import { SurveyInfoComponent } from './components/survey-info/survey-info.component';
@@ -19,6 +21,10 @@ import { SurveyOutputComponent } from './components/survey-output/survey-output.
 import { SurveyPyramidComponent } from './components/survey-pyramid/survey-pyramid.component';
 import { SurveyListComponent } from './components/survey-list/survey-list.component';
 import { SurveyUploadComponent } from './components/survey-upload/survey-upload.component';
+import { SurveyConfirmationComponent } from './components/survey-confirmation/survey-confirmation.component';
+import { SurveyFilterComponent } from './components/survey-filter/survey-filter.component';
+import { SurveyTowerComponent } from './components/survey-tower/survey-tower.component';
+import { SurveyThankyouComponent } from './components/survey-thankyou/survey-thankyou.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +39,11 @@ import { SurveyUploadComponent } from './components/survey-upload/survey-upload.
     SurveyOutputComponent,
     SurveyPyramidComponent,
     SurveyListComponent,
-    SurveyUploadComponent
+    SurveyUploadComponent,
+    SurveyConfirmationComponent,
+    SurveyFilterComponent,
+    SurveyTowerComponent,
+    SurveyThankyouComponent
   ],
   imports: [
     CommonModule,
@@ -43,8 +53,11 @@ import { SurveyUploadComponent } from './components/survey-upload/survey-upload.
     ReactiveFormsModule,
     MaterialModule,
     MatFileUploadModule,
+    DragDropModule,
+    MatTooltipModule
   ],
   exports: [ SurveyListComponent, SurveyDialogComponent],
-  entryComponents: [SurveySubjectInfoComponent, SurveyDialogComponent, SurveyOutputComponent, SurveyUploadComponent]
+  entryComponents: [SurveySubjectInfoComponent, SurveyDialogComponent, SurveyOutputComponent, SurveyUploadComponent,
+  SurveyConfirmationComponent]
 })
 export class SurveysModule { }

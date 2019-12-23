@@ -2,9 +2,10 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {WordBank} from '../../../word-bank/models/word-bank';
 import {Word} from '../../../word-bank/models/word';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 @Component({
-  selector: 'survey-pyramid',
+  selector: 'app-survey-pyramid',
   templateUrl: './survey-pyramid.component.html',
   styleUrls: ['./survey-pyramid.component.scss']
 })
@@ -16,7 +17,9 @@ export class SurveyPyramidComponent implements OnInit {
   @Output()
     update: EventEmitter<any> = new EventEmitter<any>();
   // selectedWord;
-  importedWordBank: Word[];
+  allWordBank: Word[] = [];
+  // ------------------------
+  importedWordBank: Word[] = [];
   selectedIndex: number;
   instructions: number;
   veryDescriptive: Word[] = [];
@@ -24,24 +27,47 @@ export class SurveyPyramidComponent implements OnInit {
   slightlyDescriptive: Word[] = [];
   notVeryDescriptive: Word[] = [];
   notAtAllDescriptive: Word[] = [];
+
   dragWord(i: number) {
     this.selectedIndex = i;
   }
+
   allowDrop(evt) {
     evt.preventDefault();
   }
+
   drop(section, evt) {
     evt.preventDefault();
     this[section].push(this.importedWordBank.splice(this.selectedIndex, 1)[0]);
     evt.target.classList.remove('utility__opacity-50');
   }
+
+  dropEvent(event: CdkDragDrop<Word[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      /*
+      console.log('previousContainer= ' + JSON.stringify(event.previousContainer.data));
+      console.log('container= ' + JSON.stringify(event.container.data));
+      console.log('previousIndex= ' + JSON.stringify(event.previousIndex));
+      console.log('currentIndex= ' + JSON.stringify(event.currentIndex));
+      */
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+    }
+  }
+
   closeInstructions() {
     this.instructions = 0;
   }
+
   setWordBank() {
     let tempStorage = [];
     tempStorage = Object.assign(tempStorage, this.wordBank.words);
     this.importedWordBank = tempStorage;
+    this.allWordBank = tempStorage;
   }
   resetSurvey() {
     this.selectedIndex = undefined;

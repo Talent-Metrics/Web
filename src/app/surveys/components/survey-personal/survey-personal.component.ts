@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 
 @Component({
-  selector: 'survey-personal',
+  selector: 'app-survey-personal',
   templateUrl: './survey-personal.component.html',
   styleUrls: ['./survey-personal.component.scss']
 })

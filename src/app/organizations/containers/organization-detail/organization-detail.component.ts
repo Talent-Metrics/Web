@@ -14,7 +14,7 @@ import { Subject } from 'rxjs';
 import { MatDialog} from '@angular/material';
 import { SurveyDialogComponent} from '../../../surveys/components/survey-dialog/survey-dialog.component';
 import { SurveyListComponent} from '../../../surveys/components/survey-list/survey-list.component';
-import { OrganizationDialogComponent} from '../../components/organization-dialog/organization-dialog.component';
+// import { OrganizationDialogComponent} from '../../components/organization-dialog/organization-dialog.component';
 
 @Component({
   selector: 'app-organization-details',

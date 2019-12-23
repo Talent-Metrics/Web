@@ -2,35 +2,6 @@ import {Word} from '../../word-bank/models/word';
 
 export interface SurveySubject {
   _id?: string;
-  // customerId: string;
-  // firstName: string;
-  // lastName: string;
-  // email: string;
-  // organizationId: string;
-  // positionTitle: string;
-  // employeeClass: string;
-  // age: number;
-  // department: string;
-  // division: string;
-  // location: string;
-  // yearsService: number;
-  // gender: string;
-  // ethnicity: string;
-  // veteranStatus: boolean;
-  // disabilityStatus: boolean;
-  // educationLevel: number;
-  // manager: string;
-  // createDate: number;
-  // completionDate: number;
-  // completed: boolean;
-  // notifiedCount: number;
-  // surveyId: string;
-  // wordBankId: string;
-  // category1: string[];
-  // category2: [];
-  // category3: [];
-  // category4: [];
-  // category5: [];
   surveyInfo: {
     completed: boolean,
     completionDate: number,
@@ -47,7 +18,8 @@ export interface SurveySubject {
     email: string,
     positionTitle: string,
     employeeClass: string,
-    dob: Date,
+    // dob: Date,
+    age: number,
     department: string,
     division: string,
     location: string,
@@ -57,13 +29,16 @@ export interface SurveySubject {
     veteranStatus: boolean,
     disabilityStatus: boolean,
     educationLevel: number,
-    manager: string
+    manager: string,
+    managerEmail: string
   };
   categories: {
     category1: Word[],
     category2: Word[],
     category3: Word[],
     category4: Word[],
-    category5: Word[]
+    category5: Word[],
+    category6: Word[],
+    category7: Word[],
   };
 }

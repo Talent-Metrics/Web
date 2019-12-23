@@ -53,31 +53,8 @@ mat-list-item.list-words {
 }
 a {
   &.utility__button--primary {
-    font-family: "Avenir Next", sans-serif;
-    border-radius: 3px;
-    color: $color-matte-black;
-    border-bottom: 3px solid $color-matte-black;
-    display: inline-block;
-    background-color: $color-basic-white;
-    padding: .5rem 2rem;
-    transition: all .5s;
     &:not(:last-child) {
       margin-right: 1rem;
-    }
-    &:hover {
-      background-color: $color-matte-black;
-      border-bottom: 3px solid $color-accent-pink;
-      cursor: pointer;
-      color: $color-accent-pink;
-      box-shadow: 3px 3px 3rem $color-matte-black;
-      transform: translateY(-.33rem);
-    }
-    &:active {
-      background-color: $color-matte-black;
-      box-shadow: none;
-      border-bottom: 3px solid $color-accent-green;
-      color: $color-accent-green;
-      transform: translateY(0);
     }
   }
 }
@@ -118,3 +95,7 @@ a {
     font-family: democratica, sans-serif;
   }
 }
+
+
+
+

@@ -47,12 +47,18 @@
           {{ notAtAll.name }}
         </div>
       </div>
+      <div class="survey-output__container">
+        <div class="survey-output__word" *ngFor="let notAtAll of category6">
+          {{ notAtAll.name }}
+        </div>
+      </div>
+
+      <div class="survey-output__container">
+        <div class="survey-output__word" *ngFor="let notAtAll of category7">
+          {{ notAtAll.name }}
+        </div>
+      </div>
+
     </div>
   </div>
-
-<!--  <div class="survey-external__button-row">-->
-<!--    <a class="utility__button&#45;&#45;primary" (click)="closeDialog(false)"> Close </a>-->
-<!--    <a class="utility__button&#45;&#45;primary" *ngIf="!completed" (click)="closeDialog(true)"> Submit </a>-->
-<!--  </div>-->
-
 </div>

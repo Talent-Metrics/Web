@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {SurveySubject} from '../../models/survey-subject';
-import {SurveySubjectService} from '../../services/survey-subject.service';
-import {take} from 'rxjs/operators';
-import {FormArray, FormControl, FormGroup} from '@angular/forms';
-import {WordBankService} from '../../../word-bank/services/word-bank.service';
-import {WordBank} from '../../../word-bank/models/word-bank';
-import {MatDialog} from '@angular/material';
-import {SurveyOutputComponent} from '../../components/survey-output/survey-output.component';
+import { SurveySubject} from '../../models/survey-subject';
+import { SurveySubjectService} from '../../services/survey-subject.service';
+import { OrganizationsService} from '../../../organizations/services/organizations.service';
+import { take} from 'rxjs/operators';
+import { FormArray, FormControl, FormGroup} from '@angular/forms';
+import { WordBankService} from '../../../word-bank/services/word-bank.service';
+import { WordBank} from '../../../word-bank/models/word-bank';
+import { Word } from '../../../word-bank/models/word';
+import { MatDialog} from '@angular/material';
+import { SurveyConfirmationComponent} from '../../components/survey-confirmation/survey-confirmation.component';
+import { Organization } from 'src/app/organizations/models/organization';
 
 @Component({
   selector: 'app-survey-external',
@@ -19,20 +22,34 @@ export class SurveyExternalComponent implements OnInit {
   surveySubject: SurveySubject;
   surveySubjectForm: FormGroup;
   wordBank: WordBank;
+  filter1: Word[] = [];
+  filter2: Word[] = [];
+  filter3: Word[] = [];
   step = 1;
   completed: boolean;
+  organization: Organization;
+
   getSurveySubjectById() {
     this.surveySubjectService.getSurveySubjectById(this.id)
       .pipe(
         take(1)
       ).subscribe((result: SurveySubject) => {
-        if (result.surveyInfo.completed) {
-          this.step = 4;
-          this.completed = true;
+        if (result) {
+          if (result.surveyInfo.completed) {
+            this.step = 5;
+            this.completed = true;
+          }
+          this.organizationsService.getOrganizationById(result.surveyInfo.organizationId)
+          .subscribe((org: Organization) => {
+            this.organization = org;
+          });
+          this.surveySubject = result;
+          this.surveySubjectForm = this.surveySubjectService.surveySubjectForm(result);
+          this.getWordBank(result.surveyInfo.wordBankId);
+        } else {
+          // Hide everything and show an error
+          this.step = -1;
         }
-        this.surveySubject = result;
-        this.surveySubjectForm = this.surveySubjectService.surveySubjectForm(result);
-        this.getWordBank(result.surveyInfo.wordBankId);
     }, err => console.log(err), () => console.log('finished'));
   }
   getWordBank(wordBankId: string) {
@@ -53,8 +70,15 @@ export class SurveyExternalComponent implements OnInit {
       return this.surveySubjectForm.get('categories') as FormGroup;
     }
   }
+
+  get filters() {
+    if (this.surveySubjectForm.get('filters')) {
+      return this.surveySubjectForm.get('filters') as FormGroup;
+    }
+  }
+
   setStep(which: number) {
-    if (this.step === 4) {
+    if (this.step === 6) {
       return;
     }
     this.step = which;
@@ -65,12 +89,25 @@ export class SurveyExternalComponent implements OnInit {
         personalInfo: evt.values
       });
     }
-    this.step++;
+    this.step = 2;
   }
+
   setCategories(evt) {
+    console.log(evt);
     this.surveySubjectForm.patchValue(evt);
-    this.step++;
+    this.step = 4;
   }
+
+  setFilters(evt) {
+    console.log(evt);
+    this.surveySubjectForm.patchValue({evt});
+    const group = this.surveySubjectForm.get('filters') as FormGroup;
+    this.filter1 = group.get('filter1').value as Word[];
+    this.filter2 = group.get('filter2').value as Word[];
+    this.filter3 = group.get('filter3').value as Word[];
+    this.step = 3;
+  }
+
   checkFormForFinal() {
     if (this.surveySubjectForm.valid) {
       this.surveySubjectForm.patchValue({
@@ -79,18 +116,55 @@ export class SurveyExternalComponent implements OnInit {
           completionDate: new Date()
         }
       });
+      return true;
+    } else {
+      return false;
     }
   }
   updateSurveySubject() {
-    this.checkFormForFinal();
-    this.surveySubjectService.updateSurveySubjects(this.surveySubject._id, this.surveySubjectForm.value)
-      .subscribe(result => {
-        console.log(result);
-      }, err => console.log(err), () => console.log('update complete'));
+    if (this.checkFormForFinal()) {
+      // possible spinner
+      this.surveySubjectService.updateSurveySubjects(this.surveySubject._id, this.surveySubjectForm.value)
+        .subscribe(result => {
+          this.dialogMessage('Your survey has been successfully submitted and saved.');
+          console.log('Update Survey Subject = ' + JSON.stringify(result));
+          this.getSurveySubjectById();
+        },
+        err => {
+          console.log(err); this.dialogMessage('Your survey was not successfully submitted. Please resubmit the survey.');
+        },
+        () => {
+          console.log('Update to updateSurveySubject completed');
+        });
+      } else {
+        this.dialogMessage('Form is invalid and unable to submit');
+      }
   }
+
+  dialogMessage(message: string) {
+    const dialogRef = this.dialog.open(SurveyConfirmationComponent, {
+      width: '350px',
+      data: {
+        dialogMessage: message,
+      }
+    });
+    dialogRef.afterClosed()
+      // .pipe(
+      //  takeUntil(this.unsubscribe$)
+      // )
+      .subscribe(result => {
+        if (result) {
+          // this.organizationForm.patchValue(result);
+          // this.updateOrg();
+        }
+        // this.organizationForm.disable();
+      },
+      err => console.log(err), () => console.log('update complete'));
+    }
   constructor(
     private route: ActivatedRoute,
     private surveySubjectService: SurveySubjectService,
+    private organizationsService: OrganizationsService,
     private wordBankService: WordBankService,
     private dialog: MatDialog
   ) { }

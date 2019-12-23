@@ -1,0 +1,432 @@
+<div class="example-container-wrap">
+  <div class="example-container"
+    matTooltipPosition="right"
+    aria-tooltip="Button that displays and hides a tooltip triggered by other buttons">
+    <div class="header">MOST LIKE THE CULTURE</div>
+    <div
+      cdkDropList
+      #todoList="cdkDropList"
+      [cdkDropListData]="filter1"
+      [cdkDropListConnectedTo]="[doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,cell12List,
+      cell13List,cell14List,cell15List,cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+      class="example-list"
+      (cdkDropListDropped)="dropEvent($event)">
+      <div class="example-box-all" *ngFor="let bank of filter1" cdkDrag>
+        {{bank.name}}
+        <mat-icon matListIcon class="icons"
+          matTooltip="{{ bank.definition }}"
+          aria-label="icons">
+          info
+        </mat-icon>
+      </div>
+      <!--
+      <div class="example-box-all" *ngFor="let bank of filter1" cdkDrag>
+        <mat-expansion-panel  class="example-box">
+          <mat-expansion-panel-header>
+            <mat-panel-title >
+            </mat-panel-title>
+            <mat-panel-description class="example-box-title">
+                {{bank.name}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          {{ bank.definition }}
+        </mat-expansion-panel>
+      </div>
+      -->
+    </div>
+  </div>
+  <div class="example-container">
+    <div class="header">SOMEWHAT LIKE THE CULTURE</div>
+    <div
+      cdkDropList
+      #doneList="cdkDropList"
+      [cdkDropListData]="filter2"
+      [cdkDropListConnectedTo]="[todoList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,cell12List,
+      cell13List,cell14List,cell15List,cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+      class="example-list"
+      (cdkDropListDropped)="dropEvent($event)">
+      <div class="example-box-all" *ngFor="let bank of filter2" cdkDrag>
+        {{bank.name}}
+        <mat-icon matListIcon class="icons"
+          matTooltip="{{ bank.definition }}"
+          aria-label="icons">
+          info
+        </mat-icon>
+      </div>
+    </div>
+  </div>
+  <div class="example-container">
+    <div class="header">LEAST LIKE THE CULTURE</div>
+    <div
+      cdkDropList
+      #almostList="cdkDropList"
+      [cdkDropListData]="filter3"
+      [cdkDropListConnectedTo]="[todoList,doneList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,cell12List,
+      cell13List,cell14List,cell15List,cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+      class="example-list"
+      (cdkDropListDropped)="dropEvent($event)">
+      <div class="example-box-all" *ngFor="let bank of filter3" cdkDrag>
+        {{bank.name}}
+        <mat-icon matListIcon class="icons"
+          matTooltip="{{ bank.definition }}"
+          aria-label="icons">
+          info
+        </mat-icon>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container-example">
+  <div cdkDropList #cell1List="cdkDropList" [cdkDropListData]="cell1"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,cell12List,
+  cell13List,cell14List,cell15List, cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell1" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+
+  <div cdkDropList #cell2List="cdkDropList" [cdkDropListData]="cell2"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,cell12List,
+  cell13List,cell14List,cell15List, cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell2" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div class="break"></div> <!-- break -->
+  <div cdkDropList #cell3List="cdkDropList" [cdkDropListData]="cell3"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,cell12List,
+  cell13List,cell14List,cell15List, cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell3" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+
+  <div cdkDropList #cell4List="cdkDropList" [cdkDropListData]="cell4"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,cell12List,
+  cell13List,cell14List,cell15List, cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell4" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div cdkDropList #cell5List="cdkDropList" [cdkDropListData]="cell5"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,cell12List,
+  cell13List,cell14List,cell15List, cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell5" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div class="break"></div> <!-- break -->
+  <div cdkDropList #cell6List="cdkDropList" [cdkDropListData]="cell6"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell7List,cell8List,cell9List,cell10List,cell11List,cell12List,
+  cell13List,cell14List,cell15List, cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell6" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div cdkDropList #cell7List="cdkDropList" [cdkDropListData]="cell7"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell8List,cell9List,cell10List,cell11List,cell12List,
+  cell13List,cell14List,cell15List, cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell7" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div cdkDropList #cell8List="cdkDropList" [cdkDropListData]="cell8"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell9List,cell10List,cell11List,cell12List,
+  cell13List,cell14List, cell15List, cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell8" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div cdkDropList #cell9List="cdkDropList" [cdkDropListData]="cell9"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell10List,cell11List,cell12List,
+  cell13List,cell14List, cell15List, cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell9" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div cdkDropList #cell10List="cdkDropList" [cdkDropListData]="cell10"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell11List,cell12List,
+  cell13List,cell14List, cell15List, cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell10" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div class="break"></div> <!-- break -->
+  <div cdkDropList #cell11List="cdkDropList" [cdkDropListData]="cell11"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell12List,
+  cell13List,cell14List, cell15List, cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell11" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div cdkDropList #cell12List="cdkDropList" [cdkDropListData]="cell12"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,
+  cell13List,cell14List, cell15List, cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell12" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div cdkDropList #cell13List="cdkDropList" [cdkDropListData]="cell13"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,
+  cell12List,cell14List, cell15List, cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell13" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div cdkDropList #cell14List="cdkDropList" [cdkDropListData]="cell14"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,
+  cell12List, cell13List, cell15List, cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell14" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div cdkDropList #cell15List="cdkDropList" [cdkDropListData]="cell15"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,
+  cell12List, cell13List, cell14List, cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell15" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div cdkDropList #cell16List="cdkDropList" [cdkDropListData]="cell16"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,
+  cell12List, cell13List, cell14List, cell15List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell16" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div class="break"></div> <!-- break -->
+  <div cdkDropList #cell17List="cdkDropList" [cdkDropListData]="cell17"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,
+  cell12List, cell13List, cell14List, cell15List,cell16List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell17" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div cdkDropList #cell18List="cdkDropList" [cdkDropListData]="cell18"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,
+  cell12List, cell13List, cell14List, cell15List,cell16List,cell17List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell18" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div cdkDropList #cell19List="cdkDropList" [cdkDropListData]="cell19"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,
+  cell12List, cell13List, cell14List, cell15List,cell16List,cell17List,cell18List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell19" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div cdkDropList #cell20List="cdkDropList" [cdkDropListData]="cell20"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,
+  cell12List, cell13List, cell14List, cell15List,cell16List,cell17List,cell18List,cell19List,cell21List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell20" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div cdkDropList #cell21List="cdkDropList" [cdkDropListData]="cell21"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,
+  cell12List, cell13List, cell14List, cell15List,cell16List,cell17List,cell18List,cell19List,cell20List,cell22List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell21" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div class="break"></div> <!-- break -->
+  <div cdkDropList #cell22List="cdkDropList" [cdkDropListData]="cell22"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,
+  cell12List, cell13List, cell14List, cell15List,cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell23List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell22" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+    <div cdkDropList #cell23List="cdkDropList" [cdkDropListData]="cell23"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,
+  cell12List, cell13List, cell14List, cell15List,cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell24List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell23" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div cdkDropList #cell24List="cdkDropList" [cdkDropListData]="cell24"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,
+  cell12List, cell13List, cell14List, cell15List,cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell25List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell24" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div class="break"></div> <!-- break -->
+  <div cdkDropList #cell25List="cdkDropList" [cdkDropListData]="cell25"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,
+  cell12List, cell13List, cell14List, cell15List,cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell26List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell25" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+  <div cdkDropList #cell26List="cdkDropList" [cdkDropListData]="cell26"
+  [cdkDropListConnectedTo]="[todoList,doneList,almostList,cell1List,cell2List,cell3List,cell4List,cell5List,cell6List,cell7List,cell8List,cell9List,cell10List,cell11List,
+  cell12List, cell13List, cell14List, cell15List,cell16List,cell17List,cell18List,cell19List,cell20List,cell21List,cell22List,cell23List,cell24List,cell25List]"
+  class="item" (cdkDropListDropped)="dropEvent($event)">
+    <div class="example-box-cell" *ngFor="let bank of cell26" cdkDrag>
+      {{bank.name}}
+      <mat-icon matListIcon class="icons"
+        matTooltip="{{ bank.definition }}"
+        aria-label="icons">
+        info
+      </mat-icon>
+    </div>
+  </div>
+</div>
+<div class="survey-tower_button-row">
+  <button class="utility__button--primary" *ngIf="filter1.length === 0 && filter2.length === 0 && filter3.length === 0 " (click)="setCategories()"> Review and Submit </button>
+</div>

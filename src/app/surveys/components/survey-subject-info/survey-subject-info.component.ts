@@ -57,7 +57,4 @@ export class SurveySubjectInfoComponent implements OnInit {
     console.log(this.data.form);
     console.log('Type = ' + this.data.type);
   }
-
-
-
 }

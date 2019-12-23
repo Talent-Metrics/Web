@@ -4,7 +4,7 @@ import {Word} from '../../../word-bank/models/word';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 @Component({
-  selector: 'survey-output',
+  selector: 'app-survey-output',
   templateUrl: './survey-output.component.html',
   styleUrls: ['./survey-output.component.scss']
 })
@@ -33,13 +33,16 @@ export class SurveyOutputComponent implements OnInit {
   get category5() {
     return this.surveySubjectCategories.get('category5').value as Word[];
   }
+  get category6() {
+    return this.surveySubjectCategories.get('category6').value as Word[];
+  }
+  get category7() {
+    return this.surveySubjectCategories.get('category7').value as Word[];
+  }
   closeDialog(status: boolean) {
     this.verified = status;
-    // this.dialogRef.close(this.verified);
   }
   constructor(
-    // public dialogRef: MatDialogRef<SurveyOutputComponent>,
-    // @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit() {
