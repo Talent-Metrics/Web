@@ -1,5 +1,5 @@
 import { CollectionViewer, DataSource} from '@angular/cdk/collections';
-import { Organization} from '../models/Organization';
+import { Organization} from '../models/organization';
 import { OrganizationsService } from './organizations.service';
 import { Observable, Subject, BehaviorSubject, of } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';

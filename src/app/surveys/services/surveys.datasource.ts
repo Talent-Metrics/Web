@@ -1,5 +1,5 @@
 import { CollectionViewer, DataSource} from '@angular/cdk/collections';
-import { Survey} from '../models/Survey';
+import { Survey } from '../models/survey';
 import { SurveysService } from './surveys.service';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
