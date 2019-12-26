@@ -80,7 +80,7 @@ export class AppMapComponent implements AfterViewInit {
       this.map.setZoom(17);  // Why 17? Because it looks good.
     }
   }
-  geolocate() {
+  geolocate(t: any) {
     const tester = this.autocomplete;
     const mapper = this.map;
     const mark = this.marker;
