@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { MatFileUploadModule } from 'angular-material-fileupload';
-import { DragDropModule} from '@angular/cdk/drag-drop';
+// import { DragDropModule} from '@angular/cdk/drag-drop';
 import { MatTooltipModule} from '@angular/material/tooltip';
 
 import { SurveysComponent } from './containers/surveys/surveys.component';
@@ -53,7 +53,7 @@ import { SurveyThankyouComponent } from './components/survey-thankyou/survey-tha
     ReactiveFormsModule,
     MaterialModule,
     MatFileUploadModule,
-    DragDropModule,
+    // DragDropModule,
     MatTooltipModule
   ],
   exports: [ SurveyListComponent, SurveyDialogComponent],
