@@ -12,7 +12,7 @@
     "clean": "npx rimraf ./node_modules ./package-lock.json",
     "restore": "npm ci --no-optional",
     "preinstall": "",
-    "postinstall": "ng build --prod"
+    "postinstall": "ng build --configuration=production"
   },
   "private": true,
   "dependencies": {
