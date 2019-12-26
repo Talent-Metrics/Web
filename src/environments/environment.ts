@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  //apiUrl: 'https://talentmetrics.herokuapp.com/api',
   apiUrl: 'http://localhost:3000/api',
   apiUrlTest: 'http://localhost:3000/api',
-  webUrl: 'https://talentmetrics.firebaseapp.com/'
+  webUrl: 'http://localhost:4200/',
+  apiKey: 'AIzaSyBOu9GFb1aMRub58iUoFoOsh1A7bIQH7pM'
 };
 
 /*

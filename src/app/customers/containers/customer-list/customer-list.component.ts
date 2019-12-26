@@ -40,7 +40,8 @@ export class CustomerListComponent implements OnInit {
   }
 
   onCreateClicked() {
-    this.router.navigate(['/portal/customers/0', {viewType: 'Create'}]);
+    // this.router.navigate(['./0', {viewType: 'Create'}], { relativeTo: this.route });
+    this.router.navigate(['portal/customers/0', {viewType: 'Create'}]);
   }
 
 }

@@ -165,15 +165,6 @@ $color-tm-red: rgba(240, 90, 34);
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  & .survey-instructions__logo {
-    background-image: url("../../../../assets/images/tmLogo.svg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    opacity: .5;
-    height: 120px;
-    width: 118px;
-  }
   & .survey-instructions__tm-title {
     font-family: democratica, sans-serif;
   }

@@ -9,8 +9,8 @@ import {FormControl, FormGroup} from '@angular/forms';
 })
 
 export class AppMapComponent implements AfterViewInit {
-  @ViewChild('autocomplete',{read:ElementRef, static:false}) gmapElement: ElementRef;
-  @ViewChild('map',{read:ElementRef, static:false}) gmap: ElementRef;
+  @ViewChild('autocomplete',{ read: ElementRef, static: false}) gmapElement: ElementRef;
+  @ViewChild('map', {read: ElementRef, static: false}) gmap: ElementRef;
   @Output()
 
   verifiedAddress = new EventEmitter<any>();
@@ -29,8 +29,7 @@ export class AppMapComponent implements AfterViewInit {
   };
 
   initAutocomplete() {
-    try
-    {
+    try {
       this.map = new google.maps.Map(this.gmap.nativeElement, {
       center: this.talentMetrics,
       zoom: 15
@@ -44,8 +43,7 @@ export class AppMapComponent implements AfterViewInit {
       this.autocomplete.bindTo('bounds', this.map);
       this.autocomplete.setTypes(['address_components', 'geometry', 'icon', 'name']);
       this.marker.setMap(this.map);
-    }
-    catch(error){
+    } catch (error) {
       console.log('Error occurred. Error code: ' + error.code);
     }
   }
@@ -87,7 +85,7 @@ export class AppMapComponent implements AfterViewInit {
     const mapper = this.map;
     const mark = this.marker;
     if (navigator.geolocation) {
-      //violation
+      // violation
       navigator.geolocation.getCurrentPosition(
         function(position) {
         const geolocation = {
