@@ -8,7 +8,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill" color="primary">
-      <mat-label> Word Bank </mat-label>
+      <mat-label> Select a word bank </mat-label>
       <mat-select formControlName="wordBankId">
         <mat-option *ngFor="let wb of wordBanks" [value]="wb._id">
           {{ wb.name }}
@@ -19,7 +19,7 @@
   </div>
 
   <div class="survey-dialog__buttons">
-    <a class="utility__button--primary" (click)="createSurvey()"> Create </a>
+    <button class="utility__button--primary" (click)="createSurvey()" [disabled]="!parent.valid" > Create </button>
   </div>
 
 </div>

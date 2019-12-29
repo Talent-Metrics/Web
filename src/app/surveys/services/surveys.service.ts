@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Survey } from '../models/survey';
-import { FormArray, FormControl, FormGroup} from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class SurveysService {
   private configUrl = environment.apiUrl + '/surveys';
-
+  /*
   formFields = [
     { key: 'wordBankId', value: 'Word Bank', type: 'text' },
     { key: 'name', value: 'Name', type: 'text' },
@@ -20,6 +20,7 @@ export class SurveysService {
     { key: 'subjects', value: 'Subjects', type: 'number' },
     { key: 'completed', value: 'Completed', type: 'number' }
     ];
+
 
   surveyForm() {
     const formObj = {};
@@ -34,6 +35,23 @@ export class SurveysService {
     });
     return new FormGroup(formObj);
   }
+  */
+
+ surveyForm() {
+    const formFields = {
+      customerId: new FormControl(''),
+      name: new FormControl('', [Validators.required]),
+      wordBankId: new FormControl('', [Validators.required]),
+      organizationId: new FormControl(''),
+      subjects: new FormControl(0),
+      completed: new FormControl(0),
+    };
+    return new FormGroup(formFields);
+  }
+
+
+
+
   getSurveyById(id: string): Observable<Survey> {
     return this.http.get<Survey>(this.configUrl + '/id/' + id);
   }

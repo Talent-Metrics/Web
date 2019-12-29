@@ -47,22 +47,6 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
 
   viewDisplay: boolean;
 
-  /*
-  getSurveys(id: string) {
-    this.surveysService.getSurveysByOrganizationsId(id)
-      .pipe(
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe((surveys: Survey[]) => {
-        this.surveys = surveys;
-        console.log('Getting surveys count =' + surveys.length);
-      }, err => {
-        console.log(err);
-        alert('The error =' + err);
-      }, () => { console.log('Get Surveys complete'); });
-  }
-  */
-
   getOrganization(id: string) {
     console.log('Getting organization ' + id);
     // alert('Getting organization with id =' + id);
@@ -102,34 +86,6 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
     }, err => console.log(err), () => console.log('got word banks'));
   }
 
-/*
-  selectOrganization(position: number) {
-    this.organization = this.organizations[position];
-    this.organizationForm.patchValue(this.organization);
-  }
-*/
-/*
-  onUpdate() {
-    this.organizationForm.enable();
-    const dialogRef = this.dialog.open(OrganizationDialogComponent, {
-      width: '700px',
-      data: {
-        parent: this.organizationForm,
-        type: 'update'
-      }
-    });
-    dialogRef.afterClosed()
-      .pipe(
-        takeUntil(this.unsubscribe$)
-      ).subscribe(result => {
-        if (result) {
-          this.organizationForm.patchValue(result);
-          this.updateOrg();
-        }
-      this.organizationForm.disable();
-    }, err => console.log(err), () => console.log('update complete'));
-  }
- */
   updateOrg() {
 
     this.organizationForm.patchValue({
@@ -149,45 +105,6 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
     }, () => { console.log('Organization update complete'); });
     console.log(this.organizationForm.value);
   }
-  /*
-  onAdd() {
-    this.organizationForm.enable();
-    const dialogRef = this.dialog.open(OrganizationDialogComponent, {
-      width: '700px',
-      data: {
-        parent: this.organizationForm,
-        type: 'add'
-      }
-    });
-    dialogRef.afterClosed()
-      .pipe(
-        takeUntil(this.unsubscribe$)
-      ).subscribe(result => {
-        if (result) {
-          this.organizationForm.patchValue(result);
-          this.addOrg();
-        }
-        this.organizationForm.disable();
-    }, err => console.log(err), () => console.log('add complete'));
-  }
-  */
-  /*
-
-  onDelete(id: string) {
-    this.organizationsService.deleteOrganization(id)
-      .pipe(
-        take(1)
-      )
-      .subscribe(e => {
-        alert(`Deleted ${id}`);
-        this.refreshForm();
-        this.getOrganizations(this.customerId);
-      }, err => {
-        alert(err);
-        console.log(err);
-      }, () => { console.log('Completed delete'); });
-  }
-  */
   addOrg() {
     this.organizationForm.patchValue({
       customerId: this.customerId,
@@ -219,10 +136,8 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    // this.getOrganizations(this.customerId);
     this.organizationForm = this.organizationsService.organizationForm();
     this.surveyForm = this.surveysService.surveyForm();
-    // this.organizationForm.disable();
 
     this.viewDisplay = true;
     this.route.paramMap
@@ -319,7 +234,6 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
     this.surveysService.addSurvey(this.surveyForm.value)
       .subscribe((e: Survey) => {
         this.resetSurveyForm();
-        // this.getSurveys(this.organization._id);
         this.surveyListComponent.loadSurveys();
         alert(`Created survey named: ${e.name}`);
         console.log(e);
