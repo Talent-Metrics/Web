@@ -3,8 +3,8 @@ import { SurveySubject } from '../../models/survey-subject';
 import { Survey } from '../../models/survey';
 import { SurveySubjectService } from '../../services/survey-subject.service';
 import { SurveysService } from '../../services/surveys.service';
-import { Observable, Subject} from 'rxjs';
-import { take, takeUntil} from 'rxjs/operators';
+import { Observable, Subject, forkJoin, of} from 'rxjs';
+import { take, takeUntil, catchError} from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { SurveySubjectInfoComponent } from '../../components/survey-subject-info/survey-subject-info.component';
 import { SurveyUploadComponent } from '../../components/survey-upload/survey-upload.component';
@@ -20,9 +20,9 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
   @Input() wordBankId: Subject<string>;
   @Input() customerId: string;
   @Input() organizationId: string;
+  unsubscribe$ = new Subject<void>();
   surveyId$: string;
   wordBankId$: string;
-  unsubscribe$ = new Subject<void>();
   surveySubjects: SurveySubject[];
   survey: Survey;
   type: string;
@@ -123,11 +123,13 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
       });
   }
 
-  updateSurveySubject(id: string, sub: SurveySubject) {
+  updateSurveySubject(id: string, sub: SurveySubject, notify: boolean = true) {
     this.surveySubjectService.updateSurveySubjects(id, sub)
       .subscribe(e => {
         this.getSurveySubjects(sub.surveyInfo.surveyId);
-        alert('Suvery subject is updated');
+        if (notify) {
+          alert('Suvery subject is updated');
+        }
       }, err => console.log(err), () => console.log('update complete'));
   }
 
@@ -178,7 +180,7 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
       }, err => console.log(err), () => console.log('completed deleted'));
   }
 
-  notifySurveySubject(surveySubject: SurveySubject) {
+  notifySurveySubject(surveySubject: SurveySubject, notify: boolean = true) {
     console.log(surveySubject);
     this.surveySubjectService.notifySurveySubject(surveySubject)
       .pipe(
@@ -186,12 +188,56 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
       ).subscribe(
         result => {
           console.log(result);
-          surveySubject.surveyInfo.notifiedCount++;
-          this.updateSurveySubject(surveySubject._id, surveySubject);
-          alert(`Email has been sent to ` + surveySubject.personalInfo.email);
+          if (result['accepted'] && result['accepted'].length > 0 ) {
+            surveySubject.surveyInfo.notifiedCount++;
+            this.updateSurveySubject(surveySubject._id, surveySubject, false);
+            if (notify) {
+              alert(`Email has been successfully sent to ${surveySubject.personalInfo.email}`);
+            }
+          } else {
+            if (notify) {
+              alert(`Email attempted to ${surveySubject.personalInfo.email} was not successfully sent`);
+            }
+          }
         },
         err => console.log(err),
-        () => console.log('notified'));
+        () => console.log('email sent and notified updated')
+      );
+  }
+
+  notifyAllSurveySubjects( notify: boolean = true) {
+    console.log('Notify all Survey Subjects = ' + this.surveySubjects.length);
+    const requests: Observable<Object>[] = [];
+
+    this.surveySubjects.forEach((value, index, arr) => {
+      requests.push(this.surveySubjectService.notifySurveySubject(value)
+      );
+    });
+    const allMail = forkJoin(requests).pipe(catchError(error => of(error)));
+
+    const subscribe = allMail.subscribe(val => {
+      console.log(val);
+      let successfulEmails = 0;
+      let unsuccessfulEmails = 0;
+      if (val.length > 0 ) {
+        val.forEach((result, index, arr) => {
+        if (result['accepted'] && result['accepted'].length > 0 ) {
+          successfulEmails++;
+          const surveySubject = this.surveySubjects.find((j) => j.personalInfo.email === result['accepted'][0] );
+          surveySubject.surveyInfo.notifiedCount++;
+          this.updateSurveySubject(surveySubject._id, surveySubject, false);
+        } else {
+          unsuccessfulEmails++;
+        }
+
+        });
+        if (notify) {
+          alert(`Emails have successfully been sent to ${successfulEmails} participants. There were ${unsuccessfulEmails} attempted.`);
+        }
+      }
+
+    }
+    , err => console.log(err), () => console.log('allMail complete'));
   }
 
   constructor(
@@ -216,5 +262,6 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
     this.surveyId.complete();
+    this.wordBankId.complete();
   }
 }

@@ -5,7 +5,7 @@
       <mat-icon matListIcon class="icons" title="Add Survey Subject" (click)="addSurveySubject()">add_box</mat-icon>
       <mat-icon matListIcon class="icons" title="Delete Survey">delete</mat-icon>
       <mat-icon matListIcon class="icons" title="Close Survey">close</mat-icon>
-      <mat-icon matListIcon class="icons" title="E-mail All Open Subjects">mail</mat-icon>
+      <mat-icon matListIcon class="icons" title="E-mail All Open Subjects" (click)="notifyAllSurveySubjects(true)">mail</mat-icon>
       <mat-icon matListIcon class="icons" title="Upload Survey Subjects" (click)="uploadSurvey()">publish</mat-icon>
     </div>
   </div>
@@ -18,7 +18,7 @@
           </div>
           <div class="row_column column-50 column-right">
             <mat-icon matListIcon class="icons">refresh</mat-icon>
-            <mat-icon matListIcon class="icons" (click)="notifySurveySubject(subject)">mail</mat-icon>
+            <mat-icon matListIcon class="icons" (click)="notifySurveySubject(subject,true)">mail</mat-icon>
             <mat-icon matListIcon class="icons" (click)="deleteSurveySubject(subject._id)">delete</mat-icon>
           </div>
         </div>
