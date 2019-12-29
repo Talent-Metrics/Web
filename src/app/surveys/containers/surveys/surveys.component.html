@@ -2,6 +2,7 @@
   <div class="customers_col">
     <div class="row_container">
       <mat-form-field class="row_column column-60">
+        <mat-label>Select a survey</mat-label>
         <mat-select>
           <mat-option *ngFor="let survey of surveys" (click)="selectSurvey(survey)" [value]="survey._id">
             {{ survey.name }}

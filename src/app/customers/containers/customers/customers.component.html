@@ -5,8 +5,8 @@
       <address [parent]="customerForm" (address)="testEmit($event)"></address>
       <app-customer-info [parent]="customerForm"></app-customer-info>
       <div class="customers_buttons">
-        <button type="button" class="utility__button--primary" *ngIf="customer"  [disabled]="!customerForm.valid" (click)="onSubmit()"> Update </button>
-        <button type="button" class="utility__button--primary" *ngIf="!customer && viewType =='Create'"   [disabled]="!customerForm.valid" (click)="onSubmit()">Create </button>
+        <button type="button" class="utility__button--primary" *ngIf="customer"  [disabled]="!customerForm.valid" (click)="onSubmit()"> Update Customer </button>
+        <button type="button" class="utility__button--primary" *ngIf="!customer && viewType =='Create'"   [disabled]="!customerForm.valid" (click)="onSubmit()">Create Customer </button>
         <button type="button" class="utility__button--primary" *ngIf="customer" (click)="onDelete()"> Delete </button>
         <button type="button" class="utility__button--primary" *ngIf="customerForm.dirty && customer" (click)="refreshForm()"> Reset </button>
         <button type="button" class="utility__button--primary" (click)="onToggleDisplay()"> Cancel </button>
@@ -24,11 +24,11 @@
       <app-customer-info-view [parent]="customerViewForm" [customer]="customer"></app-customer-info-view>
     </form>
     <div class="customers_buttons">
-        <button type="button" class="utility__button--primary" *ngIf="customer" (click)="onToggleDisplay()"> Edit </button>
+        <button type="button" class="utility__button--primary" *ngIf="customer" (click)="onToggleDisplay()"> Edit Customer </button>
     </div>
     <app-organization-list [customerId]=customer._id></app-organization-list>
-    <div class="customers_buttons">
-      <button type="button" class="utility__button--primary" (click)="createOrganization()"> Create </button>
+    <div class="customers_buttons_middle">
+      <button type="button" class="utility__button--primary" (click)="createOrganization()"> Create Organization </button>
     </div>
   </div>
 </div>

@@ -154,9 +154,17 @@ a,button {
   width: 10%;
 }
 
+%customers_buttons {
+  margin-bottom: 1.345em;
+}
+
 .customers_buttons{
-  margin-top: 7.5px;
-  margin-bottom: 17.5px;
+  @extend %customers_buttons;
+}
+
+.customers_buttons_middle {
+  @extend %customers_buttons;
+  margin-top: 1.345em;
 }
 
 .customers {

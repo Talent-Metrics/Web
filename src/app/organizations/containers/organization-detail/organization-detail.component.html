@@ -4,7 +4,7 @@
             <app-organization-info [parent]="organizationForm" [organization]="organization" [organizationReference]="organizationReference" [formFields]="formFields"></app-organization-info >
         </div>
         <div class="customers_buttons">
-          <button type="button" class="utility__button--primary" *ngIf="organization" [disabled]="!organizationForm.valid" (click)="updateOrg()"> Update </button>
+          <button type="button" class="utility__button--primary" *ngIf="organization" [disabled]="!organizationForm.valid" (click)="updateOrg()"> Update Organization </button>
           <button type="button" class="utility__button--primary" *ngIf="!organization && viewType =='Create'" (click)="addOrg()" [disabled]="!organizationForm.valid"> Create </button>
           <button type="button" class="utility__button--primary" (click)="onToggleDisplay()"> Cancel </button>
         </div>
@@ -17,11 +17,11 @@
           <app-organization-view [organization]="organization" [organizationReference]="organizationReference" [formFields]="formFields"></app-organization-view >
       </form>
       <div class="customers_buttons">
-          <button type="button" class="utility__button--primary" *ngIf="organization" (click)="onToggleDisplay()"> Edit </button>
+          <button type="button" class="utility__button--primary" *ngIf="organization" (click)="onToggleDisplay()"> Edit Organization </button>
       </div>
       <app-survey-list [organizationId]="organization._id" >
       </app-survey-list>
-      <div class="customers_buttons">
+      <div class="customers_buttons_middle">
         <button type="button" class="utility__button--primary" *ngIf="organization" (click)="createSurvey()"> Create Survey </button>
       </div>
     </div>

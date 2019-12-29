@@ -56,11 +56,9 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-
 </div>
-
-<div class="organizations__buttons">
-  <a class="utility__button--primary" *ngIf="type === 'update'" (click)="onSubmit()"> Update </a>
-  <a class="utility__button--primary" *ngIf="type === 'add'" (click)="onSubmit()"> Create </a>
-  <a class="utility__button--primary" *ngIf="parent.dirty" (click)="refreshForm()"> Reset </a>
+<div class="customers_buttons">
+  <button class="utility__button--primary" *ngIf="type === 'update'" (click)="onSubmit()"> Update </button>
+  <button class="utility__button--primary" *ngIf="type === 'add'" (click)="onSubmit()"> Create </button>
+  <button class="utility__button--primary" *ngIf="parent.dirty" (click)="refreshForm()"> Reset </button>
 </div>
