@@ -34,7 +34,6 @@ export class SurveySubjectService {
           ]),
           positionTitle: new FormControl(a.personalInfo.positionTitle),
           employeeClass: new FormControl(a.personalInfo.employeeClass),
-          // dob: new FormControl(a.personalInfo.dob),
           age: new FormControl(a.personalInfo.age),
           department: new FormControl(a.personalInfo.department),
           division: new FormControl(a.personalInfo.division),
@@ -46,7 +45,8 @@ export class SurveySubjectService {
           disabilityStatus: new FormControl(a.personalInfo.disabilityStatus),
           educationLevel: new FormControl(a.personalInfo.educationLevel),
           manager: new FormControl(a.personalInfo.manager),
-          managerEmail: new FormControl(a.personalInfo.managerEmail)
+          managerEmail: new FormControl(a.personalInfo.managerEmail),
+          performance: new FormControl(a.personalInfo.performance)
         }),
         surveyInfo: new FormGroup({
           customerId: new FormControl(a.surveyInfo.customerId, [
@@ -130,7 +130,8 @@ export class SurveySubjectService {
           disabilityStatus: new FormControl(false),
           educationLevel: new FormControl(0),
           manager: new FormControl(''),
-          managerEmail: new FormControl('')
+          managerEmail: new FormControl(''),
+          performance: new FormControl(0)
         }),
         surveyInfo: new FormGroup({
           customerId: new FormControl('', [

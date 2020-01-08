@@ -95,6 +95,10 @@
         <mat-label>Manager Email</mat-label>
         <input matInput formControlName="managerEmail" type="text">
       </mat-form-field>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Performance</mat-label>
+        <input matInput formControlName="performance" type="number">
+      </mat-form-field>
     </div>
     <div formGroupName="surveyInfo" class="utility__container" [hidden]="!viewUpdate">
       <mat-form-field appearance="fill" color="primary">

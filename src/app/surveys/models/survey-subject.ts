@@ -18,7 +18,6 @@ export interface SurveySubject {
     email: string,
     positionTitle: string,
     employeeClass: string,
-    // dob: Date,
     age: number,
     department: string,
     division: string,
@@ -30,7 +29,8 @@ export interface SurveySubject {
     disabilityStatus: boolean,
     educationLevel: number,
     manager: string,
-    managerEmail: string
+    managerEmail: string,
+    performance: number
   };
   categories: {
     category1: Word[],

@@ -30,12 +30,6 @@
   </mat-form-field>
 
   <mat-form-field appearance="fill" color="primary" class="orangehover">
-    <!--
-    <mat-label>Date of Birth</mat-label>
-    <input matInput [matDatepicker]="dobPicker" placeholder="Choose a date" formControlName="dob">
-    <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
-    <mat-datepicker #dobPicker></mat-datepicker>
-    -->
     <mat-label> Age </mat-label>
     <input matInput type="number" formControlName="age">
   </mat-form-field>
@@ -115,6 +109,11 @@
   <mat-form-field appearance="fill" color="primary" class="orangehover">
     <mat-label> Manager Email </mat-label>
     <input matInput type="text" formControlName="managerEmail">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" color="primary" class="orangehover">
+    <mat-label> Performance </mat-label>
+    <input matInput type="number" formControlName="performance">
   </mat-form-field>
 
   <div class="survey-personal_buttons">

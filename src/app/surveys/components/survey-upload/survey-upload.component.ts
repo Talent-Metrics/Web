@@ -157,8 +157,11 @@ export class SurveyUploadComponent implements OnInit, OnDestroy {
       case 'employeeClass':
         obj.personalInfo[header] = value;
         break;
-      case 'age':
-        obj.personalInfo[header] = parseInt(value);
+    case 'performance':
+          obj.personalInfo[header] =  parseFloat(value);
+          break;
+    case 'age':
+        obj.personalInfo[header] = parseInt(value, null);
         break;
       case 'veteranStatus':
           obj.personalInfo.veteranStatus = (value === 'Veteran' ? true : false);
