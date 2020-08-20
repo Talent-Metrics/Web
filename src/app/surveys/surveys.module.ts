@@ -24,6 +24,7 @@ import { SurveyConfirmationComponent } from './components/survey-confirmation/su
 import { SurveyFilterComponent } from './components/survey-filter/survey-filter.component';
 import { SurveyTowerComponent } from './components/survey-tower/survey-tower.component';
 import { SurveyThankyouComponent } from './components/survey-thankyou/survey-thankyou.component';
+import { SurveyIntroComponent } from './components/survey-intro/survey-intro.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { SurveyThankyouComponent } from './components/survey-thankyou/survey-tha
     SurveyConfirmationComponent,
     SurveyFilterComponent,
     SurveyTowerComponent,
-    SurveyThankyouComponent
+    SurveyThankyouComponent,
+    SurveyIntroComponent
   ],
   imports: [
     CommonModule,

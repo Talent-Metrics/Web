@@ -36,7 +36,7 @@ export class SurveyExternalComponent implements OnInit {
       ).subscribe((result: SurveySubject) => {
         if (result) {
           if (result.surveyInfo.completed) {
-            this.step = 5;
+            this.step = 6;
             this.completed = true;
           }
           this.organizationsService.getOrganizationById(result.surveyInfo.organizationId)
@@ -70,17 +70,12 @@ export class SurveyExternalComponent implements OnInit {
       return this.surveySubjectForm.get('categories') as FormGroup;
     }
   }
-
   get filters() {
     if (this.surveySubjectForm.get('filters')) {
       return this.surveySubjectForm.get('filters') as FormGroup;
     }
   }
-
   setStep(which: number) {
-    if (this.step === 6) {
-      return;
-    }
     this.step = which;
   }
   setPersonal(evt) {
@@ -92,10 +87,10 @@ export class SurveyExternalComponent implements OnInit {
     this.step = 2;
   }
 
-  setCategories(evt) {
-    console.log(evt);
-    this.surveySubjectForm.patchValue(evt);
-    this.step = 4;
+  setIntro(evt) {
+    if (evt.intro) {
+      this.step = 3;
+    }
   }
 
   setFilters(evt) {
@@ -105,7 +100,13 @@ export class SurveyExternalComponent implements OnInit {
     this.filter1 = group.get('filter1').value as Word[];
     this.filter2 = group.get('filter2').value as Word[];
     this.filter3 = group.get('filter3').value as Word[];
-    this.step = 3;
+    this.step = 4;
+  }
+
+  setCategories(evt) {
+    console.log(evt);
+    this.surveySubjectForm.patchValue(evt);
+    this.step = 5;
   }
 
   checkFormForFinal() {

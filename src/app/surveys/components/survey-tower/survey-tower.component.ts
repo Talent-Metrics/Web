@@ -2,6 +2,7 @@ import {Component, OnInit, EventEmitter, Input, Output, AfterViewInit } from '@a
 import {FormGroup} from '@angular/forms';
 import {Word} from '../../../word-bank/models/word';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-survey-tower',
@@ -54,6 +55,21 @@ export class SurveyTowerComponent implements OnInit {
 
   // @Output() updateFilters: EventEmitter<any> = new EventEmitter<any>();
 
+  closeInstructions() {
+    $('html, body').animate({scrollTop: 0}, 'slow');
+    $( '.survey-instructions').slideUp(1500, function() {
+      // Animation complete.
+      $('.dot').trigger('focus');
+    });
+  }
+
+  openInstructions() {
+     $( '.survey-instructions').slideDown(1500, function() {
+      // Animation complete.
+      $('.utility__button--primary').trigger('focus');
+     });
+  }
+
   dropEvent(event: CdkDragDrop<Word[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -91,17 +107,6 @@ export class SurveyTowerComponent implements OnInit {
 
   }
 
-  /*
-  setFilters() {
-    this.filters.patchValue({
-      filter1: this.filter1,
-      filter2: this.filter2,
-      filter3: this.filter3
-    });
-    console.log(this.filters.value);
-    this.updateFilters.emit(this.filters.value);
-  }
-  */
 
   setCategories() {
     this.categories.patchValue({
@@ -121,6 +126,8 @@ export class SurveyTowerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    $('.survey-instructions').hide();
+    $('.survey-cultures').show();
   }
 
 }

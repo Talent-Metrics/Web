@@ -16,7 +16,6 @@ export class SurveyFilterComponent implements OnInit {
   moveWordBank: Word[] = [];
   moveWordBank2: Word[] = [];
   moveWordBank3: Word[] = [];
-  instructions: number;
 
   @Input() parent: FormGroup;
 
@@ -36,29 +35,17 @@ export class SurveyFilterComponent implements OnInit {
 
   closeInstructions() {
     $('html, body').animate({scrollTop: 0}, 'slow');
-    $('.survey-cultures').slideDown(500, function() {
-      // Animation complete.
-      // $('.dot').trigger('focus');
-      $( '.survey-instructions').slideUp(1500, function() {
-        // Animation complete.
-      });
-     });
-
-  }
-
-  openInstructions() {
-     $( '.survey-instructions').slideDown(1500, function() {
-      // Animation complete.
-     });
-    // $('.survey-instructions').show(1500);
-    $( '.survey-cultures').slideUp(2000, function() {
+    $( '.survey-instructions').slideUp(1500, function() {
       // Animation complete.
       $('.dot').trigger('focus');
     });
+  }
 
-    /*, function() {
-      $('html, body').animate({scrollTop:0}, 'slow');
-    }*/
+  openInstructions() {
+    $( '.survey-instructions').slideDown(1500, function() {
+      // Animation complete.
+      $('.utility__button--primary').trigger('focus');
+    });
   }
 
   dropEvent(event: CdkDragDrop<Word[]>) {
@@ -90,9 +77,7 @@ export class SurveyFilterComponent implements OnInit {
 
   ngOnInit() {
     this.setWordBank();
-    this.instructions = 1;
-    $('.survey-instructions').show();
-    $('.survey-cultures').hide();
+    $('.survey-instructions').hide();
     console.log(this.parent);
   }
 

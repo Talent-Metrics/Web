@@ -1,62 +1,23 @@
 <div class="survey-instructions" >
-  <p> You have been sent this short assessment to help identify the Culture within your organization, {{org.name}}. The assessment should take around 10 minutes to complete.
-    The Culturistics assessment is based on twenty-six (26) words that are associated with various types of organizational culture. </p>
-
-  <p> You will be asked to choose the words that you most associate with your Organization, from Most Descriptive of your Culture to Not Descriptive at All.
+  <p>You will be asked to choose the words that you most associate with your Organization ({{org.name}}), from Most Descriptive of your Culture to Not Descriptive at All.
     First, assign the 26 words to one of three categories: Most Like the Culture, Somewhat Like the Culture, and Least Like the Culture.
-    Click on the word and (while holding down the mouse) drag and drop into the appropriate category.  You can move between categories until you are satisfied. </p>
+    Click on the word and (while holding down the mouse) drag and drop into the appropriate category.
+    You can move between categories until you are satisfied.</p>
 
-  <p>Next, you will sort the three categories into seven levels using the diamond-shaped diagram.  Each row represents a different level.
-    The top row is Most Descriptive of your Culture, the next is Very Much Like your Culture, but not as much as the top row.
-    Drag and drop the word that is Most Like the Culture in the top row, three that are Very Much Like the Culture in the next row,
-    and continue down the rows until the word that is Least Like the Culture is in the bottom box. </p>
-
-  <p>Words that are placed in the same row are considered equal.  For example, the middle row requires six words; each of the six words
-    you place in that row are considered to be equally like the culture.  You don’t need to order the words within the rows.</p>
-
-  <p>Words that are placed in the same row are considered equal.  For example, the middle row requires six words;
-    each of the six words you place in that row are considered to be equally like the culture. You don’t need to order the words within the rows.</p>
-
-  <p>Feel free to change the position of the words on the diamond.  When you are satisfied with the order, click “Submit” at the bottom of the page.</p>
-
-  <p>Note: To view the definition of any of the descriptive words, pause your mouse over the top of the word and the definition displays or click the arrow to drop down the definition in the box.
-  You can also view a complete list of words and definitions by clicking on this link: View/ Print Descriptions of your Culture.</p>
-
-  <p>It is important that when answering the survey that you consider what the actual culture is versus what you desire the culture to be.
-  <b>Distinguish “real” culture” from “aspirational” culture.</b> Often there is a “wish-list” version of company culture that the executive team wants
-  the company to embrace, while there is an actual culture that the employees live and practice on the ground.
-  The aspirational culture is the stuff you see in the handbooks, the memos, and the posters.
-  The real culture emerges more informally and organically, however it doesn’t mean that the two aren’t actually the same.</p>
-
-  <p> According to culture expert Edgar Schein, a good way to assess any organization’s culture is to look at: </p>
-  <ul>
-    <li> Its <b>artifacts</b> – the things you can see, such as the mode of dress, the look and feel of the office space, the written values and mission statements, the products, the outer rituals and practices </li>
-    <li> Its <b>espoused values</b> – what people say are the company’s values, the company’s official code of conduct, the traits its leaders and managers strive to project  </li>
-    <li> Its underlying <b>assumptions</b> – the meaning behind the artifacts and espoused values; the ingrained values that have been unconsciously adopted; the taken-for-granted beliefs </li>
-  </ul>
-
-  <p>As you look at the Culture through the lens of the artifacts, espoused values, and assumptions you will be able to clearly see what the culture is and assign the words accordingly.
-  As you progress through the assessment you will be asked to go through and choose the words that you most associate with {{org.name}} in seven different categories.</p>
-  <ul>
-    <li> <b>Most Descriptive</b> of the organization’s Culture (2 words) </li>
-    <li> <b>Very Descriptive</b> of the organization’s Culture (3 words) </li>
-    <li> <b>Somewhat Descriptive</b> of the organization’s Culture (5 words) </li>
-    <li> Words that are <b>Neutral</b> of your organization’s Culture (6 words) </li>
-    <li> <b>Slightly Not Descriptive</b> of your organization’s Culture (5 words) </li>
-    <li> <b>Not Very Descriptive</b> of your organization’s Culture. (3 words) </li>
-    <li> <b>Not Descriptive at All</b> of your organization’s Culture. (2 words) </li>
-  </ul>
-
-  <p>You can get a description of each word by hovering over the word in the word bank.</p>
-  <p>The Culturistics Assessment is very useful in determining the degree to which an organization's culture supports its mission and goals, and in identifying underlying elements
-  in the culture which may work against full achievement of its mission and goals.</p>
-
-`  <div class="survey-filler_begin">
-    <a class="utility__button--primary" (click)="closeInstructions()"> Begin Survey </a>
+  <div class="survey-filler_begin">
+    <a class="utility__button--primary" (click)="closeInstructions()"> Close </a>
   </div>
 </div>
 <div class="survey-cultures" >
-  <div class="dot"><mat-icon (click)="openInstructions()"> notes</mat-icon></div>
+  <div class="dot">
+    <mat-icon (click)="openInstructions()"
+    matTooltip="Click to open instructions"
+    matTooltipPosition ="above"
+    matTooltipShowDelay="250"
+    matTooltipHideDelay="1000"
+    >info
+    </mat-icon>
+  </div>
   <div class="example-all-container">
     <div class="header">ALL CULTURES</div>
     <div
