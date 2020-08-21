@@ -77,8 +77,7 @@ export class SurveyFilterComponent implements OnInit {
 
   ngOnInit() {
     this.setWordBank();
-    $('.survey-instructions').hide();
-    console.log(this.parent);
+    $('.survey-instructions').show();
   }
 
 }

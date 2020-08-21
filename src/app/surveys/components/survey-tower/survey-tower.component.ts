@@ -126,8 +126,7 @@ export class SurveyTowerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    $('.survey-instructions').hide();
-    $('.survey-cultures').show();
+    $('.survey-instructions').show();
   }
 
 }
