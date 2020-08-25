@@ -80,7 +80,9 @@ export class SurveyUploadComponent implements OnInit, OnDestroy {
 
       for (let R = 1; R <= range.e.r; ++R) {
         let obj = { categories: {}, personalInfo: {}, surveyInfo: {}} as SurveySubject;
+        let rowValidation = true;
         for (let C = range.s.c; C <= range.e.c; ++C) {
+          let cellValidation = true;
           const cell_address = {c: C, r: R};
           const header_cell_address = {c: C, r: 0};
           /* if an A1-style address is needed, encode the address */
@@ -94,25 +96,35 @@ export class SurveyUploadComponent implements OnInit, OnDestroy {
           // Get the value
           const desired_value = (desired_cell ? desired_cell.v : undefined);
           const header_value = (header_cell ? header_cell.v : undefined);
+
           if (desired_value) {
-            obj = this.mapSurveyParticipant(obj, desired_value, header_value);
+            cellValidation = this.participantFieldValidation(desired_cell, header_value)
+            if (cellValidation) {
+              obj = this.mapSurveyParticipant(obj, desired_cell, header_value);
+            } else {
+              console.log('row validation falied');
+              rowValidation = false;
+            }
+
           }
 
         }
 
-        obj.surveyInfo.customerId = this.data.survey.customerId;
-        obj.surveyInfo.completed = false;
-        obj.surveyInfo.createDate = this.data.surveyInfo.createDate;
-        obj.surveyInfo.organizationId = this.data.survey.organizationId;
-        obj.surveyInfo.wordBankId = this.data.survey.wordBankId;
-        obj.surveyInfo.surveyId = this.data.survey._id;
-        obj.surveyInfo.notifiedCount = 0;
         // check minimum for insert
-        if (obj && obj.personalInfo.firstName &&  obj.personalInfo.lastName && obj.personalInfo.email ) {
+        if (obj && obj.personalInfo.firstName &&  obj.personalInfo.lastName && obj.personalInfo.email && rowValidation ) {
+          obj.surveyInfo.customerId = this.data.survey.customerId;
+          obj.surveyInfo.organizationId = this.data.survey.organizationId;
+          obj.surveyInfo.wordBankId = this.data.survey.wordBankId;
+          obj.surveyInfo.surveyId = this.data.survey._id;
+
+          // find previous surveySubject
           const surveyInfo: SurveySubject = this.data.surveySubjects
             .find(j => j.personalInfo.email.toLowerCase().trim() === obj.personalInfo.email.toLowerCase().trim());
 
           if (!surveyInfo) {
+            obj.surveyInfo.completed = false;
+            obj.surveyInfo.createDate = this.data.surveyInfo.createDate;
+            obj.surveyInfo.notifiedCount =  0;
             this.surveySubjectService.addSurveySubject(obj)
             .subscribe((e: SurveySubject) => {
               this.rowsInserted++;
@@ -122,6 +134,9 @@ export class SurveyUploadComponent implements OnInit, OnDestroy {
             () => console.log('survey subject add'));
           } else if (surveyInfo) {
             obj._id = surveyInfo._id;
+            obj.surveyInfo.completed = surveyInfo.surveyInfo.completed;
+            obj.surveyInfo.createDate = surveyInfo.surveyInfo.createDate;
+            obj.surveyInfo.notifiedCount =  surveyInfo.surveyInfo.notifiedCount;
             this.surveySubjectService.updateSurveySubjects(surveyInfo._id, obj)
             .subscribe((e: Object) => {
               const p = this.data.surveySubjects.findIndex((k) => k._id === surveyInfo._id);
@@ -139,9 +154,51 @@ export class SurveyUploadComponent implements OnInit, OnDestroy {
         }
     }
   }
-}
+  }
 
-  mapSurveyParticipant(obj: SurveySubject, value: any, header: string ): SurveySubject {
+  participantFieldValidation( cell: any, header: string ): boolean {
+    let validValue = true;
+    const value: any = cell.v;
+    const formatValue: any = cell.w;
+    switch (header) {
+      case 'performance':
+        if (!Number.isInteger(value))  {
+          validValue = false;
+        }
+        break;
+      case 'age':
+        if (!Number.isInteger(value))  {
+          validValue = false;
+        }
+        break;
+      case 'veteranStatus':
+        validValue = (value === 'Veteran' ||  value === 'Non-Veteran'  ? true : false);
+        break;
+      case 'disabilityStatus':
+        validValue =  (value === 'Disabled' || value === 'Non-Disabled' ? true : false);
+        break;
+      case 'hireDate':
+      case 'dob':
+        if ( !moment(formatValue, 'MM/DD/YY').isValid()) {
+          validValue = false;
+        }
+        break;
+      case 'educationLevel':
+          const level = this.educationLevels.find(j => j.value === value );
+          if (level === undefined) {
+            validValue = false;
+          }
+      break;
+      default:
+        validValue = true;
+    }
+
+    return validValue;
+  }
+
+  mapSurveyParticipant(obj: SurveySubject, cell: any, header: string ): SurveySubject {
+    const value: any = cell.v;
+    const formatValue: any = cell.w;
     switch (header) {
       case 'firstName':
       case 'lastName':
@@ -158,10 +215,16 @@ export class SurveyUploadComponent implements OnInit, OnDestroy {
         obj.personalInfo[header] = value;
         break;
     case 'performance':
+      if ( Number.isInteger(value))  {
           obj.personalInfo[header] =  parseFloat(value);
-          break;
+      }
+      break;
     case 'age':
+      if (Number.isInteger(value))  {
         obj.personalInfo[header] = parseInt(value, null);
+      } else if ( moment.isDate(value)) {
+        obj.personalInfo[header] = moment().diff( moment(value, 'MM/DD/YYYY'), 'years');
+      }
         break;
       case 'veteranStatus':
           obj.personalInfo.veteranStatus = (value === 'Veteran' ? true : false);
@@ -171,10 +234,16 @@ export class SurveyUploadComponent implements OnInit, OnDestroy {
         break;
       case 'hireDate':
       case 'dob':
-          obj.personalInfo[header] = moment(value, 'MM/DD/YYYY').toDate();
-          break;
+        if ( moment(formatValue, 'MM/DD/YY').isValid()) {
+          obj.personalInfo[header] = moment(formatValue, 'MM/DD/YY').toDate();
+        }
+        break;
       case 'educationLevel':
-          obj.personalInfo.educationLevel = this.educationLevels.find(j => j.value === value ).key;
+          const level = this.educationLevels.find(j => j.value === value );
+
+          if (level) {
+            obj.personalInfo.educationLevel = level.key;
+          }
       break;
       default:
         console.log('Sorry, we don\'t support field ' + header + '.');
@@ -192,6 +261,5 @@ export class SurveyUploadComponent implements OnInit, OnDestroy {
     this.fileUploaded = null;
     this.uploadedFile = false;
   }
-
 
 }

@@ -5,7 +5,6 @@ import { FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -21,20 +20,6 @@ export class SurveysService {
     { key: 'completed', value: 'Completed', type: 'number' }
     ];
 
-
-  surveyForm() {
-    const formObj = {};
-    this.formFields.forEach(e => {
-      if (e.type === 'text') {
-        formObj[e.key] = new FormControl('');
-      } else if (e.type === 'number' || e.type === 'date') {
-        formObj[e.key] = new FormControl(0);
-      } else if (e.type === 'array') {
-        formObj[e.key] = new FormArray([]);
-      }
-    });
-    return new FormGroup(formObj);
-  }
   */
 
  surveyForm() {
@@ -48,9 +33,6 @@ export class SurveysService {
     };
     return new FormGroup(formFields);
   }
-
-
-
 
   getSurveyById(id: string): Observable<Survey> {
     return this.http.get<Survey>(this.configUrl + '/id/' + id);
