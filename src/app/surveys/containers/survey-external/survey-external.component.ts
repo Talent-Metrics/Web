@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Survey } from '../../models/survey';
 import { SurveySubject} from '../../models/survey-subject';
 import { SurveySubjectService} from '../../services/survey-subject.service';
+import { SurveysService} from '../../services/surveys.service';
 import { OrganizationsService} from '../../../organizations/services/organizations.service';
-import { take} from 'rxjs/operators';
+import { take, takeUntil} from 'rxjs/operators';
+import { Subject} from 'rxjs';
 import { FormArray, FormControl, FormGroup} from '@angular/forms';
 import { WordBankService} from '../../../word-bank/services/word-bank.service';
 import { WordBank} from '../../../word-bank/models/word-bank';
@@ -17,8 +20,12 @@ import { Organization } from 'src/app/organizations/models/organization';
   templateUrl: './survey-external.component.html',
   styleUrls: ['./survey-external.component.scss']
 })
-export class SurveyExternalComponent implements OnInit {
+export class SurveyExternalComponent implements OnInit, OnDestroy {
+  unsubscribe$ = new Subject<void>();
   id: string;
+  surveyId: string;
+  survey: Survey;
+  surveySubjects: SurveySubject[];
   surveySubject: SurveySubject;
   surveySubjectForm: FormGroup;
   wordBank: WordBank;
@@ -38,6 +45,7 @@ export class SurveyExternalComponent implements OnInit {
           if (result.surveyInfo.completed) {
             this.step = 6;
             this.completed = true;
+            this.surveyId = result.surveyInfo.surveyId;
           }
           this.organizationsService.getOrganizationById(result.surveyInfo.organizationId)
           .subscribe((org: Organization) => {
@@ -46,6 +54,7 @@ export class SurveyExternalComponent implements OnInit {
           this.surveySubject = result;
           this.surveySubjectForm = this.surveySubjectService.surveySubjectForm(result);
           this.getWordBank(result.surveyInfo.wordBankId);
+          this.getSurvey(result.surveyInfo.surveyId);
         } else {
           // Hide everything and show an error
           this.step = -1;
@@ -130,6 +139,7 @@ export class SurveyExternalComponent implements OnInit {
           this.dialogMessage('Your survey has been successfully submitted and saved.');
           console.log('Update Survey Subject = ' + JSON.stringify(result));
           this.getSurveySubjectById();
+          this.refreshSurveyCounts();
         },
         err => {
           console.log(err); this.dialogMessage('Your survey was not successfully submitted. Please resubmit the survey.');
@@ -140,6 +150,43 @@ export class SurveyExternalComponent implements OnInit {
       } else {
         this.dialogMessage('Form is invalid and unable to submit');
       }
+  }
+
+  getSurvey(surveyId: string) {
+    this.surveysService.getSurveyById(surveyId)
+      .pipe(
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((e: Survey) => {
+        this.survey = e;
+      },
+      err => console.log(err), () => console.log('complete survey pull')
+      );
+  }
+
+  refreshSurveyCounts() {
+    this.surveySubjectService.getSurveySubjectsBySurvey(this.surveySubject.surveyInfo.surveyId)
+      .pipe(
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((e: SurveySubject[]) => {
+        this.surveySubjects = e;
+        let surveyCompleted = 0;
+        for (const subjectSubject of this.surveySubjects) {
+          if (subjectSubject.surveyInfo.completed || subjectSubject._id === this.surveySubject._id) {
+            surveyCompleted++;
+          }
+        }
+        this.survey.completed = surveyCompleted;
+        this.survey.subjects = e.length;
+        this.surveysService.updateSurvey(this.surveySubject.surveyInfo.surveyId, this.survey)
+        .subscribe(s => {
+          console.log('Update survey count and completed = ' + JSON.stringify(s));
+        }, err => console.log('Survey count error: ' + err),
+        () => console.log('Survey counts are updated'));
+      },
+      err => console.log(err), () => console.log('complete survey subject pull')
+      );
   }
 
   dialogMessage(message: string) {
@@ -165,6 +212,7 @@ export class SurveyExternalComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private surveySubjectService: SurveySubjectService,
+    private surveysService: SurveysService,
     private organizationsService: OrganizationsService,
     private wordBankService: WordBankService,
     private dialog: MatDialog
@@ -173,6 +221,11 @@ export class SurveyExternalComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.getSurveySubjectById();
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
 }

@@ -77,7 +77,6 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
       );
   }
 
-
   uploadSurvey() {
     const dialogRef = this.dialog.open(SurveyUploadComponent, {
       width: '500px',
