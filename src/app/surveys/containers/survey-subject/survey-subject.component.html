@@ -1,6 +1,6 @@
 <div class="survey-subject" *ngIf="surveyId$">
   <div class="survey__list--header">
-    <div>Survey Subjects</div>
+    <div>Survey Subjects ({{closedSubjects}} of {{totalSubjects}} )</div>
     <div class="icon-row">
       <mat-icon matListIcon class="icons" title="Add Survey Subject" (click)="addSurveySubject()">add_box</mat-icon>
       <mat-icon matListIcon class="icons" title="Delete Survey">delete</mat-icon>

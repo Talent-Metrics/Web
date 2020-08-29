@@ -26,6 +26,8 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
   surveySubjects: SurveySubject[];
   survey: Survey;
   type: string;
+  totalSubjects: number;
+  closedSubjects: number;
 
   getSurveySubjects(surveyId: string) {
     this.surveySubjectService.getSurveySubjectsBySurvey(surveyId)
@@ -34,6 +36,8 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
       )
       .subscribe((e: SurveySubject[]) => {
         this.surveySubjects = e;
+        this.totalSubjects = e.length;
+        this.closedSubjects = e.filter(k => k.surveyInfo.completed === true).length;
       },
       err => console.log(err), () => console.log('complete survey subject pull')
       );
