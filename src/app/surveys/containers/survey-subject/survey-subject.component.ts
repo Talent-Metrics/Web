@@ -8,7 +8,13 @@ import { take, takeUntil, catchError} from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { SurveySubjectInfoComponent } from '../../components/survey-subject-info/survey-subject-info.component';
 import { SurveyUploadComponent } from '../../components/survey-upload/survey-upload.component';
+import { SurveyConfirmationComponent} from '../../components/survey-confirmation/survey-confirmation.component';
 import * as moment from 'moment';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-survey-subject',
@@ -28,6 +34,8 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
   type: string;
   totalSubjects: number;
   closedSubjects: number;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   getSurveySubjects(surveyId: string) {
     this.surveySubjectService.getSurveySubjectsBySurvey(surveyId)
@@ -131,7 +139,11 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
       .subscribe(e => {
         this.getSurveySubjects(sub.surveyInfo.surveyId);
         if (notify) {
-          alert('Suvery subject is updated');
+          this._snackBar.open('Survey subject is updated', 'Clear', {
+            duration: 3000,
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition
+          });
         }
       }, err => console.log(err), () => console.log('update complete'));
   }
@@ -165,7 +177,11 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
             .subscribe((e: SurveySubject) => {
               this.getSurveySubjects(this.surveyId$);
               this.refreshSurveyCounts();
-              alert(`added: ${e.personalInfo.firstName}, ${e.personalInfo.lastName}`);
+              this._snackBar.open(`Survey subject is added: ${e.personalInfo.firstName}  ${e.personalInfo.lastName}`, 'Clear', {
+                duration: 3000,
+                horizontalPosition: this.horizontalPosition,
+                verticalPosition: this.verticalPosition
+              });
 
             }, err => console.log(err), () => console.log('complete add'));
         } else {
@@ -175,12 +191,18 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
   }
 
   deleteSurveySubject(id: string) {
-    this.surveySubjectService.deleteSurveySubject(id)
+      this.surveySubjectService.deleteSurveySubject(id)
       .subscribe(e => {
         this.getSurveySubjects(this.surveyId$);
         this.refreshSurveyCounts();
-        alert('deleted');
-      }, err => console.log(err), () => console.log('completed deleted'));
+        this._snackBar.open(`Survey subject is deleted`, 'Clear', {
+          duration: 3000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
+      },
+      err => console.log(err),
+      () => console.log('SurveySubject ' + id + ' deleted'));
   }
 
   notifySurveySubject(surveySubject: SurveySubject, notify: boolean = true) {
@@ -195,11 +217,19 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
             surveySubject.surveyInfo.notifiedCount++;
             this.updateSurveySubject(surveySubject._id, surveySubject, false);
             if (notify) {
-              alert(`Email has been successfully sent to ${surveySubject.personalInfo.email}`);
+              this._snackBar.open(`Email has been successfully sent to ${surveySubject.personalInfo.email}`, 'Clear', {
+                duration: 3000,
+                horizontalPosition: this.horizontalPosition,
+                verticalPosition: this.verticalPosition
+              });
             }
           } else {
             if (notify) {
-              alert(`Email attempted to ${surveySubject.personalInfo.email} was not successfully sent`);
+              this._snackBar.open(`Email attempted to ${surveySubject.personalInfo.email} was not successfully sent`, 'Clear', {
+                duration: 3000,
+                horizontalPosition: this.horizontalPosition,
+                verticalPosition: this.verticalPosition
+              });
             }
           }
         },
@@ -209,12 +239,14 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
   }
 
   notifyAllSurveySubjects( notify: boolean = true) {
-    console.log('Notify all Survey Subjects = ' + this.surveySubjects.length);
+    console.log('Notify all uncompleted Survey Subjects = ' + this.surveySubjects.length);
     const requests: Observable<Object>[] = [];
 
     this.surveySubjects.forEach((value, index, arr) => {
-      requests.push(this.surveySubjectService.notifySurveySubject(value)
-      );
+      if ( !value.surveyInfo.completed) {
+        requests.push(this.surveySubjectService.notifySurveySubject(value)
+        );
+      }
     });
     const allMail = forkJoin(requests).pipe(catchError(error => of(error)));
 
@@ -235,7 +267,13 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
 
         });
         if (notify) {
-          alert(`Emails have successfully been sent to ${successfulEmails} participants. There were ${unsuccessfulEmails} attempted.`);
+          this._snackBar.open(
+            `Emails have successfully been sent to ${successfulEmails} participants. ` +
+            `There were ${unsuccessfulEmails} attempted.`, 'Clear', {
+            duration: 3000,
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition
+          });
         }
       }
 
@@ -243,10 +281,31 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
     , err => console.log(err), () => console.log('allMail complete'));
   }
 
+  confirmationDialogMessage(title: string, message: string, button: string, successCall, args) {
+    const dialogRef = this.dialog.open(SurveyConfirmationComponent, {
+      width: '400px',
+      height: '250px',
+      data: {
+        dialogTitle: title,
+        dialogMessage: message,
+        dialogSuccessButton: button
+      }
+    });
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result) {
+          successCall.apply(this, args);
+        }
+      },
+      err => console.log(err),
+      () => console.log('Confirmation complete'));
+  }
+
   constructor(
     public surveySubjectService: SurveySubjectService,
     public surveyService: SurveysService,
     public dialog: MatDialog
+    ,private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {

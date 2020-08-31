@@ -18,8 +18,8 @@
           </div>
           <div class="row_column column-50 column-right">
             <mat-icon matListIcon class="icons">refresh</mat-icon>
-            <mat-icon matListIcon class="icons" (click)="notifySurveySubject(subject,true)">mail</mat-icon>
-            <mat-icon matListIcon class="icons" (click)="deleteSurveySubject(subject._id)">delete</mat-icon>
+            <mat-icon matListIcon class="icons" title="E-mail Subject" (click)="notifySurveySubject(subject,true)">mail</mat-icon>
+            <mat-icon matListIcon class="icons" title="Delete Subject" (click)="confirmationDialogMessage('Delete Confirmation', 'Are you sure you want to delete this survey subject?', 'Delete', deleteSurveySubject, [subject._id])">delete</mat-icon>
           </div>
         </div>
         <div class="row_container">

@@ -6,7 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { DragDropModule} from '@angular/cdk/drag-drop';
-import { MatTooltipModule} from '@angular/material/tooltip';
 
 import { SurveysComponent } from './containers/surveys/surveys.component';
 import { SurveyInfoComponent } from './components/survey-info/survey-info.component';
@@ -25,6 +24,7 @@ import { SurveyFilterComponent } from './components/survey-filter/survey-filter.
 import { SurveyTowerComponent } from './components/survey-tower/survey-tower.component';
 import { SurveyThankyouComponent } from './components/survey-thankyou/survey-thankyou.component';
 import { SurveyIntroComponent } from './components/survey-intro/survey-intro.component';
+import { SurveyMessageComponent } from './components/survey-message/survey-message.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +44,8 @@ import { SurveyIntroComponent } from './components/survey-intro/survey-intro.com
     SurveyFilterComponent,
     SurveyTowerComponent,
     SurveyThankyouComponent,
-    SurveyIntroComponent
+    SurveyIntroComponent,
+    SurveyMessageComponent
   ],
   imports: [
     CommonModule,
@@ -54,10 +55,9 @@ import { SurveyIntroComponent } from './components/survey-intro/survey-intro.com
     ReactiveFormsModule,
     MaterialModule,
     DragDropModule,
-    MatTooltipModule
   ],
   exports: [ SurveyListComponent, SurveyDialogComponent],
   entryComponents: [SurveySubjectInfoComponent, SurveyDialogComponent, SurveyOutputComponent, SurveyUploadComponent,
-  SurveyConfirmationComponent]
+  SurveyConfirmationComponent, SurveyMessageComponent]
 })
 export class SurveysModule { }

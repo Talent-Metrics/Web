@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { MatPaginatorModule, MatProgressSpinnerModule,
-  MatSortModule, MatTableModule } from "@angular/material";
+  MatSortModule, MatTableModule } from '@angular/material';
 
 import {
   MatButtonModule,
@@ -20,6 +20,9 @@ import {
   MatExpansionModule,
   MatDividerModule
 } from '@angular/material';
+
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [],
@@ -61,7 +64,9 @@ import {
     MatDividerModule,
     //for example
     MatPaginatorModule, MatProgressSpinnerModule,
-    MatSortModule, MatTableModule
+    MatSortModule, MatTableModule,
+    MatSnackBarModule,
+    MatTooltipModule
   ],
   providers: [MatDatepickerModule]
 })

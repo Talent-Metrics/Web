@@ -1,8 +1,6 @@
 <h2 mat-dialog-title>{{this.data.dialogTitle}}</h2>
 <mat-dialog-content>{{this.data.dialogMessage}}</mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close>Cancel</button>
   <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>{{this.data.dialogSuccessButton}}</button>
+  <button mat-button [mat-dialog-close]="true" class="utility__button--primary">Okay</button>
 </mat-dialog-actions>
-
