@@ -9,7 +9,9 @@ import {MatDialog} from '@angular/material';
 import {WordBank} from '../../../word-bank/models/word-bank';
 import {WordBankService} from '../../../word-bank/services/word-bank.service';
 import {SurveyDialogComponent} from '../../components/survey-dialog/survey-dialog.component';
+import { SurveyConfirmationComponent} from '../../components/survey-confirmation/survey-confirmation.component';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
+import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-surveys',
@@ -27,6 +29,8 @@ export class SurveysComponent implements OnInit, OnDestroy {
   organizationId: string;
   wordBankId = new Subject<string>();
   surveyForm = new FormGroup({});
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   getSurveys(organizationId: string) {
     this.surveysService.getSurveysByOrganizationsId(organizationId)
@@ -50,7 +54,6 @@ export class SurveysComponent implements OnInit, OnDestroy {
         this.selectSurvey(e);
       }, err => {
         console.log(err);
-        alert(err);
       }, () => { console.log('Survey setup complete'); });
   }
 
@@ -74,7 +77,6 @@ export class SurveysComponent implements OnInit, OnDestroy {
         console.log(e);
       }, err => {
         console.log(err);
-        alert(err);
       }, () => { console.log('Update Survey complete'); });
   }
 
@@ -110,10 +112,12 @@ export class SurveysComponent implements OnInit, OnDestroy {
       .subscribe((e: Survey) => {
         this.getSurveys(this.organizationId);
         this.selectSurvey(e);
-        alert(`Created survey named: ${e.name}`);
-        console.log(e);
+        this._snackBar.open(`Created survey named: ${e.name}`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
       }, err => {
-        alert(err);
         console.log(err);
       }, () => console.log('complete add'));
   }
@@ -123,9 +127,12 @@ export class SurveysComponent implements OnInit, OnDestroy {
       .subscribe((e) => {
         console.log(e);
         this.getSurveys(this.organizationId);
-        alert('updated');
+        this._snackBar.open(`Survey is updated`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
       }, err => {
-        alert(err);
         console.log(err);
       }, () => console.log('update complete'));
   }
@@ -137,14 +144,17 @@ export class SurveysComponent implements OnInit, OnDestroy {
         this.getSurveys(this.organizationId);
         this.resetForm();
       }, err => {
-        alert(err);
         console.log(err);
       }, () => console.log('delete survey complete'));
     this.surveySubjectService.deleteSurveySubjectBySurvey(this.survey._id)
       .subscribe((f) => {
+        this._snackBar.open(`Survey and survey subjects are deleted`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
         console.log(f);
       }, err => {
-        alert(err);
         console.log(err);
       }, () => console.log('delete subjects complete'));
   }
@@ -158,12 +168,33 @@ export class SurveysComponent implements OnInit, OnDestroy {
     }, err => console.log(err), () => console.log('got word banks'));
   }
 
+  confirmationDialogMessage(title: string, message: string, button: string, successCall, args) {
+    const dialogRef = this.dialog.open(SurveyConfirmationComponent, {
+      width: '400px',
+      height: '250px',
+      data: {
+        dialogTitle: title,
+        dialogMessage: message,
+        dialogSuccessButton: button
+      }
+    });
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result) {
+          successCall.apply(this, args);
+        }
+      },
+      err => console.log(err),
+      () => console.log('Confirmation complete'));
+  }
+
   constructor(
     public surveysService: SurveysService,
     public surveySubjectService: SurveySubjectService,
     public wordBankService: WordBankService,
     public dialog: MatDialog,
-    private router: ActivatedRoute
+    private router: ActivatedRoute,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {

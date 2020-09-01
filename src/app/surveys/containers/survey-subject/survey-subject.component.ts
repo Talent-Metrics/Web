@@ -10,11 +10,7 @@ import { SurveySubjectInfoComponent } from '../../components/survey-subject-info
 import { SurveyUploadComponent } from '../../components/survey-upload/survey-upload.component';
 import { SurveyConfirmationComponent} from '../../components/survey-confirmation/survey-confirmation.component';
 import * as moment from 'moment';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-survey-subject',
@@ -81,7 +77,7 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
         this.surveyService.updateSurvey(this.surveyId$, this.survey)
         .subscribe(s => {
           this.getSurvey(this.surveyId$);
-          console.log('Update survey count and completed = ' + JSON.stringify(s));
+          // console.log('Update survey count and completed = ' + JSON.stringify(s));
         }, err => console.log(err),
         () => console.log('Update Survey Count'));
       },
@@ -139,8 +135,8 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
       .subscribe(e => {
         this.getSurveySubjects(sub.surveyInfo.surveyId);
         if (notify) {
-          this._snackBar.open('Survey subject is updated', 'Clear', {
-            duration: 3000,
+          this._snackBar.open(`Survey subject ${sub.personalInfo.firstName} ${sub.personalInfo.lastName} is updated`, 'Clear', {
+            duration: 2000,
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition
           });
@@ -178,7 +174,7 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
               this.getSurveySubjects(this.surveyId$);
               this.refreshSurveyCounts();
               this._snackBar.open(`Survey subject is added: ${e.personalInfo.firstName}  ${e.personalInfo.lastName}`, 'Clear', {
-                duration: 3000,
+                duration: 2000,
                 horizontalPosition: this.horizontalPosition,
                 verticalPosition: this.verticalPosition
               });
@@ -196,7 +192,7 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
         this.getSurveySubjects(this.surveyId$);
         this.refreshSurveyCounts();
         this._snackBar.open(`Survey subject is deleted`, 'Clear', {
-          duration: 3000,
+          duration: 2000,
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition
         });
@@ -218,7 +214,7 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
             this.updateSurveySubject(surveySubject._id, surveySubject, false);
             if (notify) {
               this._snackBar.open(`Email has been successfully sent to ${surveySubject.personalInfo.email}`, 'Clear', {
-                duration: 3000,
+                duration: 2000,
                 horizontalPosition: this.horizontalPosition,
                 verticalPosition: this.verticalPosition
               });
@@ -226,7 +222,7 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
           } else {
             if (notify) {
               this._snackBar.open(`Email attempted to ${surveySubject.personalInfo.email} was not successfully sent`, 'Clear', {
-                duration: 3000,
+                duration: 2000,
                 horizontalPosition: this.horizontalPosition,
                 verticalPosition: this.verticalPosition
               });
@@ -251,7 +247,6 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
     const allMail = forkJoin(requests).pipe(catchError(error => of(error)));
 
     const subscribe = allMail.subscribe(val => {
-      console.log(val);
       let successfulEmails = 0;
       let unsuccessfulEmails = 0;
       if (val.length > 0 ) {
@@ -270,7 +265,7 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
           this._snackBar.open(
             `Emails have successfully been sent to ${successfulEmails} participants. ` +
             `There were ${unsuccessfulEmails} attempted.`, 'Clear', {
-            duration: 3000,
+            duration: 1000,
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition
           });
@@ -301,11 +296,47 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
       () => console.log('Confirmation complete'));
   }
 
+  closeSurvey() {
+    console.log('Close all uncompleted Survey Subjects = ' + this.surveySubjects.length);
+    const requests: Observable<Object>[] = [];
+    this.surveySubjects.forEach((value, index, arr) => {
+      if ( !value.surveyInfo.completed) {
+        value.surveyInfo.completed = true;
+        value.surveyInfo.completionDate = Date.now();
+        requests.push(this.surveySubjectService.updateSurveySubjects(value._id, value)
+        );
+      }
+    });
+
+    const allSurveySubjects = forkJoin(requests).pipe(catchError(error => of(error)));
+    const subscribe = allSurveySubjects.subscribe(val => {
+      let successfulClosed = 0;
+
+      if (val.length > 0 ) {
+        val.forEach((result, index, arr) => {
+          console.log(`update results = ${JSON.stringify(result)} `);
+          if (result['ok'] && result['ok'] === 1 && result['n'] === 1 ) {
+            successfulClosed++;
+          }
+        });
+      }
+      this._snackBar.open(
+        `You have successfully closed ${successfulClosed} participant(s).`, 'Clear', {
+        duration: 3000,
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition
+      });
+      this.getSurveySubjects(this.surveyId$);
+      this.refreshSurveyCounts();
+    }
+    , err => console.log(err), () => console.log('allSurveys closed complete'));
+  }
+
   constructor(
     public surveySubjectService: SurveySubjectService,
     public surveyService: SurveysService,
-    public dialog: MatDialog
-    ,private _snackBar: MatSnackBar
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
