@@ -1,6 +1,7 @@
 /// <reference types="@types/googlemaps" />
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, AfterViewInit} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Output, ViewChild, AfterViewInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
+import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-map',
@@ -9,7 +10,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 })
 
 export class AppMapComponent implements AfterViewInit {
-  @ViewChild('autocomplete',{ read: ElementRef, static: false}) gmapElement: ElementRef;
+  @ViewChild('autocomplete', { read: ElementRef, static: false}) gmapElement: ElementRef;
   @ViewChild('map', {read: ElementRef, static: false}) gmap: ElementRef;
   @Output()
 
@@ -18,6 +19,8 @@ export class AppMapComponent implements AfterViewInit {
   place: google.maps.places.PlaceResult;
   map: google.maps.Map;
   marker = new google.maps.Marker;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   searchForm = new FormGroup({
     autocomplete: new FormControl('')
@@ -68,7 +71,11 @@ export class AppMapComponent implements AfterViewInit {
     });
     this.verifiedAddress.emit(retObj);
     if (!this.place.geometry) {
-      window.alert(`No details available for input: ${this.place.name}`);
+      this._snackBar.open(`No details available for input: ${this.place.name}`, 'Clear', {
+        duration: 2000,
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition
+      });
       return;
     }
     if (this.place.geometry.viewport) {
@@ -111,7 +118,9 @@ export class AppMapComponent implements AfterViewInit {
       );
     }
   }
-  constructor() { }
+  constructor(
+    private _snackBar: MatSnackBar
+    ) { }
 
   ngAfterViewInit() {
     this.initAutocomplete();

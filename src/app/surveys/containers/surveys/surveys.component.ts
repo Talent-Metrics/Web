@@ -41,7 +41,11 @@ export class SurveysComponent implements OnInit, OnDestroy {
         this.surveys = e;
       }, err => {
         console.log(err);
-        alert(err);
+        this._snackBar.open(`Error, please check log`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
       }, () => { console.log('Get Surveys complete'); });
   }
 

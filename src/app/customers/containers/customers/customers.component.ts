@@ -8,6 +8,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { take, takeUntil, skip} from 'rxjs/operators';
 import { Subject} from 'rxjs';
 import * as moment from 'moment';
+import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-customers',
@@ -24,6 +25,9 @@ export class CustomersComponent implements OnInit, OnDestroy {
   customerViewForm: FormGroup;
   viewType: string;
   viewDisplay: boolean;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+
 
   getCustomer(id: string) {
     this.customersService.getCustomerById(id)
@@ -35,8 +39,11 @@ export class CustomersComponent implements OnInit, OnDestroy {
       },
       err => {
         console.log(err);
-        // alert(err);
-        // add messages architecture
+        this._snackBar.open(`Error, please check log`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
       },
       () => { console.log('Get Customer complete'); });
   }
@@ -53,8 +60,11 @@ export class CustomersComponent implements OnInit, OnDestroy {
         },
         err => {
           console.log(err);
-          // alert('The error ='+err);
-          // add messages architecture
+          this._snackBar.open(`Error, please check log`, 'Clear', {
+            duration: 2000,
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition
+          });
         },
         () => { console.log('Get Organizations complete'); }
       );
@@ -68,13 +78,21 @@ export class CustomersComponent implements OnInit, OnDestroy {
       .subscribe((e) => {
         console.log(e);
         this.getCustomer(this.customer._id);
-        alert(`Your customer record has been successfully updated.`);
+        this._snackBar.open(`Your customer record has been successfully updated.`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
         this.customerForm.markAsPristine();
         this.onToggleDisplay();
       },
       err => {
         console.log(err);
-        alert(err);
+        this._snackBar.open(`Error, please check log`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
       },
       () => { console.log('Update Customer complete'); });
   }
@@ -93,12 +111,20 @@ export class CustomersComponent implements OnInit, OnDestroy {
     .subscribe((e) => {
       console.log(' Addition return =' + JSON.stringify(e));
       this.customerForm.markAsPristine();
-      alert(`Your customer record has been successfully added.`);
+      this._snackBar.open(`Your customer record has been successfully added.`, 'Clear', {
+        duration: 2000,
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition
+      });
       this.router.navigate(['/portal/customers/']);
     },
     err => {
       console.log(err);
-      alert(err);
+      this._snackBar.open(`Error, please check log`, 'Clear', {
+        duration: 2000,
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition
+      });
     },
     () => { console.log('Add Customer complete'); });
   }
@@ -154,7 +180,8 @@ export class CustomersComponent implements OnInit, OnDestroy {
     private customersService: CustomersService,
     private organizationsService: OrganizationsService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.viewDisplay = true;

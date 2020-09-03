@@ -1,12 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../models/user';
-import {FormControl, FormGroup} from '@angular/forms';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-
+import { FormGroup} from '@angular/forms';
+import { Subject} from 'rxjs';
+import { takeUntil} from 'rxjs/operators';
+import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 @Component({
-  selector: 'users',
+  selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
@@ -17,6 +17,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   userId: string;
   customerId: string;
   userForm = new FormGroup({});
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+
   getUser(id: string) {
     this.usersService.getUser(id)
       .pipe(
@@ -27,7 +30,11 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.mockTest();
       }, err => {
         console.log(err);
-        alert(err);
+        this._snackBar.open(`Error, please check log`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
       }, () => { console.log('Get User complete'); });
   }
   getUsers(custId: string) {
@@ -41,7 +48,11 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.mockTest();
       }, err => {
         console.log(err);
-        alert(err);
+        this._snackBar.open(`Error, please check log`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
       }, () => { console.log('Get Users complete'); });
   }
   onSubmit() {
@@ -50,14 +61,19 @@ export class UsersComponent implements OnInit, OnDestroy {
         console.log(e);
       }, err => {
         console.log(err);
-        alert(err);
+        this._snackBar.open(`Error, please check log`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
       }, () => { console.log('Update User complete'); });
   }
   mockTest() {
     this.userForm.patchValue(this.user);
   }
   constructor(
-    public usersService: UsersService
+    public usersService: UsersService,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {

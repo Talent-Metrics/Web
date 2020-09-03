@@ -1,12 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, OnDestroy } from '@angular/core';
 import {SubscriptionsService} from '../../services/subscriptions.service';
 import {Subscription} from '../../models/subscription';
-import {FormControl, FormGroup} from '@angular/forms';
-import {Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
+import {FormGroup} from '@angular/forms';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'subscriptions',
+  selector: 'app-subscriptions',
   templateUrl: './subscriptions.component.html',
   styleUrls: ['./subscriptions.component.scss']
 })
@@ -26,6 +27,9 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
     { key: 'subscriptionType', value: 'Subscription Type' },
     { key: 'surveyCount', value: '# of Surveys' },
   ];
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+
   getSubscriptions(customerId: string) {
     this.subscriptionsService.getSubscriptionsByCustomerId(customerId)
       .pipe(
@@ -36,7 +40,11 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
         this.mockTest();
       }, err => {
         console.log(err);
-        alert(err);
+        this._snackBar.open(`Error, please check log`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
       }, () => {
         console.log('Get Subscriptions complete');
       });
@@ -47,7 +55,11 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
         console.log(e);
       }, err => {
         console.log(err);
-        alert(err);
+        this._snackBar.open(`Error, please check log`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
       }, () => { console.log('Update Subscription complete'); });
   }
   mockTest() {
@@ -55,7 +67,8 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
     this.subscriptionForm.patchValue(this.sub);
   }
   constructor(
-    private subscriptionsService: SubscriptionsService
+    private subscriptionsService: SubscriptionsService,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {

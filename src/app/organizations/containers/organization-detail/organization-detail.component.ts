@@ -14,7 +14,7 @@ import { Subject } from 'rxjs';
 import { MatDialog} from '@angular/material';
 import { SurveyDialogComponent} from '../../../surveys/components/survey-dialog/survey-dialog.component';
 import { SurveyListComponent} from '../../../surveys/components/survey-list/survey-list.component';
-// import { OrganizationDialogComponent} from '../../components/organization-dialog/organization-dialog.component';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-organization-details',
@@ -33,7 +33,9 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   wordBanks: WordBank[];
   @ViewChild(SurveyListComponent, {static: false})
   private surveyListComponent: SurveyListComponent;
-  // public dialog: MatDialog;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+
 
   formFields: FormField[] = [
     { key: 'name', value: 'Organization Name', type: 'text', isSelect: false, referenceField: '' },
@@ -49,7 +51,6 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
 
   getOrganization(id: string) {
     console.log('Getting organization ' + id);
-    // alert('Getting organization with id =' + id);
     this.organizationsService.getOrganizationById(id)
       .pipe(
         takeUntil(this.unsubscribe$)
@@ -58,7 +59,11 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
         this.organization = org;
       }, err => {
         console.log(err);
-        alert('The error =' + err);
+        this._snackBar.open(`Error, please check log`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
       }, () => { console.log('Get Organization complete'); });
   }
 
@@ -72,7 +77,11 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
         this.organizationReference = orgRef[0];
       }, err => {
         console.log(err);
-        alert('The error =' + err);
+        this._snackBar.open(`Error, please check log`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
       }, () => { console.log('Get Organization complete'); });
   }
 
@@ -96,12 +105,19 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
     this.organizationsService.updateOrganization(this.organization._id, this.organizationForm.value)
     .subscribe((e) => {
       this.getOrganization(this.organization._id);
-      alert(`${this.organizationForm.get('name').value} has been updated`);
+      this._snackBar.open(`${this.organizationForm.get('name').value} has been updated`, 'Clear', {
+        duration: 2000,
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition
+      });
       this.onToggleDisplay();
-      // this.refreshForm();
     }, err => {
       console.log(err);
-      alert(err);
+      this._snackBar.open(`Error, please check log`, 'Clear', {
+        duration: 2000,
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition
+      });
     }, () => { console.log('Organization update complete'); });
     console.log(this.organizationForm.value);
   }
@@ -114,7 +130,11 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   this.organizationsService.addOrganization(this.organizationForm.value)
     .subscribe(e => {
         console.log(e);
-        alert(`${this.organizationForm.get('name').value} has been added`);
+        this._snackBar.open(`${this.organizationForm.get('name').value} has been added`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
         this.onToggleDisplay();
         // this.refreshForm();
         // this.getOrganizations(this.customerId);
@@ -133,6 +153,7 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private wordBankService: WordBankService,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -235,10 +256,18 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
       .subscribe((e: Survey) => {
         this.resetSurveyForm();
         this.surveyListComponent.loadSurveys();
-        alert(`Created survey named: ${e.name}`);
+        this._snackBar.open(`Created survey named: ${e.name}`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
         console.log(e);
       }, err => {
-        alert(err);
+        this._snackBar.open(`Error, please check log`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
         console.log(err);
       }, () => console.log('complete add'));
   }

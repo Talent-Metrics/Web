@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import {WordBankService} from '../../services/word-bank.service';
 import {WordBank} from '../../models/word-bank';
 import {Subject} from 'rxjs';
@@ -8,6 +8,7 @@ import {Word} from '../../models/word';
 import {MatDialog} from '@angular/material';
 import {WordDialogComponent} from '../../components/word-dialog/word-dialog.component';
 import {WordBankDialogComponent} from '../../components/word-bank-dialog/word-bank-dialog.component';
+import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-word-bank',
@@ -22,6 +23,8 @@ export class WordBankComponent implements OnInit {
   wordBanks: WordBank[];
   wordBank: WordBank = undefined;
   unsubscribe$ = new Subject<void>();
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   // compareWordBanks() {
     // this.wordBankSelectForm.controls['selectWordBanks'].setValue(this.wordBanks[1]._id);
@@ -49,7 +52,11 @@ export class WordBankComponent implements OnInit {
           this.wordBankSelectForm.controls['selectWordBanks'].setValue(bank);
         }
       }, err => {
-        alert(err);
+        this._snackBar.open(`Error, please check log`, 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
         console.log(err);
       }, () => { console.log('Get Word Banks complete'); });
   }
@@ -164,7 +171,11 @@ export class WordBankComponent implements OnInit {
     console.log(this.wordBank._id);
     this.wordBankService.deleteOne(this.wordBank._id)
       .subscribe(e => {
-        alert('You have deleted a Word Bank');
+        this._snackBar.open('You have deleted a Word Bank', 'Clear', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
         console.log(e);
         this.getAllWords();
       }, err => console.log(err), () => console.log('delete complete'));
@@ -178,7 +189,8 @@ export class WordBankComponent implements OnInit {
   }
   constructor(
     private wordBankService: WordBankService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
