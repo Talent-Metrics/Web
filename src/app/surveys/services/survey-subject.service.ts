@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { SurveySubject } from '../models/survey-subject';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { environment } from '../../../environments/environment';
@@ -211,7 +211,6 @@ export class SurveySubjectService {
   }
 
   getSurveySubjectsBySurvey(surveyId: string) {
-    console.log(this.configUrl, '/survey/', surveyId);
     return this.http.get(this.configUrl + '/survey/' + surveyId);
   }
 
@@ -234,6 +233,11 @@ export class SurveySubjectService {
   notifySurveySubject(abc) {
     return this.http.post(this.mailUrl, abc);
   }
+
+  downloadFile(surveyId: string): any {
+		return this.http.get(this.configUrl + '/survey/' + surveyId, {responseType: 'blob'});
+  }
+
   constructor(
     private http: HttpClient
   ) { }

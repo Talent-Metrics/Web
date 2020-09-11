@@ -3,10 +3,10 @@
     <div>Survey Subjects ({{closedSubjects}} of {{totalSubjects}} )</div>
     <div class="icon-row">
       <mat-icon matListIcon class="icons" title="Add Survey Subject" (click)="addSurveySubject()">add_box</mat-icon>
-
       <mat-icon matListIcon class="icons" title="Close Survey"(click)="confirmationDialogMessage('Close Survey Confirmation', 'Are you sure you want to close this survey? All open subjects will be set to closed.', 'Close', closeSurvey, [surveyId$])">close</mat-icon>
       <mat-icon matListIcon class="icons" title="E-mail All Open Subjects" (click)="notifyAllSurveySubjects(true)">mail</mat-icon>
       <mat-icon matListIcon class="icons" title="Upload Survey Subjects" (click)="uploadSurvey()">publish</mat-icon>
+      <mat-icon matListIcon class="icons" title="Download Survey Subjects" (click)="confirmationDialogMessage('Download Survey Info', 'Are you sure you want to download this survey information?', 'Download', download, [surveyId$])">cloud_downloads</mat-icon>
     </div>
   </div>
   <mat-list class="survey__list">

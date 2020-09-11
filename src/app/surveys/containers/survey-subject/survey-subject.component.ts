@@ -9,9 +9,9 @@ import { MatDialog } from '@angular/material';
 import { SurveySubjectInfoComponent } from '../../components/survey-subject-info/survey-subject-info.component';
 import { SurveyUploadComponent } from '../../components/survey-upload/survey-upload.component';
 import { SurveyConfirmationComponent} from '../../components/survey-confirmation/survey-confirmation.component';
-import * as moment from 'moment';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
-
+import * as moment from 'moment';
+import * as fileSaver from 'file-saver';
 @Component({
   selector: 'app-survey-subject',
   templateUrl: './survey-subject.component.html',
@@ -330,6 +330,17 @@ export class SurveySubjectComponent implements OnInit, OnDestroy {
       this.refreshSurveyCounts();
     }
     , err => console.log(err), () => console.log('allSurveys closed complete'));
+  }
+
+  download(id: string) {
+    this.surveySubjectService.downloadFile(id).subscribe(response => {
+      //const url= window.URL.createObjectURL(response);
+      //window.open(url);
+      //window.location.href = url;
+      fileSaver.saveAs(response, `survey-${id}.json`);
+    }),
+    error => console.log('Error downloading the file'),
+    () => console.info('File downloaded successfully');
   }
 
   constructor(

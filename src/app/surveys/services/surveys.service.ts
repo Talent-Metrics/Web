@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Survey } from '../models/survey';
 import { FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import { environment } from '../../../environments/environment';
@@ -10,17 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class SurveysService {
   private configUrl = environment.apiUrl + '/surveys';
-  /*
-  formFields = [
-    { key: 'wordBankId', value: 'Word Bank', type: 'text' },
-    { key: 'name', value: 'Name', type: 'text' },
-    { key: 'customerId', value: 'Customer Id', type: 'text' },
-    { key: 'organizationId', value: 'Organization Id', type: 'text' },
-    { key: 'subjects', value: 'Subjects', type: 'number' },
-    { key: 'completed', value: 'Completed', type: 'number' }
-    ];
 
-  */
 
  surveyForm() {
     const formFields = {
@@ -57,6 +47,7 @@ export class SurveysService {
   deleteSurvey(surveyId: string) {
     return this.http.delete(this.configUrl + '/' + surveyId);
   }
+
   constructor(
     private http: HttpClient
   ) { }
